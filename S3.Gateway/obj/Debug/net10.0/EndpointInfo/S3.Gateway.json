@@ -1,0 +1,542 @@
+{
+  "openapi": "3.0.4",
+  "info": {
+    "title": "S3.Gateway",
+    "version": "1.0"
+  },
+  "paths": {
+    "/Napas/merchant/getdeeplink": {
+      "post": {
+        "tags": [
+          "Napas"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetDeepLinkRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetDeepLinkRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetDeepLinkRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/Napas/callbackstatus": {
+      "post": {
+        "tags": [
+          "Napas"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CallBackStatusRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CallBackStatusRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CallBackStatusRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/Napas/merchant/createmerchant": {
+      "post": {
+        "tags": [
+          "Napas"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateMerchantRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateMerchantRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateMerchantRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/Napas/merchant/updatebankaccount": {
+      "post": {
+        "tags": [
+          "Napas"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateBankAccountRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateBankAccountRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateBankAccountRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/Napas/merchant/querymerchant": {
+      "post": {
+        "tags": [
+          "Napas"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QueryMerchantRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QueryMerchantRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/QueryMerchantRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/Napas/merchant/updatemerchant": {
+      "post": {
+        "tags": [
+          "Napas"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateMerchantRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateMerchantRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateMerchantRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "BranchInfo": {
+        "type": "object",
+        "properties": {
+          "platformBranchId": {
+            "type": "string",
+            "nullable": true
+          },
+          "branchName": {
+            "type": "string",
+            "nullable": true
+          },
+          "branchCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "branchAccount": {
+            "type": "string",
+            "nullable": true
+          },
+          "branchBankId": {
+            "type": "string",
+            "nullable": true
+          },
+          "beneficiaryName": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CallBackStatusRequest": {
+        "type": "object",
+        "properties": {
+          "senderReference": {
+            "type": "string",
+            "nullable": true
+          },
+          "creationDateTime": {
+            "type": "string",
+            "nullable": true
+          },
+          "platformCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "platformMerchantId": {
+            "type": "string",
+            "nullable": true
+          },
+          "merchantName": {
+            "type": "string",
+            "nullable": true
+          },
+          "merchantAddress": {
+            "type": "string",
+            "nullable": true
+          },
+          "merchantCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "merchantAlias": {
+            "type": "string",
+            "nullable": true
+          },
+          "merchantType": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "branch": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BranchInfo"
+            },
+            "nullable": true
+          },
+          "qrName": {
+            "type": "string",
+            "nullable": true
+          },
+          "paymentChannel": {
+            "type": "string",
+            "nullable": true
+          },
+          "website": {
+            "type": "string",
+            "nullable": true
+          },
+          "taxId": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "contractId": {
+            "type": "string",
+            "nullable": true
+          },
+          "mcc": {
+            "type": "string",
+            "nullable": true
+          },
+          "fee": {
+            "type": "number",
+            "format": "double"
+          },
+          "masterMerchantFee": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateMerchantBranch": {
+        "type": "object",
+        "properties": {
+          "platformBranchId": {
+            "type": "string",
+            "nullable": true
+          },
+          "branchName": {
+            "type": "string",
+            "nullable": true
+          },
+          "qrName": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateMerchantRequest": {
+        "type": "object",
+        "properties": {
+          "senderReference": {
+            "type": "string",
+            "nullable": true
+          },
+          "creationDateTime": {
+            "type": "string",
+            "nullable": true
+          },
+          "platformCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "platformMerchantId": {
+            "type": "string",
+            "nullable": true
+          },
+          "merchantName": {
+            "type": "string",
+            "nullable": true
+          },
+          "merchantAddress": {
+            "type": "string",
+            "nullable": true
+          },
+          "branch": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CreateMerchantBranch"
+            },
+            "nullable": true
+          },
+          "contractId": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetDeepLinkRequest": {
+        "type": "object",
+        "properties": {
+          "senderReference": {
+            "type": "string",
+            "nullable": true
+          },
+          "creationDateTime": {
+            "type": "string",
+            "nullable": true
+          },
+          "platformCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "platformName": {
+            "type": "string",
+            "nullable": true
+          },
+          "platformMerchantId": {
+            "type": "string",
+            "nullable": true
+          },
+          "mobileOS": {
+            "type": "string",
+            "nullable": true
+          },
+          "partnerCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "callbackUrl": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "QueryMerchantRequest": {
+        "type": "object",
+        "properties": {
+          "senderReference": {
+            "type": "string",
+            "nullable": true
+          },
+          "creationDateTime": {
+            "type": "string",
+            "nullable": true
+          },
+          "platformCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "platformMerchantId": {
+            "type": "string",
+            "nullable": true
+          },
+          "merchantCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "merchantAlias": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateBankAccountRequest": {
+        "type": "object",
+        "properties": {
+          "senderReference": {
+            "type": "string",
+            "nullable": true
+          },
+          "creationDateTime": {
+            "type": "string",
+            "nullable": true
+          },
+          "platformCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "platformMerchantId": {
+            "type": "string",
+            "nullable": true
+          },
+          "branchAlias": {
+            "type": "string",
+            "nullable": true
+          },
+          "branchAccount": {
+            "type": "string",
+            "nullable": true
+          },
+          "branchBankId": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateMerchantRequest": {
+        "type": "object",
+        "properties": {
+          "senderReference": {
+            "type": "string",
+            "nullable": true
+          },
+          "creationDateTime": {
+            "type": "string",
+            "nullable": true
+          },
+          "platformCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "platformMerchantId": {
+            "type": "string",
+            "nullable": true
+          },
+          "branchAlias": {
+            "type": "string",
+            "nullable": true
+          },
+          "newMerchantName": {
+            "type": "string",
+            "nullable": true
+          },
+          "newMerchantAddress": {
+            "type": "string",
+            "nullable": true
+          },
+          "newBranchName": {
+            "type": "string",
+            "nullable": true
+          },
+          "newQrName": {
+            "type": "string",
+            "nullable": true
+          },
+          "newPaymentChannel": {
+            "type": "string",
+            "nullable": true
+          },
+          "newWebsite": {
+            "type": "string",
+            "nullable": true
+          },
+          "newTaxId": {
+            "type": "string",
+            "nullable": true
+          },
+          "newEmail": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Napas"
+    }
+  ]
+}

@@ -1,0 +1,98 @@
+[
+  {
+    "ContainingType": "S3.Gateway.Controllers.NapasController",
+    "Method": "CallBackStatus",
+    "RelativePath": "Napas/callbackstatus",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "S3.Gateway.Features.Payments.Napas.CallBackStatusRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "S3.Gateway.Controllers.NapasController",
+    "Method": "CreateMerchant",
+    "RelativePath": "Napas/merchant/createmerchant",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "S3.Gateway.Features.Payments.Napas.CreateMerchantRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "S3.Gateway.Controllers.NapasController",
+    "Method": "Getdeeplink",
+    "RelativePath": "Napas/merchant/getdeeplink",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "S3.Gateway.Features.Payments.Napas.GetDeepLinkRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "S3.Gateway.Controllers.NapasController",
+    "Method": "QueryMerchant",
+    "RelativePath": "Napas/merchant/querymerchant",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "S3.Gateway.Features.Payments.Napas.QueryMerchantRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "S3.Gateway.Controllers.NapasController",
+    "Method": "UpdateBankAccount",
+    "RelativePath": "Napas/merchant/updatebankaccount",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "S3.Gateway.Features.Payments.Napas.UpdateBankAccountRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "S3.Gateway.Controllers.NapasController",
+    "Method": "UpdateMerchant",
+    "RelativePath": "Napas/merchant/updatemerchant",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "S3.Gateway.Features.Payments.Napas.UpdateMerchantRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]
