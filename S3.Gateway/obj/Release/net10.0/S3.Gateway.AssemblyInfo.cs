@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("S3.Gateway")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3ef9226bb65f72d62ad1f9c33e8c8534d719df08")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3a917a48535c4a454f0d661bc856e70702f6aad5")]
 [assembly: System.Reflection.AssemblyProductAttribute("S3.Gateway")]
 [assembly: System.Reflection.AssemblyTitleAttribute("S3.Gateway")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
