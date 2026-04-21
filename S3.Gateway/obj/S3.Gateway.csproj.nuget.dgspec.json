@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\source\\repos\\s3retail-new\\S3.Gateway\\S3.Gateway.csproj": {}
+    "D:\\Local source\\Backend-net-core-10\\S3.Gateway\\S3.Gateway.csproj": {}
   },
   "projects": {
-    "D:\\source\\repos\\s3retail-new\\S3.Gateway\\S3.Gateway.csproj": {
+    "D:\\Local source\\Backend-net-core-10\\S3.Gateway\\S3.Gateway.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\source\\repos\\s3retail-new\\S3.Gateway\\S3.Gateway.csproj",
+        "projectUniqueName": "D:\\Local source\\Backend-net-core-10\\S3.Gateway\\S3.Gateway.csproj",
         "projectName": "S3.Gateway",
-        "projectPath": "D:\\source\\repos\\s3retail-new\\S3.Gateway\\S3.Gateway.csproj",
+        "projectPath": "D:\\Local source\\Backend-net-core-10\\S3.Gateway\\S3.Gateway.csproj",
         "packagesPath": "C:\\Users\\dev\\.nuget\\packages\\",
-        "outputPath": "D:\\source\\repos\\s3retail-new\\S3.Gateway\\obj\\",
+        "outputPath": "D:\\Local source\\Backend-net-core-10\\S3.Gateway\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -71,10 +71,6 @@
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
-              "target": "Package",
-              "version": "[10.0.6, )"
-            },
-            "Microsoft.Extensions.Options": {
               "target": "Package",
               "version": "[10.0.6, )"
             },
