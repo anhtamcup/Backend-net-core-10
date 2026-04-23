@@ -15,7 +15,7 @@
     public class CallbackRouting: EntityBase
     {
         public string RequestID { get; set; } = string.Empty;
-        public Guid RefID { get; set; } = new Guid();
+        public string RefID { get; set; } = string.Empty;
         public Target3rd Target { get; set; }
         public string PartnerCode { get; set; } = string.Empty;
         public string CallbackUrl { get; set; } = string.Empty;

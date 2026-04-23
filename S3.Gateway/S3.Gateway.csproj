@@ -7,7 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="PaymentSetting\Napas\Key\eKYC\public.key">
+    <None Remove="PaymentSetting\Napas\Key\eKYC\keypair.p12" />
+    <None Remove="PaymentSetting\Napas\Key\eKYC\public.key" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="PaymentSetting\Napas\Key\eKYC\keypair.p12">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="MediatR" Version="14.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.6" />

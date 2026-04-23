@@ -58,8 +58,22 @@ namespace S3.Gateway.Integrations.Napas
             var httpRequest = new HttpRequestMessage(HttpMethod.Post, endpoint);
 
             httpRequest.Content = JsonContent.Create(request);
-            httpRequest.Headers.Authorization =
-                new AuthenticationHeaderValue("Bearer", accessToken);
+
+            httpRequest.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+
+            var privateKeyPath = Path.Combine(
+                AppContext.BaseDirectory,
+                _napasConfig.Key.eKYC.PrivateKey
+            );
+
+            var payload = JsonConvert.SerializeObject(request);
+            var signature = RsaSignatureService.Sign(
+                payload,
+                privateKeyPath,
+                _napasConfig.Key.eKYC.Password
+            );
+
+            httpRequest.Headers.Add("signature", signature);
 
             return httpRequest;
         }

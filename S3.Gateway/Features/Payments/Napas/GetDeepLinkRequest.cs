@@ -6,6 +6,8 @@ using S3.Gateway.Entities;
 using S3.Gateway.Integrations.Napas;
 using System.Net;
 using System.Net.Http.Headers;
+using System.Security.Cryptography;
+using System.Text;
 namespace S3.Gateway.Features.Payments.Napas
 {
     public class GetDeepLinkRequest : NpGetDeepLinkRequest, IRequest<ResponseBase<NpGetDeepLinkResponse>>
@@ -25,46 +27,7 @@ namespace S3.Gateway.Features.Payments.Napas
             _dbContext = dbContext;
         }
 
-        private async Task CallAPI()
-        {
-            try
-            {
-                var handler = new HttpClientHandler
-                {
-                    AutomaticDecompression = DecompressionMethods.All
-                };
-
-                var client = new HttpClient(handler);
-                //client.DefaultRequestVersion = HttpVersion.Version11;
-
-
-                client.DefaultRequestHeaders.Accept.ParseAdd("*/*");
-                client.DefaultRequestHeaders.Connection.ParseAdd("keep-alive");
-
-                var request = new HttpRequestMessage(
-                    HttpMethod.Post,
-                    "https://mms-api-staging.napas.com.vn/oauth2/token");
-
-                var collection = new List<KeyValuePair<string, string>>
-                {
-                    new("grant_type", "client_credentials"),
-                    new("client_id", "USER971283"),
-                    new("client_secret", "b3huAXe6bVStMfTBspgbGerXBy7t4SF7")
-                };
-                request.Content = new FormUrlEncodedContent(collection);
-
-                var response = await client.SendAsync(request);
-                var body = await response.Content.ReadAsStringAsync();
-               Console.WriteLine(response.StatusCode);
-                Console.WriteLine(body);
-
-
-            }
-            catch (Exception ex)
-            {
-
-            }
-        }
+        
 
         public async Task<ResponseBase<NpGetDeepLinkResponse>> Handle(GetDeepLinkRequest request, CancellationToken cancellationToken)
         {
@@ -72,16 +35,11 @@ namespace S3.Gateway.Features.Payments.Napas
             try
             {
                 NpGetDeepLinkRequest npGetDeepLinkRequest = request;
-                npGetDeepLinkRequest.SenderReference = RequestUtility.CreateSenderReference("NX");
-                npGetDeepLinkRequest.CreationDateTime = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss") + "+07:00";
-                npGetDeepLinkRequest.PlatformCode = "NX";
-                npGetDeepLinkRequest.PlatformName = "NexusA3";
-                npGetDeepLinkRequest.PlatformMerchantId = "PAWN000001";
-                npGetDeepLinkRequest.MobileOS = "Android";
-
                 var data = await _napasClient.GetDeepLink(npGetDeepLinkRequest);
+
                 var callbackRouting = new CallbackRouting
                 {
+                    RefID = request.PlatformMerchantId,
                     RequestID = RequestContext.RequestID,
                     Target = Target3rd.Napas,
                     PartnerCode = request.PartnerCode,
