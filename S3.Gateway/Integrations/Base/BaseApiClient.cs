@@ -1,7 +1,7 @@
-﻿using S3.Gateway.Entities;
+﻿using Newtonsoft.Json;
+using S3.Gateway.Entities;
 using S3.Gateway.Features.Logs;
 using System.Diagnostics;
-using System.Text.Json;
 
 namespace S3.Gateway.Integrations.Base
 {
@@ -20,7 +20,7 @@ namespace S3.Gateway.Integrations.Base
             return new FormUrlEncodedContent(data);
         }
 
-        public async Task<T?> SendAsync<T>(
+        public async Task<T> SendAsync<T>(
             HttpClient client,
             HttpRequestMessage request)
         {
@@ -40,6 +40,8 @@ namespace S3.Gateway.Integrations.Base
 
             try
             {
+                client.DefaultRequestHeaders.Accept.ParseAdd("*/*");
+                client.DefaultRequestHeaders.Connection.ParseAdd("keep-alive");
                 var response = await client.SendAsync(request);
                 var responseBody = await response.Content.ReadAsStringAsync();
                 log.ResponseBody = responseBody;
@@ -53,12 +55,8 @@ namespace S3.Gateway.Integrations.Base
 
                 if (responseBody != null)
                 {
-                    return JsonSerializer.Deserialize<T>(
-                        responseBody,
-                        new JsonSerializerOptions
-                        {
-                            PropertyNameCaseInsensitive = true
-                        });
+                    var resultJson = JsonConvert.DeserializeObject<T>(responseBody);
+                    return resultJson;
                 }
 
                 return default;
@@ -76,7 +74,7 @@ namespace S3.Gateway.Integrations.Base
                 stopwatch.Stop();
                 log.Duration = (int)stopwatch.ElapsedMilliseconds;
 
-                await _logService.SaveAsync(log);
+                _ = _logService.SaveAsync(log);
             }
         }
     }

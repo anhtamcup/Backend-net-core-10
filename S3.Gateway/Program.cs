@@ -4,7 +4,7 @@ using S3.Gateway.Features.Logs;
 using S3.Gateway.Integrations.Base;
 using S3.Gateway.Integrations.Napas;
 using S3.Gateway.Middleware;
-using System.Security.Cryptography.X509Certificates;
+using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,14 +26,23 @@ builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(typeof(Program).Assembly);
 });
 
+builder.Services.AddMemoryCache();
+builder.Services.AddSingleton<NapasTokenService>();
 builder.Services.AddHttpClient<NapasClient>()
-.ConfigurePrimaryHttpMessageHandler(sp =>
-{
-    var cert = new X509Certificate2("PaymentSetting/Napas/Key/cfox.pfx", "cfox");
-    var handler = new HttpClientHandler();
-    handler.ClientCertificates.Add(cert);
-    return handler;
-});
+    .ConfigurePrimaryHttpMessageHandler(() =>
+    {
+        return new HttpClientHandler
+        {
+            AutomaticDecompression = DecompressionMethods.All
+        };
+    });
+//.ConfigurePrimaryHttpMessageHandler(sp =>
+//{
+//    var cert = new X509Certificate2("PaymentSetting/Napas/Key/cfox.pfx", "cfox");
+//    var handler = new HttpClientHandler();
+//    handler.ClientCertificates.Add(cert);
+//    return handler;
+//});
 
 builder.Services.Configure<NapasConfig>(
     builder.Configuration.GetSection("NapasConfig"));

@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System.Text.Json.Serialization;
 
 namespace S3.Gateway.Integrations.Napas
 {
@@ -12,12 +11,12 @@ namespace S3.Gateway.Integrations.Napas
 
     public class NpOAuthResponse
     {
-        [JsonPropertyName("access_token")]
+        [JsonProperty("access_token")]
         public string AccessToken { get; set; } = string.Empty;
-        [JsonPropertyName("token_type")]
+        [JsonProperty("token_type")]
         public string TokenType { get; set; } = string.Empty;
-        [JsonPropertyName("expires_in")]
-        public int ExpiresIn { get; set; }
+        [JsonProperty("expires_in")]
+        public string ExpiresIn { get; set; } = string.Empty;
     }
 
     public class NpGetDeepLinkResponse

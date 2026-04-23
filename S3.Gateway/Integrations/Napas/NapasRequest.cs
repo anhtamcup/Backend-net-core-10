@@ -2,6 +2,24 @@
 
 namespace S3.Gateway.Integrations.Napas
 {
+    public static class RequestUtility
+    {
+        public static string CreateSenderReference(string platformCode)
+        {
+            if (string.IsNullOrWhiteSpace(platformCode) || platformCode.Length != 2)
+                throw new ArgumentException("platformCode must be 2 characters.");
+
+            DateTime now = DateTime.Now;
+
+            string datePart = now.ToString("yyyyMMdd");
+
+            string refId = now.ToString("HHmmssfff"); // 9 ký tự
+            refId += now.Ticks.ToString()[^3..];      // lấy 3 ký tự cuối
+
+            return $"{datePart}{platformCode}{refId}";
+        }
+    }
+
     public class NpGetDeepLinkRequest
     {
         public string SenderReference { get; set; } = string.Empty;
