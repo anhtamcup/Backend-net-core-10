@@ -2,7 +2,7 @@
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
-namespace S3.Gateway.Integrations.Napas
+namespace S3.Gateway.Integrations.eKYC.Napas
 {
     public static class RsaSignatureService
     {

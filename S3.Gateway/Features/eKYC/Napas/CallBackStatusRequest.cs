@@ -3,11 +3,10 @@ using Newtonsoft.Json;
 using S3.Gateway.Common;
 using S3.Gateway.Data;
 using S3.Gateway.Entities;
-using S3.Gateway.Integrations.Napas;
+using S3.Gateway.Integrations.eKYC.Napas;
 using System.Text;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace S3.Gateway.Features.Payments.Napas
+namespace S3.Gateway.Features.eKYC.Napas
 {
     public class CallBackStatusRequest : NpCallBackStatusRequest, IRequest<NpCallBackStatusResponse>
     {

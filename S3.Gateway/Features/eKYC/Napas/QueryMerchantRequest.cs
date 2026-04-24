@@ -1,7 +1,7 @@
 ﻿using MediatR;
-using S3.Gateway.Integrations.Napas;
+using S3.Gateway.Integrations.eKYC.Napas;
 
-namespace S3.Gateway.Features.Payments.Napas
+namespace S3.Gateway.Features.eKYC.Napas
 {
     public class QueryMerchantRequest : NpQueryMerchantRequest, IRequest<ResponseBase<NpQueryMerchantResponse>>
     {

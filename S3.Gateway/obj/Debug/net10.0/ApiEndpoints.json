@@ -9,7 +9,7 @@
     "Parameters": [
       {
         "Name": "request",
-        "Type": "S3.Gateway.Features.Payments.Napas.CallBackStatusRequest",
+        "Type": "S3.Gateway.Features.eKYC.Napas.CallBackStatusRequest",
         "IsRequired": true
       }
     ],
@@ -25,7 +25,7 @@
     "Parameters": [
       {
         "Name": "request",
-        "Type": "S3.Gateway.Features.Payments.Napas.CreateMerchantRequest",
+        "Type": "S3.Gateway.Features.eKYC.Napas.CreateMerchantRequest",
         "IsRequired": true
       }
     ],
@@ -41,7 +41,7 @@
     "Parameters": [
       {
         "Name": "request",
-        "Type": "S3.Gateway.Features.Payments.Napas.GetDeepLinkRequest",
+        "Type": "S3.Gateway.Features.eKYC.Napas.GetDeepLinkRequest",
         "IsRequired": true
       }
     ],
@@ -57,7 +57,7 @@
     "Parameters": [
       {
         "Name": "request",
-        "Type": "S3.Gateway.Features.Payments.Napas.QueryMerchantRequest",
+        "Type": "S3.Gateway.Features.eKYC.Napas.QueryMerchantRequest",
         "IsRequired": true
       }
     ],
@@ -73,7 +73,7 @@
     "Parameters": [
       {
         "Name": "request",
-        "Type": "S3.Gateway.Features.Payments.Napas.UpdateBankAccountRequest",
+        "Type": "S3.Gateway.Features.eKYC.Napas.UpdateBankAccountRequest",
         "IsRequired": true
       }
     ],
@@ -89,7 +89,39 @@
     "Parameters": [
       {
         "Name": "request",
-        "Type": "S3.Gateway.Features.Payments.Napas.UpdateMerchantRequest",
+        "Type": "S3.Gateway.Features.eKYC.Napas.UpdateMerchantRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "S3.Gateway.Controllers.NapasController",
+    "Method": "OAuth",
+    "RelativePath": "Napas/oath",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "S3.Gateway.Features.eKYC.Napas.OAuthRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "S3.Gateway.Controllers.PaymentController",
+    "Method": "NapasNotification",
+    "RelativePath": "Payment/napas/apg/notification",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "S3.Gateway.Features.Payment.Napas.PaymentNotificationRequest",
         "IsRequired": true
       }
     ],

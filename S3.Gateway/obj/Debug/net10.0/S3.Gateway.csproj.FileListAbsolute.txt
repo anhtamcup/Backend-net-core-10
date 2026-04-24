@@ -285,7 +285,6 @@ D:\Local source\Backend-net-core-10\S3.Gateway\obj\Debug\net10.0\staticwebassets
 D:\Local source\Backend-net-core-10\S3.Gateway\obj\Debug\net10.0\staticwebassets.development.json
 D:\Local source\Backend-net-core-10\S3.Gateway\obj\Debug\net10.0\staticwebassets.build.endpoints.json
 D:\Local source\Backend-net-core-10\S3.Gateway\obj\Debug\net10.0\swae.build.ex.cache
-D:\Local source\Backend-net-core-10\S3.Gateway\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt
 D:\Local source\Backend-net-core-10\S3.Gateway\obj\Debug\net10.0\S3.Gateway.csproj.Up2Date
 D:\Local source\Backend-net-core-10\S3.Gateway\obj\Debug\net10.0\S3.Gateway.dll
 D:\Local source\Backend-net-core-10\S3.Gateway\obj\Debug\net10.0\refint\S3.Gateway.dll
@@ -293,3 +292,5 @@ D:\Local source\Backend-net-core-10\S3.Gateway\obj\Debug\net10.0\S3.Gateway.pdb
 D:\Local source\Backend-net-core-10\S3.Gateway\obj\Debug\net10.0\S3.Gateway.genruntimeconfig.cache
 D:\Local source\Backend-net-core-10\S3.Gateway\obj\Debug\net10.0\ref\S3.Gateway.dll
 D:\Local source\Backend-net-core-10\S3.Gateway\bin\Debug\net10.0\PaymentSetting\Napas\Key\eKYC\keypair.p12
+D:\Local source\Backend-net-core-10\S3.Gateway\bin\Debug\net10.0\dotnet-tools.json
+D:\Local source\Backend-net-core-10\S3.Gateway\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt

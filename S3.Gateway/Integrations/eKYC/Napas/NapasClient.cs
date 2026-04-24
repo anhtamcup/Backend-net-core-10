@@ -4,7 +4,7 @@ using S3.Gateway.Integrations.Base;
 using System.Net;
 using System.Net.Http.Headers;
 
-namespace S3.Gateway.Integrations.Napas
+namespace S3.Gateway.Integrations.eKYC.Napas
 {
     public class NapasClient
     {
@@ -30,7 +30,7 @@ namespace S3.Gateway.Integrations.Napas
             return await _tokenService.GetToken(OAuth);
         }
 
-        private async Task<NpOAuthResponse> OAuth()
+        public async Task<NpOAuthResponse> OAuth()
         {
             var collection = new List<KeyValuePair<string, string>>
             {
@@ -53,8 +53,9 @@ namespace S3.Gateway.Integrations.Napas
 
         private async Task<HttpRequestMessage> CreateHttpRequestMessage(string endpoint, object request)
         {
-            var accessToken = await GetAccessToken();
-
+            //var accessToken = await GetAccessToken();
+            var oauth = await OAuth();
+            var accessToken = oauth.AccessToken;
             var httpRequest = new HttpRequestMessage(HttpMethod.Post, endpoint);
 
             httpRequest.Content = JsonContent.Create(request);

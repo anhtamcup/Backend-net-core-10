@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
 
-namespace S3.Gateway.Integrations.Napas
+namespace S3.Gateway.Integrations.eKYC.Napas
 {
     public class NapasTokenService
     {

@@ -294,3 +294,4 @@ D:\Local source\Backend-net-core-10\S3.Gateway\obj\Release\net10.0\refint\S3.Gat
 D:\Local source\Backend-net-core-10\S3.Gateway\obj\Release\net10.0\S3.Gateway.pdb
 D:\Local source\Backend-net-core-10\S3.Gateway\obj\Release\net10.0\S3.Gateway.genruntimeconfig.cache
 D:\Local source\Backend-net-core-10\S3.Gateway\obj\Release\net10.0\ref\S3.Gateway.dll
+D:\Local source\Backend-net-core-10\S3.Gateway\bin\Release\net10.0\dotnet-tools.json

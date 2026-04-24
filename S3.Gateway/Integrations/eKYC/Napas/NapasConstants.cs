@@ -1,4 +1,4 @@
-﻿namespace S3.Gateway.Integrations.Napas
+﻿namespace S3.Gateway.Integrations.eKYC.Napas
 {
     public class NapasConstants
     {

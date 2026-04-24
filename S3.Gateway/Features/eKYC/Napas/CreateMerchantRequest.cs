@@ -1,9 +1,9 @@
 ﻿using MediatR;
 using Newtonsoft.Json;
 using S3.Gateway.Entities;
-using S3.Gateway.Integrations.Napas;
+using S3.Gateway.Integrations.eKYC.Napas;
 
-namespace S3.Gateway.Features.Payments.Napas
+namespace S3.Gateway.Features.eKYC.Napas
 {
     public class CreateMerchantRequest : NpCreateMerchantRequest, IRequest<ResponseBase<NpCreateMerchantResponse>>
     {

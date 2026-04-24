@@ -1,6 +1,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using S3.Gateway.Features.Payments.Napas;
+using S3.Gateway.Features.eKYC.Napas;
 
 namespace S3.Gateway.Controllers
 {
@@ -51,6 +51,13 @@ namespace S3.Gateway.Controllers
 
         [HttpPost("merchant/updatemerchant")]
         public async Task<IActionResult> UpdateMerchant([FromBody] UpdateMerchantRequest request)
+        {
+            var result = await _mediator.Send(request);
+            return Ok(result);
+        }
+
+        [HttpPost("oath")]
+        public async Task<IActionResult> OAuth([FromBody] OAuthRequest request)
         {
             var result = await _mediator.Send(request);
             return Ok(result);

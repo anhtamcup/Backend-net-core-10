@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace S3.Gateway.Integrations.Napas
+namespace S3.Gateway.Integrations.eKYC.Napas
 {
     public class NpResponseInfo
     {
@@ -121,5 +121,12 @@ namespace S3.Gateway.Integrations.Napas
         public string BranchBankId { get; set; } = string.Empty;
         public string BeneficiaryName { get; set; } = string.Empty;
         public NpResponseInfo Response { get; set; } = new();
+    }
+
+    public class NpPaymentNotificationResponse
+    {
+        public string Code { get; set; } = string.Empty;
+
+        public string Message { get; set; } = string.Empty;
     }
 }

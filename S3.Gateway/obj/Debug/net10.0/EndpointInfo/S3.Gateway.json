@@ -190,6 +190,68 @@
           }
         }
       }
+    },
+    "/Napas/oath": {
+      "post": {
+        "tags": [
+          "Napas"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OAuthRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OAuthRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/OAuthRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/Payment/napas/apg/notification": {
+      "post": {
+        "tags": [
+          "Payment"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PaymentNotificationRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PaymentNotificationRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PaymentNotificationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -410,6 +472,151 @@
         },
         "additionalProperties": false
       },
+      "NpHeader": {
+        "type": "object",
+        "properties": {
+          "messageIdentifier": {
+            "type": "string",
+            "nullable": true
+          },
+          "creationDateTime": {
+            "type": "string",
+            "nullable": true
+          },
+          "senderReference": {
+            "type": "string",
+            "nullable": true
+          },
+          "senderId": {
+            "type": "string",
+            "nullable": true
+          },
+          "receiverId": {
+            "type": "string",
+            "nullable": true
+          },
+          "signature": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "NpPaymentNotificationRequest": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "amount": {
+            "type": "string",
+            "nullable": true
+          },
+          "transDateTime": {
+            "type": "string",
+            "nullable": true
+          },
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "issueBank": {
+            "type": "string",
+            "nullable": true
+          },
+          "beneficiaryBank": {
+            "type": "string",
+            "nullable": true
+          },
+          "realMerchantAccount": {
+            "type": "string",
+            "nullable": true
+          },
+          "mcc": {
+            "type": "string",
+            "nullable": true
+          },
+          "sourceAccount": {
+            "type": "string",
+            "nullable": true
+          },
+          "systemTrace": {
+            "type": "string",
+            "nullable": true
+          },
+          "localTime": {
+            "type": "string",
+            "nullable": true
+          },
+          "localDate": {
+            "type": "string",
+            "nullable": true
+          },
+          "terminalId": {
+            "type": "string",
+            "nullable": true
+          },
+          "refId": {
+            "type": "string",
+            "nullable": true
+          },
+          "customerName": {
+            "type": "string",
+            "nullable": true
+          },
+          "settlementInfo": {
+            "$ref": "#/components/schemas/NpSettlementInfo"
+          },
+          "caseId": {
+            "type": "string",
+            "nullable": true
+          },
+          "creationDateTime": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "NpSettlementInfo": {
+        "type": "object",
+        "properties": {
+          "settlementDate": {
+            "type": "string",
+            "nullable": true
+          },
+          "settlementCode": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "OAuthRequest": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "PaymentNotificationRequest": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "header": {
+            "$ref": "#/components/schemas/NpHeader"
+          },
+          "payload": {
+            "$ref": "#/components/schemas/NpPaymentNotificationRequest"
+          }
+        },
+        "additionalProperties": false
+      },
       "QueryMerchantRequest": {
         "type": "object",
         "properties": {
@@ -537,6 +744,9 @@
   "tags": [
     {
       "name": "Napas"
+    },
+    {
+      "name": "Payment"
     }
   ]
 }
