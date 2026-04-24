@@ -75,6 +75,7 @@ namespace S3.Gateway.Integrations.eKYC.Napas
             );
 
             httpRequest.Headers.Add("signature", signature);
+            httpRequest.Headers.Add("Application", "json");
 
             return httpRequest;
         }
