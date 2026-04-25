@@ -60,19 +60,24 @@ namespace S3.Gateway.Middleware
             }
             finally
             {
-                var duration = (int)(DateTime.Now - start).TotalMilliseconds;
-                await logService.SaveAsync(new RequestLog
+                var path = context.Request.Path.Value?.ToLower() ?? "";
+                var isSwagger = path.StartsWith("/swagger") || path.StartsWith("/favicon");
+                if (!isSwagger)
                 {
-                    Path = context.Request.Path,
-                    Method = context.Request.Method,
-                    RequestBody = requestBody,
-                    ResponseBody = responseBody,
-                    StatusCode = statusCode,
-                    Duration = duration,
-                    IpAddress = context.Connection.RemoteIpAddress?.ToString() ?? string.Empty,
-                    ErrorMessage = errorMessage,
-                    StackTrace = stackTrace
-                });
+                    var duration = (int)(DateTime.Now - start).TotalMilliseconds;
+                    await logService.SaveAsync(new RequestLog
+                    {
+                        Path = context.Request.Path,
+                        Method = context.Request.Method,
+                        RequestBody = requestBody,
+                        ResponseBody = responseBody,
+                        StatusCode = statusCode,
+                        Duration = duration,
+                        IpAddress = context.Connection.RemoteIpAddress?.ToString() ?? string.Empty,
+                        ErrorMessage = errorMessage,
+                        StackTrace = stackTrace
+                    });
+                }
             }
         }
     }

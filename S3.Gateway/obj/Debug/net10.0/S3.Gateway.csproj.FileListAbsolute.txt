@@ -294,3 +294,5 @@ D:\Local source\Backend-net-core-10\S3.Gateway\obj\Debug\net10.0\ref\S3.Gateway.
 D:\Local source\Backend-net-core-10\S3.Gateway\bin\Debug\net10.0\PaymentSetting\Napas\Key\eKYC\keypair.p12
 D:\Local source\Backend-net-core-10\S3.Gateway\bin\Debug\net10.0\dotnet-tools.json
 D:\Local source\Backend-net-core-10\S3.Gateway\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt
+D:\Local source\Backend-net-core-10\S3.Gateway\bin\Debug\net10.0\System.Net.Http.WinHttpHandler.dll
+D:\Local source\Backend-net-core-10\S3.Gateway\bin\Debug\net10.0\runtimes\win\lib\net10.0\System.Net.Http.WinHttpHandler.dll

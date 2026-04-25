@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "7y0PGsGM06o=",
+  "dgSpecHash": "hlRZ2qNoPOg=",
   "success": true,
   "projectFilePath": "D:\\Local source\\Backend-net-core-10\\S3.Gateway\\S3.Gateway.csproj",
   "expectedPackageFiles": [
@@ -55,6 +55,7 @@
     "C:\\Users\\dev\\.nuget\\packages\\system.configuration.configurationmanager\\9.0.4\\system.configuration.configurationmanager.9.0.4.nupkg.sha512",
     "C:\\Users\\dev\\.nuget\\packages\\system.identitymodel.tokens.jwt\\7.7.1\\system.identitymodel.tokens.jwt.7.7.1.nupkg.sha512",
     "C:\\Users\\dev\\.nuget\\packages\\system.memory.data\\8.0.1\\system.memory.data.8.0.1.nupkg.sha512",
+    "C:\\Users\\dev\\.nuget\\packages\\system.net.http.winhttphandler\\10.0.7\\system.net.http.winhttphandler.10.0.7.nupkg.sha512",
     "C:\\Users\\dev\\.nuget\\packages\\system.security.cryptography.pkcs\\9.0.4\\system.security.cryptography.pkcs.9.0.4.nupkg.sha512",
     "C:\\Users\\dev\\.nuget\\packages\\system.security.cryptography.protecteddata\\9.0.4\\system.security.cryptography.protecteddata.9.0.4.nupkg.sha512"
   ],

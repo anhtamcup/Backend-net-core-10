@@ -295,3 +295,5 @@ D:\Local source\Backend-net-core-10\S3.Gateway\obj\Release\net10.0\S3.Gateway.pd
 D:\Local source\Backend-net-core-10\S3.Gateway\obj\Release\net10.0\S3.Gateway.genruntimeconfig.cache
 D:\Local source\Backend-net-core-10\S3.Gateway\obj\Release\net10.0\ref\S3.Gateway.dll
 D:\Local source\Backend-net-core-10\S3.Gateway\bin\Release\net10.0\dotnet-tools.json
+D:\Local source\Backend-net-core-10\S3.Gateway\bin\Release\net10.0\System.Net.Http.WinHttpHandler.dll
+D:\Local source\Backend-net-core-10\S3.Gateway\bin\Release\net10.0\runtimes\win\lib\net10.0\System.Net.Http.WinHttpHandler.dll

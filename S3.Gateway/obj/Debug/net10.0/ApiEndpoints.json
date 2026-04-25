@@ -1,5 +1,117 @@
 [
   {
+    "ContainingType": "S3.Gateway.Controllers.EkycController",
+    "Method": "CallBackStatus",
+    "RelativePath": "Ekyc/napas/callbackstatus",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "S3.Gateway.Features.eKYC.Napas.CallBackStatusRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "S3.Gateway.Controllers.EkycController",
+    "Method": "CreateMerchant",
+    "RelativePath": "Ekyc/napas/merchant/createmerchant",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "S3.Gateway.Features.eKYC.Napas.CreateMerchantRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "S3.Gateway.Controllers.EkycController",
+    "Method": "Getdeeplink",
+    "RelativePath": "Ekyc/napas/merchant/getdeeplink",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "S3.Gateway.Features.eKYC.Napas.GetDeepLinkRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "S3.Gateway.Controllers.EkycController",
+    "Method": "QueryMerchant",
+    "RelativePath": "Ekyc/napas/merchant/querymerchant",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "S3.Gateway.Features.eKYC.Napas.QueryMerchantRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "S3.Gateway.Controllers.EkycController",
+    "Method": "UpdateBankAccount",
+    "RelativePath": "Ekyc/napas/merchant/updatebankaccount",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "S3.Gateway.Features.eKYC.Napas.UpdateBankAccountRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "S3.Gateway.Controllers.EkycController",
+    "Method": "UpdateMerchant",
+    "RelativePath": "Ekyc/napas/merchant/updatemerchant",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "S3.Gateway.Features.eKYC.Napas.UpdateMerchantRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "S3.Gateway.Controllers.EkycController",
+    "Method": "OAuth",
+    "RelativePath": "Ekyc/napas/oath",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "S3.Gateway.Features.eKYC.Napas.OAuthRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "S3.Gateway.Controllers.NapasController",
     "Method": "CallBackStatus",
     "RelativePath": "Napas/callbackstatus",

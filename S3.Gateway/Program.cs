@@ -28,14 +28,14 @@ builder.Services.AddMediatR(cfg =>
 
 builder.Services.AddMemoryCache();
 builder.Services.AddSingleton<NapasTokenService>();
-builder.Services.AddHttpClient<NapasClient>()
-    .ConfigurePrimaryHttpMessageHandler(() =>
-    {
-        return new HttpClientHandler
-        {
-            AutomaticDecompression = DecompressionMethods.All
-        };
-    });
+//builder.Services.AddHttpClient<NapasClient>()
+//    .ConfigurePrimaryHttpMessageHandler(() =>
+//    {
+//        return new HttpClientHandler
+//        {
+//            AutomaticDecompression = DecompressionMethods.All
+//        };
+//    });
 //.ConfigurePrimaryHttpMessageHandler(sp =>
 //{
 //    var cert = new X509Certificate2("PaymentSetting/Napas/Key/cfox.pfx", "cfox");
@@ -48,6 +48,7 @@ builder.Services.Configure<NapasConfig>(
     builder.Configuration.GetSection("NapasConfig"));
 
 builder.Services.AddScoped<BaseApiClient>();
+builder.Services.AddScoped<NapasClient>();
 builder.Services.AddSingleton<ILogService, LogService>();
 builder.Services.AddHostedService<LogBackgroundWorker>();
 

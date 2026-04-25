@@ -28,6 +28,7 @@
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="10.1.7" />
+    <PackageReference Include="System.Net.Http.WinHttpHandler" Version="10.0.7" />
   </ItemGroup>
 
   <ItemGroup>

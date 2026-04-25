@@ -22,7 +22,6 @@ namespace S3.Gateway.Features.eKYC.Napas
 
         public async Task<NpOAuthResponse> Handle(OAuthRequest request, CancellationToken cancellationToken)
         {
-            var now = DateTime.Now;
             var response = await _napasClient.OAuth();
             return response;
         }

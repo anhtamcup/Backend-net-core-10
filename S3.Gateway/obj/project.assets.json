@@ -1022,6 +1022,28 @@
           "buildTransitive/net6.0/_._": {}
         }
       },
+      "System.Net.Http.WinHttpHandler/10.0.7": {
+        "type": "package",
+        "compile": {
+          "lib/net10.0/System.Net.Http.WinHttpHandler.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net10.0/System.Net.Http.WinHttpHandler.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net8.0/_._": {}
+        },
+        "runtimeTargets": {
+          "runtimes/win/lib/net10.0/System.Net.Http.WinHttpHandler.dll": {
+            "assetType": "runtime",
+            "rid": "win"
+          }
+        }
+      },
       "System.Security.Cryptography.Pkcs/9.0.4": {
         "type": "package",
         "compile": {
@@ -2747,6 +2769,41 @@
         "useSharedDesignerContext.txt"
       ]
     },
+    "System.Net.Http.WinHttpHandler/10.0.7": {
+      "sha512": "IylyMnExXIVipYqZdEql4uo4g45H9yHHCFmUG8gOWUrit8/J6LDR6d51lU2Dv0qcxI/9YuyZWzjERLTDmlA8xQ==",
+      "type": "package",
+      "path": "system.net.http.winhttphandler/10.0.7",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "PACKAGE.md",
+        "THIRD-PARTY-NOTICES.TXT",
+        "buildTransitive/net461/System.Net.Http.WinHttpHandler.targets",
+        "buildTransitive/net462/_._",
+        "buildTransitive/net8.0/_._",
+        "buildTransitive/netcoreapp2.0/System.Net.Http.WinHttpHandler.targets",
+        "lib/net10.0/System.Net.Http.WinHttpHandler.dll",
+        "lib/net10.0/System.Net.Http.WinHttpHandler.xml",
+        "lib/net462/System.Net.Http.WinHttpHandler.dll",
+        "lib/net462/System.Net.Http.WinHttpHandler.xml",
+        "lib/net8.0/System.Net.Http.WinHttpHandler.dll",
+        "lib/net8.0/System.Net.Http.WinHttpHandler.xml",
+        "lib/net9.0/System.Net.Http.WinHttpHandler.dll",
+        "lib/net9.0/System.Net.Http.WinHttpHandler.xml",
+        "lib/netstandard2.0/System.Net.Http.WinHttpHandler.dll",
+        "lib/netstandard2.0/System.Net.Http.WinHttpHandler.xml",
+        "runtimes/win/lib/net10.0/System.Net.Http.WinHttpHandler.dll",
+        "runtimes/win/lib/net10.0/System.Net.Http.WinHttpHandler.xml",
+        "runtimes/win/lib/net8.0/System.Net.Http.WinHttpHandler.dll",
+        "runtimes/win/lib/net8.0/System.Net.Http.WinHttpHandler.xml",
+        "runtimes/win/lib/net9.0/System.Net.Http.WinHttpHandler.dll",
+        "runtimes/win/lib/net9.0/System.Net.Http.WinHttpHandler.xml",
+        "system.net.http.winhttphandler.10.0.7.nupkg.sha512",
+        "system.net.http.winhttphandler.nuspec",
+        "useSharedDesignerContext.txt"
+      ]
+    },
     "System.Security.Cryptography.Pkcs/9.0.4": {
       "sha512": "cUFTcMlz/Qw9s90b2wnWSCvHdjv51Bau9FQqhsr4TlwSe1OX+7SoXUqphis5G74MLOvMOCghxPPlEqOdCrVVGA==",
       "type": "package",
@@ -2823,7 +2880,8 @@
       "Microsoft.EntityFrameworkCore.SqlServer >= 10.0.6",
       "Microsoft.EntityFrameworkCore.Tools >= 10.0.6",
       "Newtonsoft.Json >= 13.0.4",
-      "Swashbuckle.AspNetCore >= 10.1.7"
+      "Swashbuckle.AspNetCore >= 10.1.7",
+      "System.Net.Http.WinHttpHandler >= 10.0.7"
     ]
   },
   "packageFolders": {
@@ -2907,6 +2965,10 @@
           "Swashbuckle.AspNetCore": {
             "target": "Package",
             "version": "[10.1.7, )"
+          },
+          "System.Net.Http.WinHttpHandler": {
+            "target": "Package",
+            "version": "[10.0.7, )"
           }
         },
         "imports": [
