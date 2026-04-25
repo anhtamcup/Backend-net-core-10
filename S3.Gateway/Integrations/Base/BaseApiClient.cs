@@ -64,34 +64,56 @@ namespace S3.Gateway.Integrations.Base
                     }
                 }
 
-                HttpContent content;
-                if (data is IEnumerable<KeyValuePair<string, string>> formData)
+                async Task<(HttpStatusCode StatusCode, string Content)> SendRequestAsync(bool retry = false)
                 {
-                    content = new FormUrlEncodedContent(formData);
-                }
-                else
-                {
-                    content = new StringContent(
-                        data is string s ? s : JsonConvert.SerializeObject(data),
-                        Encoding.UTF8,
-                        "application/json");
+                    HttpContent content;
+                    if (data is IEnumerable<KeyValuePair<string, string>> formData)
+                    {
+                        content = new FormUrlEncodedContent(formData);
+                    }
+                    else
+                    {
+                        content = new StringContent(
+                            data is string s ? s : JsonConvert.SerializeObject(data),
+                            Encoding.UTF8,
+                            "application/json");
+                    }
+
+                    var requestBody = await content.ReadAsStringAsync();
+                    var response = await client.PostAsync(url, content);
+                    var responseString = await response.Content.ReadAsStringAsync();
+
+                    if (retry)
+                    {
+                        log.RequestBody2 = requestBody;
+                        log.ResponseBody2 = responseString;
+                    }
+                    else
+                    {
+                        log.RequestBody = requestBody;
+                        log.ResponseBody = responseString;
+                    }
+
+                    return (response.StatusCode, responseString);
                 }
 
-                var requestBody = await content.ReadAsStringAsync();
-                log.RequestBody = requestBody;
+                var response = await SendRequestAsync();
 
-                var response = await client.PostAsync(url, content);
-                if (response.StatusCode == HttpStatusCode.Unauthorized)
+                if (response.StatusCode == HttpStatusCode.Unauthorized && refreshToken != null)
                 {
                     // Refresh token one time
+                    var newToken = await refreshToken();
+                    if (string.IsNullOrWhiteSpace(newToken) == false)
+                    {
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", newToken);
+                        response = await SendRequestAsync(true);
+                    }
                 }
 
-                var responseString = await response.Content.ReadAsStringAsync();
                 log.StatusCode = (int)response.StatusCode;
-                log.ResponseBody = responseString;
-                log.IsSuccess = response.IsSuccessStatusCode;
+                log.IsSuccess = response.StatusCode == HttpStatusCode.OK;
 
-                var result = JsonConvert.DeserializeObject<T>(responseString);
+                var result = JsonConvert.DeserializeObject<T>(response.Content);
                 return result;
             }
             catch (Exception ex)

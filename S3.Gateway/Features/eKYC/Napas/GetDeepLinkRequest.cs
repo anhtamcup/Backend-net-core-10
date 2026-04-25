@@ -15,7 +15,6 @@ namespace S3.Gateway.Features.eKYC.Napas
     {
         public string PartnerCode { get; set; } = string.Empty;
         public string CallbackUrl { get; set; } = string.Empty;
-        public string Token { get; set; } = string.Empty;
     }
 
     public class GetDeepLinkRequestHandler : IRequestHandler<GetDeepLinkRequest, ResponseBase<NpGetDeepLinkResponse>>
@@ -34,8 +33,16 @@ namespace S3.Gateway.Features.eKYC.Napas
             var response = new ResponseBase<NpGetDeepLinkResponse>();
             try
             {
-                NpGetDeepLinkRequest npGetDeepLinkRequest = request;
-
+                var npGetDeepLinkRequest = new NpGetDeepLinkRequest
+                {
+                    SenderReference = request.SenderReference,
+                    CreationDateTime = request.CreationDateTime,
+                    PlatformCode = request.PlatformCode,
+                    PlatformName = request.PlatformName,
+                    PlatformMerchantId = request.PlatformMerchantId,
+                    MobileOS = request.MobileOS,
+                };
+                    
                 var data = await _napasClient.GetDeepLink(npGetDeepLinkRequest);
 
                 var callbackRouting = new CallbackRouting

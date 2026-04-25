@@ -37,6 +37,8 @@ namespace S3.Gateway.Integrations.eKYC.Napas
                 { "signature", "xxx" }
             };
 
+            _tokenService.SetTokenTmp();
+
             return await _baseClient.PostTAsync<T>(
                 url,
                 payload,

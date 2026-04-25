@@ -12,6 +12,10 @@ namespace S3.Gateway.Entities
 
         public string ResponseBody { get; set; } = string.Empty;
 
+        public string RequestBody2 { get; set; } = string.Empty;
+
+        public string ResponseBody2 { get; set; } = string.Empty;
+
         public int StatusCode { get; set; }
 
         public int Duration { get; set; }
