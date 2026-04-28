@@ -53,7 +53,7 @@ namespace S3.Gateway.Features.Payments.Napas
                         IsSuccess = forwardSucess,
                     };
 
-                    routing.ActionHistory += "  ->" + routingLog.Action;
+                    routing.ActionHistory += "  -> " + routingLog.Action;
                     routing.Status = routingLog.IsSuccess ? CallbackRoutingStatus.COMPLETED : CallbackRoutingStatus.ERROR;
 
                     _dbContext.CallbackRoutingLogs.Add(routingLog);
