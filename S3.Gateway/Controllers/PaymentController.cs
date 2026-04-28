@@ -28,5 +28,12 @@ namespace S3.Gateway.Controllers
             var result = await _mediator.Send(request);
             return Ok(result);
         }
+
+        [HttpPost("napas/investigation")]
+        public async Task<IActionResult> NapasInvestigation([FromBody] NapasGenQRRequest request)
+        {
+            var result = await _mediator.Send(request);
+            return Ok(result);
+        }
     }
 }

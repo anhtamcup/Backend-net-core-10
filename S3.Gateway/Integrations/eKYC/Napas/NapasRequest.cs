@@ -1,7 +1,7 @@
 ﻿using System.Reflection.PortableExecutable;
 using System.Text.Json.Serialization;
 
-namespace S3.Gateway.Integrations.eKYC.Napas
+namespace S3.Gateway.Integrations.Ekyc.Napas
 {
     public static class RequestUtility
     {

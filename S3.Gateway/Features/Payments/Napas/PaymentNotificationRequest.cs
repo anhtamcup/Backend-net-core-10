@@ -3,7 +3,7 @@ using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using S3.Gateway.Data;
-using S3.Gateway.Integrations.eKYC.Napas;
+using S3.Gateway.Integrations.Ekyc.Napas;
 using System.Text;
 
 namespace S3.Gateway.Features.Payment.Napas

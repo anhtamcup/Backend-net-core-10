@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using S3.Gateway.Data;
 using S3.Gateway.Features.Logs;
 using S3.Gateway.Integrations.Base;
-using S3.Gateway.Integrations.eKYC.Napas;
+using S3.Gateway.Integrations.Ekyc.Napas;
 using S3.Gateway.Middleware;
 using System.Net;
 

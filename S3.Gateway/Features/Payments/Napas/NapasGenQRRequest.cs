@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 using S3.Gateway.Common;
 using S3.Gateway.Data;
 using S3.Gateway.Entities;
-using S3.Gateway.Integrations.eKYC.Napas;
+using S3.Gateway.Integrations.Ekyc.Napas;
 using S3.Gateway.Integrations.Payment.Napas;
 using System.Text.RegularExpressions;
 using static S3.Gateway.Integrations.Payment.Napas.NapasQR;

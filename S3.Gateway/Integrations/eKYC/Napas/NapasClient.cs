@@ -1,9 +1,7 @@
 ﻿using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using S3.Gateway.Integrations.Base;
 
-namespace S3.Gateway.Integrations.eKYC.Napas
+namespace S3.Gateway.Integrations.Ekyc.Napas
 {
     public class NapasClient
     {
@@ -24,11 +22,11 @@ namespace S3.Gateway.Integrations.eKYC.Napas
         private async Task<T> CallApi<T>(string url, object request)
         {
             var payload = RSASignatureService.SerializeObject(request);
-            var privateKeyPath = Path.Combine(AppContext.BaseDirectory, _napasConfig.Key.eKYC.PrivateKey);
+            var privateKeyPath = Path.Combine(AppContext.BaseDirectory, _napasConfig.Ekyc.PrivateKey);
             var signaturePayload = RSASignatureService.SignMessage(payload, privateKeyPath);
             var headers = new Dictionary<string, string>
             {
-                { "Application", "json" },
+                { "Application", _napasConfig.Ekyc.Application },
                 { "signature", signaturePayload }
             };
 

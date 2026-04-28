@@ -7,16 +7,28 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="PaymentSetting\Napas\Key\eKYC\napas-mms-stg.cer" />
-    <None Remove="PaymentSetting\Napas\Key\eKYC\private.key" />
-    <None Remove="PaymentSetting\Napas\Key\eKYC\public.key" />
+    <None Remove="KeyConfig\Napas\Ekyc\napas-mms-stg.cer" />
+    <None Remove="KeyConfig\Napas\Ekyc\private.key" />
+    <None Remove="KeyConfig\Napas\Ekyc\public.key" />
+    <None Remove="KeyConfig\Napas\Payment\certificate.txt" />
+    <None Remove="KeyConfig\Napas\Payment\cfox.pfx" />
+    <None Remove="KeyConfig\Napas\Payment\dvptml.key" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="PaymentSetting\Napas\Key\eKYC\napas-mms-stg.cer">
+    <Content Include="KeyConfig\Napas\Ekyc\napas-mms-stg.cer">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="PaymentSetting\Napas\Key\eKYC\private.key">
+    <Content Include="KeyConfig\Napas\Ekyc\private.key">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="KeyConfig\Napas\Payment\certificate.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="KeyConfig\Napas\Payment\cfox.pfx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="KeyConfig\Napas\Payment\dvptml.key">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
