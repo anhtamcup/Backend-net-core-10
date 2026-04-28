@@ -61,7 +61,7 @@ namespace S3.Gateway.Middleware
             finally
             {
                 var path = context.Request.Path.Value?.ToLower() ?? "";
-                var isSwagger = path.StartsWith("/swagger") || path.StartsWith("/favicon");
+                var isSwagger = path.StartsWith("/swagger") || path.StartsWith("/favicon") || path.Trim() == "/";
                 if (!isSwagger)
                 {
                     var duration = (int)(DateTime.Now - start).TotalMilliseconds;
