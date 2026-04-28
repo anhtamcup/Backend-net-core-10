@@ -1,6 +1,8 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using S3.Gateway.Features.eKYC.Napas;
+using S3.Gateway.Integrations.eKYC.Napas;
 
 namespace S3.Gateway.Controllers
 {
@@ -9,9 +11,11 @@ namespace S3.Gateway.Controllers
     public class EkycController : ControllerBase
     {
         private readonly IMediator _mediator;
-        public EkycController(IMediator mediator)
+        private readonly NapasConfig _napasConfig;
+        public EkycController(IMediator mediator, IOptions<NapasConfig> options)
         {
             _mediator = mediator;
+            _napasConfig = options.Value;
         }
 
         [HttpPost("napas/merchant/getdeeplink")]
@@ -24,6 +28,20 @@ namespace S3.Gateway.Controllers
         [HttpPost("napas/callbackstatus")]
         public async Task<IActionResult> CallBackStatus([FromBody] CallBackStatusRequest request)
         {
+            if (!Request.Headers.TryGetValue("Signature", out var signatureBase64))
+            {
+                return BadRequest("Missing signature header");
+            }
+
+            var publicKeyPath = Path.Combine(AppContext.BaseDirectory, _napasConfig.Key.eKYC.PublicKey);
+            var payload = RSASignatureService.SerializeObject(request);
+            var verifySignature = RSASignatureService.VerifySignature(payload, signatureBase64.ToString(), publicKeyPath);
+
+            if (verifySignature == false)
+            {
+                return BadRequest("Verify Signature Failed");
+            }
+
             var result = await _mediator.Send(request);
             return Ok(result);
         }

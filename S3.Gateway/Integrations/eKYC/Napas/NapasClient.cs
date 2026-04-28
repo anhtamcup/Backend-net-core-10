@@ -23,14 +23,7 @@ namespace S3.Gateway.Integrations.eKYC.Napas
 
         private async Task<T> CallApi<T>(string url, object request)
         {
-            var payload = JsonConvert.SerializeObject(
-                request,
-                new JsonSerializerSettings
-                {
-                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                    NullValueHandling = NullValueHandling.Ignore
-                });
-
+            var payload = RSASignatureService.SerializeObject(request);
             var privateKeyPath = Path.Combine(AppContext.BaseDirectory, _napasConfig.Key.eKYC.PrivateKey);
             var signaturePayload = RSASignatureService.SignMessage(payload, privateKeyPath);
             var headers = new Dictionary<string, string>

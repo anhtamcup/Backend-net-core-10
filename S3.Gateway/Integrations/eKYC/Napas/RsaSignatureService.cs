@@ -1,4 +1,6 @@
-﻿using System.Security.Cryptography;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
@@ -6,46 +8,18 @@ namespace S3.Gateway.Integrations.eKYC.Napas
 {
     public static class RSASignatureService
     {
-        #region Old
-        //public static string Sign(string data, string p12Path, string password)
-        //{
-        //    var cert = new X509Certificate2(
-        //        p12Path,
-        //        password,
-        //        X509KeyStorageFlags.Exportable | X509KeyStorageFlags.MachineKeySet
-        //    );
+        public static string SerializeObject(object request)
+        {
+            var payload = JsonConvert.SerializeObject(
+                request,
+                new JsonSerializerSettings
+                {
+                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                    NullValueHandling = NullValueHandling.Ignore
+                });
 
-        //    using RSA rsa = cert.GetRSAPrivateKey();
-
-        //    byte[] dataBytes = Encoding.UTF8.GetBytes(data);
-
-        //    byte[] signature = rsa.SignData(
-        //        dataBytes,
-        //        HashAlgorithmName.SHA256,
-        //        RSASignaturePadding.Pkcs1
-        //    );
-
-        //    return Convert.ToBase64String(signature);
-        //}
-
-        //public static bool Verify(string data, string signatureBase64, string publicKeyPath)
-        //{
-        //    string pem = File.ReadAllText(publicKeyPath);
-
-        //    using RSA rsa = RSA.Create();
-        //    rsa.ImportFromPem(pem);
-
-        //    byte[] dataBytes = Encoding.UTF8.GetBytes(data);
-        //    byte[] signature = Convert.FromBase64String(signatureBase64);
-
-        //    return rsa.VerifyData(
-        //        dataBytes,
-        //        signature,
-        //        HashAlgorithmName.SHA256,
-        //        RSASignaturePadding.Pkcs1
-        //    );
-        //}
-        #endregion
+            return payload;
+        }
 
         public static string SignMessage(string message, string privateKeyPath)
         {
@@ -67,17 +41,26 @@ namespace S3.Gateway.Integrations.eKYC.Napas
 
         public static bool VerifySignature(string message, string signatureBase64, string publicKeyPath)
         {
-            string publicKeyPem = File.ReadAllText(publicKeyPath);
+            if (string.IsNullOrWhiteSpace(message))
+                throw new ArgumentException("Message cannot be empty");
 
-            using var rsa = RSA.Create();
-            rsa.ImportFromPem(publicKeyPem.ToCharArray());
+            if (string.IsNullOrWhiteSpace(signatureBase64))
+                throw new ArgumentException("Signature cannot be empty");
 
-            byte[] data = Encoding.UTF8.GetBytes(message);
-            byte[] signature = Convert.FromBase64String(signatureBase64);
+            if (!System.IO.File.Exists(publicKeyPath))
+                throw new ArgumentException("Public key file not found");
+
+            // Load certificate
+            var cert = new X509Certificate2(publicKeyPath);
+
+            using RSA rsa = cert.GetRSAPublicKey();
+
+            byte[] dataBytes = Encoding.UTF8.GetBytes(message);
+            byte[] signatureBytes = Convert.FromBase64String(signatureBase64);
 
             return rsa.VerifyData(
-                data,
-                signature,
+                dataBytes,
+                signatureBytes,
                 HashAlgorithmName.SHA256,
                 RSASignaturePadding.Pkcs1);
         }

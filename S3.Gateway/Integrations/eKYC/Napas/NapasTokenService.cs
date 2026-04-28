@@ -1,5 +1,4 @@
-﻿using Azure;
-using Microsoft.Extensions.Caching.Memory;
+﻿using Microsoft.Extensions.Caching.Memory;
 
 namespace S3.Gateway.Integrations.eKYC.Napas
 {
@@ -13,14 +12,6 @@ namespace S3.Gateway.Integrations.eKYC.Napas
         public NapasTokenService(IMemoryCache cache)
         {
             _cache = cache;
-        }
-
-        public void SetTokenTmp()
-        {
-            _cache.Set(
-                TOKEN_CACHE_KEY,
-                "xxx",
-                TimeSpan.FromSeconds(1000));
         }
 
         public async Task<string> GetToken(Func<Task<NpOAuthResponse>> factory)
