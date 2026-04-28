@@ -1,6 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using S3.Gateway.Features.Payment.Napas;
+using S3.Gateway.Features.Payments.Napas;
 
 namespace S3.Gateway.Controllers
 {
@@ -16,6 +17,13 @@ namespace S3.Gateway.Controllers
 
         [HttpPost("napas/apg/notification")]
         public async Task<IActionResult> NapasNotification([FromBody] PaymentNotificationRequest request)
+        {
+            var result = await _mediator.Send(request);
+            return Ok(result);
+        }
+
+        [HttpPost("napas/qr")]
+        public async Task<IActionResult> NapasGenQR([FromBody] NapasGenQRRequest request)
         {
             var result = await _mediator.Send(request);
             return Ok(result);

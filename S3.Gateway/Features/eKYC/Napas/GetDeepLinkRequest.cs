@@ -61,7 +61,8 @@ namespace S3.Gateway.Features.eKYC.Napas
                     RequestID = callbackRouting.RequestID,
                     Action = callbackRouting.ActionHistory,
                     RequestPayload = JsonConvert.SerializeObject(npGetDeepLinkRequest),
-                    ResponsePayload = JsonConvert.SerializeObject(data)
+                    ResponsePayload = JsonConvert.SerializeObject(data),
+                    IsSuccess = (data.Response.Code == ApiErrorCode.SUCCESS.Code)
                 };
 
                 _dbContext.CallbackRoutings.Add(callbackRouting);

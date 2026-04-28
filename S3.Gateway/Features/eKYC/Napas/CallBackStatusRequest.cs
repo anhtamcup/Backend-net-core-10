@@ -66,6 +66,7 @@ namespace S3.Gateway.Features.eKYC.Napas
                             Action = "FORWARD TO: " + endpointForward,
                             RequestPayload = callbackRoutingLog.ResponsePayload,
                             ResponsePayload = resultForwardString,
+                            IsSuccess = (forwardResponse.StatusCode == System.Net.HttpStatusCode.OK)
                         };
 
                         callbackRoutingLog.IsSuccess = true;
