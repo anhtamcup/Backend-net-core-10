@@ -31,13 +31,13 @@ namespace S3.Gateway.Integrations.eKYC.Napas
                     NullValueHandling = NullValueHandling.Ignore
                 });
 
+            var privateKeyPath = Path.Combine(AppContext.BaseDirectory, _napasConfig.Key.eKYC.PrivateKey);
+            var signaturePayload = RSASignatureService.SignMessage(payload, privateKeyPath);
             var headers = new Dictionary<string, string>
             {
                 { "Application", "json" },
-                { "signature", "xxx" }
+                { "signature", signaturePayload }
             };
-
-            _tokenService.SetTokenTmp();
 
             return await _baseClient.PostTAsync<T>(
                 url,

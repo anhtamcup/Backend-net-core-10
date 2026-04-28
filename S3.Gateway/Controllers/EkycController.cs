@@ -56,11 +56,11 @@ namespace S3.Gateway.Controllers
             return Ok(result);
         }
 
-        [HttpPost("napas/oath")]
-        public async Task<IActionResult> OAuth([FromBody] OAuthRequest request)
-        {
-            var result = await _mediator.Send(request);
-            return Ok(result);
-        }
+        //[HttpPost("napas/oath")]
+        //public async Task<IActionResult> OAuth([FromBody] OAuthRequest request)
+        //{
+        //    var result = await _mediator.Send(request);
+        //    return Ok(result);
+        //}
     }
 }

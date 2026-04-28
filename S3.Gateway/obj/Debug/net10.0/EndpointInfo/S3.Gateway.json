@@ -191,37 +191,6 @@
         }
       }
     },
-    "/Ekyc/napas/oath": {
-      "post": {
-        "tags": [
-          "Ekyc"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/OAuthRequest"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/OAuthRequest"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/OAuthRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/Napas/merchant/getdeeplink": {
       "post": {
         "tags": [

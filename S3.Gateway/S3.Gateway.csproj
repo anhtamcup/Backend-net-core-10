@@ -7,12 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="PaymentSetting\Napas\Key\eKYC\keypair.p12" />
+    <None Remove="PaymentSetting\Napas\Key\eKYC\private.key" />
     <None Remove="PaymentSetting\Napas\Key\eKYC\public.key" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="PaymentSetting\Napas\Key\eKYC\keypair.p12">
+    <Content Include="PaymentSetting\Napas\Key\eKYC\private.key">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

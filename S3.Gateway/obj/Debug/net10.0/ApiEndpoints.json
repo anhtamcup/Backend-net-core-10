@@ -96,22 +96,6 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "S3.Gateway.Controllers.EkycController",
-    "Method": "OAuth",
-    "RelativePath": "Ekyc/napas/oath",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "request",
-        "Type": "S3.Gateway.Features.eKYC.Napas.OAuthRequest",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
     "ContainingType": "S3.Gateway.Controllers.NapasController",
     "Method": "CallBackStatus",
     "RelativePath": "Napas/callbackstatus",
