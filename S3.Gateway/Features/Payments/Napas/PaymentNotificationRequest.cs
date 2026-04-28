@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using S3.Gateway.Common;
 using S3.Gateway.Data;
 using S3.Gateway.Integrations.Payment;
 using S3.Gateway.Integrations.Payment.Napas;
@@ -26,14 +27,8 @@ namespace S3.Gateway.Features.Payments.Napas
 
         public async Task<NpPaymentNotificationResponse> Handle(PaymentNotificationRequest request, CancellationToken cancellationToken)
         {
-            var payload = JsonConvert.SerializeObject(
-                request,
-                new JsonSerializerSettings
-                {
-                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                    NullValueHandling = NullValueHandling.Ignore
-                });
 
+            var payload = Utility.SerializeObjectLowerCase(request);
             using (var client = new HttpClient())
             using (var content = new StringContent(payload, Encoding.UTF8, "application/json"))
             {

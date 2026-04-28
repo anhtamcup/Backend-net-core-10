@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Options;
+using S3.Gateway.Common;
 using S3.Gateway.Integrations.Base;
 
 namespace S3.Gateway.Integrations.Ekyc.Napas
@@ -21,7 +22,7 @@ namespace S3.Gateway.Integrations.Ekyc.Napas
 
         private async Task<T> CallApi<T>(string url, object request)
         {
-            var payload = RSASignatureService.SerializeObject(request);
+            var payload = Utility.SerializeObjectLowerCase(request);
             var privateKeyPath = Path.Combine(AppContext.BaseDirectory, _eConfig.Napas.PrivateKey);
             var signaturePayload = RSASignatureService.SignMessage(payload, privateKeyPath);
             var headers = new Dictionary<string, string>

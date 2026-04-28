@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
@@ -8,19 +6,6 @@ namespace S3.Gateway.Integrations.Ekyc.Napas
 {
     public static class RSASignatureService
     {
-        public static string SerializeObject(object request)
-        {
-            var payload = JsonConvert.SerializeObject(
-                request,
-                new JsonSerializerSettings
-                {
-                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                    NullValueHandling = NullValueHandling.Ignore
-                });
-
-            return payload;
-        }
-
         public static string SignMessage(string message, string privateKeyPath)
         {
             // đọc private key từ file

@@ -1,6 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using S3.Gateway.Common;
 using S3.Gateway.Features.Ekyc.Napas;
 using S3.Gateway.Integrations.Ekyc;
 using S3.Gateway.Integrations.Ekyc.Napas;
@@ -35,7 +36,7 @@ namespace S3.Gateway.Controllers
             }
 
             var publicKeyPath = Path.Combine(AppContext.BaseDirectory, _eConfig.Napas.PublicKey);
-            var payload = RSASignatureService.SerializeObject(request);
+            var payload = Utility.SerializeObjectLowerCase(request);
             var verifySignature = RSASignatureService.VerifySignature(payload, signatureBase64.ToString(), publicKeyPath);
 
             if (verifySignature == false)
