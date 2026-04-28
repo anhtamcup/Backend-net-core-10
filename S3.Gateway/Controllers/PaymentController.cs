@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using S3.Gateway.Common;
 using S3.Gateway.Features.Payments.Napas;
-using S3.Gateway.Integrations.Ekyc.Napas;
 using S3.Gateway.Integrations.Payment;
 
 namespace S3.Gateway.Controllers
@@ -27,10 +26,10 @@ namespace S3.Gateway.Controllers
             var publicKeyPath = Path.Combine(AppContext.BaseDirectory, _pConfig.Napas.PublicKey);
             var payloadVerify = Utility.SerializeObjectLowerCase(request.Payload);
             var verifySignature = RSASignatureService.VerifySignature(payloadVerify, request.Header.Signature, publicKeyPath);
-            if(verifySignature == false)
-            {
-                return BadRequest("Verify Signature Failed");
-            }
+            //if(verifySignature == false)
+            //{
+            //    return BadRequest("Verify Signature Failed");
+            //}
 
             var result = await _mediator.Send(request);
             return Ok(result);

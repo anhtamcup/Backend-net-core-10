@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 using S3.Gateway.Integrations.Base;
 using S3.Gateway.Integrations.Ekyc.Napas;
-using static QRCoder.PayloadGenerator;
 
 namespace S3.Gateway.Integrations.Payment.Napas
 {
