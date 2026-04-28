@@ -1,8 +1,6 @@
-﻿using Azure;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using S3.Gateway.Entities;
 using S3.Gateway.Features.Logs;
-using S3.Gateway.Integrations.Ekyc.Napas;
 using System.Diagnostics;
 using System.Net;
 using System.Net.Http.Headers;
