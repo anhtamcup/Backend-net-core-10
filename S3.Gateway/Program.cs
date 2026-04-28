@@ -2,9 +2,10 @@ using Microsoft.EntityFrameworkCore;
 using S3.Gateway.Data;
 using S3.Gateway.Features.Logs;
 using S3.Gateway.Integrations.Base;
+using S3.Gateway.Integrations.Ekyc;
 using S3.Gateway.Integrations.Ekyc.Napas;
+using S3.Gateway.Integrations.Payment;
 using S3.Gateway.Middleware;
-using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -44,8 +45,8 @@ builder.Services.AddSingleton<NapasTokenService>();
 //    return handler;
 //});
 
-builder.Services.Configure<NapasConfig>(
-    builder.Configuration.GetSection("NapasConfig"));
+builder.Services.Configure<EkycConfig>(builder.Configuration.GetSection("Ekyc"));
+builder.Services.Configure<PaymentConfig>(builder.Configuration.GetSection("Payment"));
 
 builder.Services.AddScoped<BaseApiClient>();
 builder.Services.AddScoped<NapasClient>();

@@ -3,7 +3,7 @@ using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using S3.Gateway.Data;
-using S3.Gateway.Integrations.Ekyc.Napas;
+using S3.Gateway.Integrations.Payment;
 using S3.Gateway.Integrations.Payment.Napas;
 using System.Text;
 
@@ -16,12 +16,12 @@ namespace S3.Gateway.Features.Payments.Napas
     public class PaymentNotificationRequestHandler : IRequestHandler<PaymentNotificationRequest, NpPaymentNotificationResponse>
     {
         private readonly DBContext _dbContext;
-        private readonly NapasConfig _napasConfig;
+        private readonly PaymentConfig _pConfig;
 
-        public PaymentNotificationRequestHandler(DBContext dbContext, IOptions<NapasConfig> options)
+        public PaymentNotificationRequestHandler(DBContext dbContext, IOptions<PaymentConfig> options)
         {
             _dbContext = dbContext;
-            _napasConfig = options.Value;
+            _pConfig = options.Value;
         }
 
         public async Task<NpPaymentNotificationResponse> Handle(PaymentNotificationRequest request, CancellationToken cancellationToken)
@@ -37,7 +37,7 @@ namespace S3.Gateway.Features.Payments.Napas
             using (var client = new HttpClient())
             using (var content = new StringContent(payload, Encoding.UTF8, "application/json"))
             {
-                var forwardResponse = await client.PostAsync(_napasConfig.ForwardNotiPaymentURL, content);
+                var forwardResponse = await client.PostAsync(_pConfig.Napas.ForwardNotiPaymentURL, content);
                 var resultForwardString = await forwardResponse.Content.ReadAsStringAsync();
                 var resultForward = JsonConvert.DeserializeObject<NpPaymentNotificationResponse>(resultForwardString);
                 return resultForward;

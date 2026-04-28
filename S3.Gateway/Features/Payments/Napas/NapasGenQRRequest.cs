@@ -1,10 +1,8 @@
 ﻿using MediatR;
-using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using S3.Gateway.Common;
 using S3.Gateway.Data;
 using S3.Gateway.Entities;
-using S3.Gateway.Integrations.Ekyc.Napas;
 using S3.Gateway.Integrations.Payment.Napas;
 using System.Text.RegularExpressions;
 using static S3.Gateway.Integrations.Payment.Napas.NapasQR;
@@ -157,12 +155,10 @@ namespace S3.Gateway.Features.Payments.Napas
     public class NapasGenQRHandler : IRequestHandler<NapasGenQRRequest, NapasGenQRResponse>
     {
         private readonly DBContext _dbContext;
-        private readonly NapasConfig _napasConfig;
 
-        public NapasGenQRHandler(DBContext dbContext, IOptions<NapasConfig> options)
+        public NapasGenQRHandler(DBContext dbContext)
         {
             _dbContext = dbContext;
-            _napasConfig = options.Value;
         }
 
         public async Task<NapasGenQRResponse> Handle(NapasGenQRRequest request, CancellationToken cancellationToken)
