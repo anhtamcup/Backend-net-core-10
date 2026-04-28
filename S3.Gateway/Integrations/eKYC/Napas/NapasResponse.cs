@@ -122,11 +122,4 @@ namespace S3.Gateway.Integrations.Ekyc.Napas
         public string BeneficiaryName { get; set; } = string.Empty;
         public NpResponseInfo Response { get; set; } = new();
     }
-
-    public class NpPaymentNotificationResponse
-    {
-        public string Code { get; set; } = string.Empty;
-
-        public string Message { get; set; } = string.Empty;
-    }
 }

@@ -1,6 +1,5 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using S3.Gateway.Features.Payment.Napas;
 using S3.Gateway.Features.Payments.Napas;
 
 namespace S3.Gateway.Controllers
@@ -30,7 +29,7 @@ namespace S3.Gateway.Controllers
         }
 
         [HttpPost("napas/investigation")]
-        public async Task<IActionResult> NapasInvestigation([FromBody] NapasGenQRRequest request)
+        public async Task<IActionResult> NapasInvestigation([FromBody] NapasInvestigationRequest request)
         {
             var result = await _mediator.Send(request);
             return Ok(result);

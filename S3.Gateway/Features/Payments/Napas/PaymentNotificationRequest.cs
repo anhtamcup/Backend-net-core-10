@@ -4,9 +4,10 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using S3.Gateway.Data;
 using S3.Gateway.Integrations.Ekyc.Napas;
+using S3.Gateway.Integrations.Payment.Napas;
 using System.Text;
 
-namespace S3.Gateway.Features.Payment.Napas
+namespace S3.Gateway.Features.Payments.Napas
 {
     public class PaymentNotificationRequest : NpRequestBase<NpPaymentNotificationRequest>, IRequest<NpPaymentNotificationResponse>
     {
@@ -14,13 +15,11 @@ namespace S3.Gateway.Features.Payment.Napas
 
     public class PaymentNotificationRequestHandler : IRequestHandler<PaymentNotificationRequest, NpPaymentNotificationResponse>
     {
-        private readonly NapasClient _napasClient;
         private readonly DBContext _dbContext;
         private readonly NapasConfig _napasConfig;
 
-        public PaymentNotificationRequestHandler(NapasClient napasClient, DBContext dbContext, IOptions<NapasConfig> options)
+        public PaymentNotificationRequestHandler(DBContext dbContext, IOptions<NapasConfig> options)
         {
-            _napasClient = napasClient;
             _dbContext = dbContext;
             _napasConfig = options.Value;
         }
