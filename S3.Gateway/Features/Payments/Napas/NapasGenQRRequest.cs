@@ -175,7 +175,6 @@ namespace S3.Gateway.Features.Payments.Napas
 
             var callbackRouting = new CallbackRouting
             {
-                RefID = request.RequestID,
                 RequestID = RequestContext.RequestID,
                 Target = Target3rd.Napas,
                 PartnerCode = request.PartnerCode,
@@ -216,6 +215,7 @@ namespace S3.Gateway.Features.Payments.Napas
                 IsSuccess = genQRResponse.Success
             };
 
+            callbackRouting.RefID = genQRRequest.AccountNumber;
             _dbContext.CallbackRoutingLogs.Add(callbackRoutingLog);
             await _dbContext.SaveChangesAsync(cancellationToken);
 
@@ -228,7 +228,7 @@ namespace S3.Gateway.Features.Payments.Napas
             response.QRCodeBase64 = genQRResponse.QRCodeBase64;
             response.QRCodeData = genQRResponse.QRCodeData;
             response.TransDateTime = now.ToString("yyyy-MM-ddTHH:mm:ss") + "+07:00";
-            response.TransactionID = genQRRequest.AccountNumber;
+            response.TransactionID = callbackRouting.RefID;
             response.Success = true;
             return response;
         }

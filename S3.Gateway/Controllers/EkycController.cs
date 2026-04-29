@@ -19,14 +19,14 @@ namespace S3.Gateway.Controllers
             _eConfig = options.Value;
         }
 
-        [HttpPost("napas/merchant/getdeeplink")]
+        [HttpPost("pmnp/merchant/getdeeplink")]
         public async Task<IActionResult> Getdeeplink([FromBody] GetDeepLinkRequest request)
         {
             var result = await _mediator.Send(request);
             return Ok(result);
         }
 
-        [HttpPost("napas/callbackstatus")]
+        [HttpPost("pmnp/callbackstatus")]
         public async Task<IActionResult> CallBackStatus([FromBody] CallBackStatusRequest request)
         {
             if (!Request.Headers.TryGetValue("Signature", out var signatureBase64))
@@ -47,28 +47,28 @@ namespace S3.Gateway.Controllers
             return Ok(result);
         }
 
-        [HttpPost("napas/merchant/createmerchant")]
+        [HttpPost("pmnp/merchant/createmerchant")]
         public async Task<IActionResult> CreateMerchant([FromBody] CreateMerchantRequest request)
         {
             var result = await _mediator.Send(request);
             return Ok(result);
         }
 
-        [HttpPost("napas/merchant/updatebankaccount")]
+        [HttpPost("pmnp/merchant/updatebankaccount")]
         public async Task<IActionResult> UpdateBankAccount([FromBody] UpdateBankAccountRequest request)
         {
             var result = await _mediator.Send(request);
             return Ok(result);
         }
 
-        [HttpPost("napas/merchant/querymerchant")]
+        [HttpPost("pmnp/merchant/querymerchant")]
         public async Task<IActionResult> QueryMerchant([FromBody] QueryMerchantRequest request)
         {
             var result = await _mediator.Send(request);
             return Ok(result);
         }
 
-        [HttpPost("napas/merchant/updatemerchant")]
+        [HttpPost("pmnp/merchant/updatemerchant")]
         public async Task<IActionResult> UpdateMerchant([FromBody] UpdateMerchantRequest request)
         {
             var result = await _mediator.Send(request);

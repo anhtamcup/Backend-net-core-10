@@ -1,4 +1,6 @@
-﻿namespace S3.Gateway.Integrations.Payment.Napas
+﻿using Newtonsoft.Json;
+
+namespace S3.Gateway.Integrations.Payment.Napas
 {
     public class NpPaymentNotificationResponse
     {
@@ -44,5 +46,17 @@
         public string Code { get; set; } = string.Empty;
 
         public string Message { get; set; } = string.Empty;
+    }
+
+    public class NpOAuthResponse
+    {
+        [JsonProperty("access_token")]
+        public string AccessToken { get; set; }
+
+        [JsonProperty("token_type")]
+        public string TokenType { get; set; }
+
+        [JsonProperty("expires_in")]
+        public string ExpiresIn { get; set; }
     }
 }

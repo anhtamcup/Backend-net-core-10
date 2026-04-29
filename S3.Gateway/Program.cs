@@ -5,6 +5,7 @@ using S3.Gateway.Integrations.Base;
 using S3.Gateway.Integrations.Ekyc;
 using S3.Gateway.Integrations.Ekyc.Napas;
 using S3.Gateway.Integrations.Payment;
+using S3.Gateway.Integrations.Payment.Napas;
 using S3.Gateway.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -50,6 +51,7 @@ builder.Services.Configure<PaymentConfig>(builder.Configuration.GetSection("Paym
 
 builder.Services.AddScoped<BaseApiClient>();
 builder.Services.AddScoped<NapasClient>();
+builder.Services.AddScoped<NapasApi>();
 builder.Services.AddSingleton<ILogService, LogService>();
 builder.Services.AddHostedService<LogBackgroundWorker>();
 

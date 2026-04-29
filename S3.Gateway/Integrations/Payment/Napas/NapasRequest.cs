@@ -51,9 +51,9 @@
 
     public class NpInvestigationRequest
     {
+        public string Id { get; set; } = string.Empty;
         public string CaseId { get; set; } = string.Empty;
         public string CreationDateTime { get; set; } = string.Empty;
-        public string Id { get; set; } = string.Empty;
         public string TransDateTime { get; set; } = string.Empty;
     }
 }

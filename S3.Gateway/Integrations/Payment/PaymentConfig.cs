@@ -11,12 +11,19 @@
             public string Application { get; set; } = string.Empty;
 
             public string OauthURL { get; set; } = string.Empty;
+            public string InvestigationURL { get; set; } = string.Empty;
 
             public string GrantType { get; set; } = string.Empty;
             public string ClientId { get; set; } = string.Empty;
             public string ClientSecret { get; set; } = string.Empty;
 
+            public string SenderId { get; set; } = string.Empty;
+            public string ReceiverId { get; set; } = string.Empty;
+
             public string ForwardNotiPaymentURL { get; set; } = string.Empty;
+
+            public string SSL { get; set; } = string.Empty;
+            public string SSLPassword { get; set; } = string.Empty;
         }
     }
 }

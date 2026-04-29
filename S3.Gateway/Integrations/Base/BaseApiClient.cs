@@ -4,6 +4,7 @@ using S3.Gateway.Features.Logs;
 using System.Diagnostics;
 using System.Net;
 using System.Net.Http.Headers;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 namespace S3.Gateway.Integrations.Base
@@ -22,7 +23,8 @@ namespace S3.Gateway.Integrations.Base
             object data,
             string token = "",
             Func<Task<string>>? refreshToken = null,
-            Dictionary<string, string>? headers = null)
+            Dictionary<string, string>? headers = null,
+            X509Certificate2? clientCert = null)
         {
             var stopwatch = Stopwatch.StartNew();
             var log = new ApiLog
@@ -38,6 +40,11 @@ namespace S3.Gateway.Integrations.Base
                 {
                     AutomaticDecompression = DecompressionMethods.All
                 };
+
+                if (clientCert != null)
+                {
+                    handler.ClientCertificates.Add(clientCert);
+                }
 
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
                 using var client = new HttpClient(handler);

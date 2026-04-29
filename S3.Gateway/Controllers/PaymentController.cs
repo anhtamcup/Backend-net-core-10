@@ -35,14 +35,14 @@ namespace S3.Gateway.Controllers
             return Ok(result);
         }
 
-        [HttpPost("napas/qr")]
+        [HttpPost("pmnp/qr")]
         public async Task<IActionResult> NapasGenQR([FromBody] NapasGenQRRequest request)
         {
             var result = await _mediator.Send(request);
             return Ok(result);
         }
 
-        [HttpPost("napas/investigation")]
+        [HttpPost("pmnp/investigation")]
         public async Task<IActionResult> NapasInvestigation([FromBody] NapasInvestigationRequest request)
         {
             var result = await _mediator.Send(request);
