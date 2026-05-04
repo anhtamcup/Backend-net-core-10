@@ -1,0 +1,6 @@
+Script tạo quyền ghi sql
+
+CREATE LOGIN [IIS APPPOOL\S3.Gateway] FROM WINDOWS;
+CREATE USER [IIS APPPOOL\S3.Gateway] FOR LOGIN [IIS APPPOOL\S3.Gateway];
+ALTER ROLE db_datareader ADD MEMBER [IIS APPPOOL\S3.Gateway];
+ALTER ROLE db_datawriter ADD MEMBER [IIS APPPOOL\S3.Gateway];
