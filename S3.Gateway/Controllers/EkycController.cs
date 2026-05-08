@@ -29,18 +29,21 @@ namespace S3.Gateway.Controllers
         [HttpPost("pmnp/callbackstatus")]
         public async Task<IActionResult> CallBackStatus([FromBody] CallBackStatusRequest request)
         {
-            if (!Request.Headers.TryGetValue("Signature", out var signatureBase64))
+            if (_eConfig.Napas.SkipVerifySignature == false)
             {
-                return BadRequest("Missing signature header");
-            }
+                if (!Request.Headers.TryGetValue("Signature", out var signatureBase64))
+                {
+                    return BadRequest("Missing signature header");
+                }
 
-            var publicKeyPath = Path.Combine(AppContext.BaseDirectory, _eConfig.Napas.PublicKey);
-            var payload = Utility.SerializeObjectLowerCase(request);
-            var verifySignature = RSASignatureService.VerifySignature(payload, signatureBase64.ToString(), publicKeyPath);
+                var publicKeyPath = Path.Combine(AppContext.BaseDirectory, _eConfig.Napas.PublicKey);
+                var payload = Utility.SerializeObjectLowerCase(request);
+                var verifySignature = RSASignatureService.VerifySignature(payload, signatureBase64.ToString(), publicKeyPath);
 
-            if (verifySignature == false)
-            {
-                return BadRequest("Verify Signature Failed");
+                if (verifySignature == false)
+                {
+                    return BadRequest("Verify Signature Failed");
+                }
             }
 
             var result = await _mediator.Send(request);
