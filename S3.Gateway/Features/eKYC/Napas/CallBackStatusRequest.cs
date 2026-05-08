@@ -66,17 +66,17 @@ namespace S3.Gateway.Features.Ekyc.Napas
                     //    var forwardResponse = await client.PostAsync(endpointForward, content);
                     //    var resultForwardString = await forwardResponse.Content.ReadAsStringAsync();
                     //    var resultForward = JsonConvert.DeserializeObject<NpCallBackStatusResponse>(resultForwardString);
-                    //    var callbackRoutingLog2 = new CallbackRoutingLog
-                    //    {
-                    //        RequestID = RequestContext.RequestID,
-                    //        Action = "FORWARD TO: " + endpointForward,
-                    //        RequestPayload = callbackRoutingLog.ResponsePayload,
-                    //        ResponsePayload = resultForwardString,
-                    //        IsSuccess = (forwardResponse.StatusCode == System.Net.HttpStatusCode.OK)
-                    //    };
+                    //var callbackRoutingLog2 = new CallbackRoutingLog
+                    //{
+                    //    RequestID = RequestContext.RequestID,
+                    //    Action = "FORWARD TO: " + endpointForward,
+                    //    RequestPayload = callbackRoutingLog.ResponsePayload,
+                    //    ResponsePayload = resultForwardString,
+                    //    IsSuccess = (forwardResponse.StatusCode == System.Net.HttpStatusCode.OK)
+                    //};
 
-                    //    callbackRoutingLog.IsSuccess = true;
-                    //    callbackRouting.ActionHistory += string.Format(" -> {0} : {1}", callbackRoutingLog2.Action, callbackRoutingLog2.RequestID);
+                    callbackRoutingLog.IsSuccess = forwardSucess;
+                    //callbackRouting.ActionHistory += string.Format(" -> {0} : {1}", callbackRoutingLog2.Action, callbackRoutingLog2.RequestID);
                     return forwardResponse;
                     //}
                 }
