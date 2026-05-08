@@ -3,7 +3,9 @@ using Newtonsoft.Json;
 using S3.Gateway.Common;
 using S3.Gateway.Data;
 using S3.Gateway.Entities;
+using S3.Gateway.Integrations.Base;
 using S3.Gateway.Integrations.Ekyc.Napas;
+using S3.Gateway.Integrations.Payment.Napas;
 using System.Text;
 
 namespace S3.Gateway.Features.Ekyc.Napas
@@ -15,13 +17,13 @@ namespace S3.Gateway.Features.Ekyc.Napas
 
     public class CallBackStatusRequestHandler : IRequestHandler<CallBackStatusRequest, NpCallBackStatusResponse>
     {
-        private readonly NapasClient _napasClient;
         private readonly DBContext _dbContext;
+        private readonly BaseApiClient _apiClient;
 
-        public CallBackStatusRequestHandler(NapasClient napasClient, DBContext dbContext)
+        public CallBackStatusRequestHandler(DBContext dbContext, BaseApiClient apiClient)
         {
-            _napasClient = napasClient;
             _dbContext = dbContext;
+            _apiClient = apiClient;
         }
 
         public async Task<NpCallBackStatusResponse> Handle(CallBackStatusRequest request, CancellationToken cancellationToken)
@@ -54,26 +56,31 @@ namespace S3.Gateway.Features.Ekyc.Napas
 
                 try
                 {
-                    using (var client = new HttpClient())
-                    using (var content = new StringContent(callbackRoutingLog.ResponsePayload, Encoding.UTF8, "application/json"))
-                    {
-                        var forwardResponse = await client.PostAsync(endpointForward, content);
-                        var resultForwardString = await forwardResponse.Content.ReadAsStringAsync();
-                        var resultForward = JsonConvert.DeserializeObject<NpCallBackStatusResponse>(resultForwardString);
-                        var callbackRoutingLog2 = new CallbackRoutingLog
-                        {
-                            RequestID = RequestContext.RequestID,
-                            Action = "FORWARD TO: " + endpointForward,
-                            RequestPayload = callbackRoutingLog.ResponsePayload,
-                            ResponsePayload = resultForwardString,
-                            IsSuccess = (forwardResponse.StatusCode == System.Net.HttpStatusCode.OK)
-                        };
 
-                        callbackRoutingLog.IsSuccess = true;
-                        callbackRouting.ActionHistory += string.Format(" -> {0} : {1}", callbackRoutingLog2.Action, callbackRoutingLog2.RequestID);
-                        return resultForward;
-                    }
-                } catch(Exception ex)
+                    var forwardResponse = await _apiClient.PostTAsync<NpCallBackStatusResponse>(endpointForward, callbackRoutingLog.RequestPayload);
+                    var forwardSucess = (forwardResponse != null);
+
+                    //using (var client = new HttpClient())
+                    //using (var content = new StringContent(callbackRoutingLog.RequestPayload, Encoding.UTF8, "application/json"))
+                    //{
+                    //    var forwardResponse = await client.PostAsync(endpointForward, content);
+                    //    var resultForwardString = await forwardResponse.Content.ReadAsStringAsync();
+                    //    var resultForward = JsonConvert.DeserializeObject<NpCallBackStatusResponse>(resultForwardString);
+                    //    var callbackRoutingLog2 = new CallbackRoutingLog
+                    //    {
+                    //        RequestID = RequestContext.RequestID,
+                    //        Action = "FORWARD TO: " + endpointForward,
+                    //        RequestPayload = callbackRoutingLog.ResponsePayload,
+                    //        ResponsePayload = resultForwardString,
+                    //        IsSuccess = (forwardResponse.StatusCode == System.Net.HttpStatusCode.OK)
+                    //    };
+
+                    //    callbackRoutingLog.IsSuccess = true;
+                    //    callbackRouting.ActionHistory += string.Format(" -> {0} : {1}", callbackRoutingLog2.Action, callbackRoutingLog2.RequestID);
+                    return forwardResponse;
+                    //}
+                }
+                catch (Exception ex)
                 {
                     callbackRouting.ActionHistory += "   -> FORWARD FAILD TO: " + endpointForward;
                     throw new Exception(ex.ToString());
