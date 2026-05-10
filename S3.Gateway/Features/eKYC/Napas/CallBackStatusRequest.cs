@@ -35,7 +35,7 @@ namespace S3.Gateway.Features.Ekyc.Napas
                 {
                     RequestID = RequestContext.RequestID,
                     Action = "RECEIVED NOTI FROM NAPAS",
-                    RequestPayload = JsonConvert.SerializeObject(request),
+                    RequestPayload = Utility.SerializeObjectLowerCase(request),
                 };
 
                 _dbContext.CallbackRoutingLogs.Add(callbackRoutingLog);
