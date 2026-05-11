@@ -8,7 +8,7 @@ using S3.Gateway.Integrations.Ekyc;
 namespace S3.Gateway.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("ekyc")]
     public class EkycController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -26,7 +26,8 @@ namespace S3.Gateway.Controllers
             return Ok(result);
         }
 
-        [HttpPost("pmnp/callbackstatus")]
+        //[HttpPost("pmnp/callbackstatus")]
+        [HttpPost("Napas/callbackstatus")]
         public async Task<IActionResult> CallBackStatus([FromBody] CallBackStatusRequest request)
         {
             if (_eConfig.Napas.SkipVerifySignature == false)

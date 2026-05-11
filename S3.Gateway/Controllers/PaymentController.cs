@@ -8,7 +8,7 @@ using S3.Gateway.Integrations.Payment;
 namespace S3.Gateway.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("payment")]
     public class PaymentController : ControllerBase
     {
         private readonly IMediator _mediator;
