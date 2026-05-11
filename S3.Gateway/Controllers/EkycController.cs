@@ -26,8 +26,7 @@ namespace S3.Gateway.Controllers
             return Ok(result);
         }
 
-        //[HttpPost("pmnp/callbackstatus")]
-        [HttpPost("Napas/callbackstatus")]
+        [HttpPost("pmnp/callbackstatus")]
         public async Task<IActionResult> CallBackStatus([FromBody] CallBackStatusRequest request)
         {
             if (_eConfig.Napas.SkipVerifySignature == false)
