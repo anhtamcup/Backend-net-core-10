@@ -4,6 +4,7 @@ namespace S3.Gateway.Entities
 {
     public class CallbackRoutingLog: EntityBase
     {
+        public string RefID { get; set; } = string.Empty;
         public string RequestID { get; set; } = RequestContext.RequestID;
         public string RequestPayload { get; set; } = string.Empty;
         public string ResponsePayload { get; set; } = string.Empty;

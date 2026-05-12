@@ -1,13 +1,8 @@
-﻿using Azure.Core;
-using MediatR;
-using Newtonsoft.Json;
+﻿using MediatR;
 using S3.Gateway.Common;
 using S3.Gateway.Data;
 using S3.Gateway.Entities;
 using S3.Gateway.Integrations.Ekyc.Napas;
-using System.Net;
-using System.Net.Http.Headers;
-using System.Text;
 
 namespace S3.Gateway.Features.Ekyc.Napas
 {
@@ -45,29 +40,33 @@ namespace S3.Gateway.Features.Ekyc.Napas
                     
                 var data = await _napasClient.GetDeepLink(npGetDeepLinkRequest);
 
-                var callbackRouting = new CallbackRouting
+                if (data.Response.Code == ApiErrorCode.SUCCESS.Code)
                 {
-                    RefID = request.PlatformMerchantId,
-                    RequestID = RequestContext.RequestID,
-                    Target = Target3rd.Napas,
-                    PartnerCode = request.PartnerCode,
-                    CallbackUrl = request.CallbackUrl,
-                    RequestPayload = JsonConvert.SerializeObject(request),
-                    ActionHistory = "GET DEEP LINK",
-                };
+                    var callbackRouting = new CallbackRouting
+                    {
+                        RefID = request.PlatformMerchantId,
+                        RequestID = RequestContext.RequestID,
+                        Target = Target3rd.Napas,
+                        PartnerCode = request.PartnerCode,
+                        CallbackUrl = request.CallbackUrl,
+                        RequestPayload = Utility.SerializeObjectLowerCase(request),
+                        ActionHistory = "GET DEEP LINK",
+                    };
 
-                var callbackRoutingLog = new CallbackRoutingLog
-                {
-                    RequestID = callbackRouting.RequestID,
-                    Action = callbackRouting.ActionHistory,
-                    RequestPayload = JsonConvert.SerializeObject(npGetDeepLinkRequest),
-                    ResponsePayload = JsonConvert.SerializeObject(data),
-                    IsSuccess = (data.Response.Code == ApiErrorCode.SUCCESS.Code)
-                };
+                    var callbackRoutingLog = new CallbackRoutingLog
+                    {
+                        RequestID = callbackRouting.RequestID,
+                        Action = callbackRouting.ActionHistory,
+                        RequestPayload = Utility.SerializeObjectLowerCase(npGetDeepLinkRequest),
+                        ResponsePayload = Utility.SerializeObjectLowerCase(data),
+                        IsSuccess = true
+                    };
 
-                _dbContext.CallbackRoutings.Add(callbackRouting);
-                _dbContext.CallbackRoutingLogs.Add(callbackRoutingLog);
-                await _dbContext.SaveChangesAsync(cancellationToken);
+                    _dbContext.CallbackRoutings.Add(callbackRouting);
+                    _dbContext.CallbackRoutingLogs.Add(callbackRoutingLog);
+                    await _dbContext.SaveChangesAsync(cancellationToken);
+                }
+
                 response.IsSuccess = true;
                 response.Data = data;
                 return response;

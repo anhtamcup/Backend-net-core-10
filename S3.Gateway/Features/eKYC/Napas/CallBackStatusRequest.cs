@@ -1,12 +1,9 @@
 ﻿using MediatR;
-using Newtonsoft.Json;
 using S3.Gateway.Common;
 using S3.Gateway.Data;
 using S3.Gateway.Entities;
 using S3.Gateway.Integrations.Base;
 using S3.Gateway.Integrations.Ekyc.Napas;
-using S3.Gateway.Integrations.Payment.Napas;
-using System.Text;
 
 namespace S3.Gateway.Features.Ekyc.Napas
 {
@@ -28,70 +25,79 @@ namespace S3.Gateway.Features.Ekyc.Napas
 
         public async Task<NpCallBackStatusResponse> Handle(CallBackStatusRequest request, CancellationToken cancellationToken)
         {
+            var now = DateTime.Now;
+            var requestPayloadReceive = Utility.SerializeObjectLowerCase(request);
+            var errorMessage = string.Empty;
+            var refID = string.Empty;
+            var response = new NpCallBackStatusResponse
+            {
+                SenderReference = request.SenderReference,
+                CreationDateTime = request.CreationDateTime,
+                Response = new NpResponseInfo
+                {
+                    Code = "500",
+                    Description = "Có lỗi xảy ra"
+                }
+            };
+
             try
             {
-                var now = DateTime.Now;
-                var callbackRoutingLog = new CallbackRoutingLog
-                {
-                    RequestID = RequestContext.RequestID,
-                    Action = "RECEIVED NOTI FROM NAPAS",
-                    RequestPayload = Utility.SerializeObjectLowerCase(request),
-                };
+                var callbackRouting = _dbContext.CallbackRoutings
+                    .Where(item => item.RefID == request.PlatformMerchantId)
+                    .OrderByDescending(item => item.ID)
+                    .FirstOrDefault();
 
-                _dbContext.CallbackRoutingLogs.Add(callbackRoutingLog);
-
-                // Forward to merchant system
-                var callbackRouting = _dbContext.CallbackRoutings.Where(item => item.RefID == request.PlatformMerchantId).FirstOrDefault();
                 if (callbackRouting == null)
                 {
-                    callbackRoutingLog.ErrorMessage = "Không tìm thấy thông tin call back routing";
-                    throw new Exception(callbackRoutingLog.ErrorMessage);
+                    errorMessage = "Không tìm thấy thông tin call back routing";
+                    response.Response.Details = errorMessage;
+                    return response;
                 }
 
-                callbackRouting.ActionHistory += string.Format(" -> {0} : {1}", callbackRoutingLog.Action, callbackRoutingLog.RequestID);
-                callbackRouting.UpdatedAt = now;
-
-                // Forward
-                var endpointForward = callbackRouting.CallbackUrl;
-
-                try
+                refID = callbackRouting.ID.ToString();
+                var url = callbackRouting.CallbackUrl;
+                var forwardResponse = await _apiClient.PostTAsync<NpCallBackStatusResponse>(url, requestPayloadReceive);
+                if (forwardResponse == null)
                 {
-
-                    var forwardResponse = await _apiClient.PostTAsync<NpCallBackStatusResponse>(endpointForward, callbackRoutingLog.RequestPayload);
-                    var forwardSucess = (forwardResponse != null);
-
-                    //using (var client = new HttpClient())
-                    //using (var content = new StringContent(callbackRoutingLog.RequestPayload, Encoding.UTF8, "application/json"))
-                    //{
-                    //    var forwardResponse = await client.PostAsync(endpointForward, content);
-                    //    var resultForwardString = await forwardResponse.Content.ReadAsStringAsync();
-                    //    var resultForward = JsonConvert.DeserializeObject<NpCallBackStatusResponse>(resultForwardString);
-                    //var callbackRoutingLog2 = new CallbackRoutingLog
-                    //{
-                    //    RequestID = RequestContext.RequestID,
-                    //    Action = "FORWARD TO: " + endpointForward,
-                    //    RequestPayload = callbackRoutingLog.ResponsePayload,
-                    //    ResponsePayload = resultForwardString,
-                    //    IsSuccess = (forwardResponse.StatusCode == System.Net.HttpStatusCode.OK)
-                    //};
-
-                    callbackRoutingLog.IsSuccess = forwardSucess;
-                    //callbackRouting.ActionHistory += string.Format(" -> {0} : {1}", callbackRoutingLog2.Action, callbackRoutingLog2.RequestID);
-                    return forwardResponse;
-                    //}
+                    response.Response.Details = "Lỗi chuyển tiếp";
+                    callbackRouting.ActionHistory += " -> Forward thất bại đến: " + url;
+                    callbackRouting.Status = CallbackRoutingStatus.ERROR;
+                    return response;
                 }
-                catch (Exception ex)
+
+                var callbackRoutingLogForward = new CallbackRoutingLog
                 {
-                    callbackRouting.ActionHistory += "   -> FORWARD FAILD TO: " + endpointForward;
-                    throw new Exception(ex.ToString());
-                }
+                    RefID = refID,
+                    Action = "FORWARD",
+                    RequestPayload = requestPayloadReceive,
+                    ResponsePayload = Utility.SerializeObjectLowerCase(forwardResponse),
+                    ErrorMessage = forwardResponse.Response.Details
+                };
+                _dbContext.CallbackRoutingLogs.Add(callbackRoutingLogForward);
+
+                callbackRouting.ActionHistory += " -> Đã forward đến: " + url;
+                callbackRouting.Status = CallbackRoutingStatus.COMPLETED;
+                response = forwardResponse;
+                return forwardResponse;
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.ToString());
+                errorMessage = ex.ToString();
+                response.Response.Details = "Lỗi hệ thống";
+                return response;
             }
             finally
             {
+                var callbackRoutingLog = new CallbackRoutingLog
+                {
+                    RefID = refID,
+                    Action = "RECEIVED NAPAS",
+                    RequestPayload = requestPayloadReceive,
+                    ResponsePayload = Utility.SerializeObjectLowerCase(response),
+                    ErrorMessage = errorMessage
+                };
+
+                _dbContext.CallbackRoutingLogs.Add(callbackRoutingLog);
                 await _dbContext.SaveChangesAsync(cancellationToken);
             }
         }
