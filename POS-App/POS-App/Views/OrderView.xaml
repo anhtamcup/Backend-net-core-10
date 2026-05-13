@@ -86,7 +86,7 @@
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="FontFamily" Value="Be Vietnam Pro"/>
             <Setter Property="Template">
-            <Setter.Value>
+                <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Border CornerRadius="5" x:Name="Bd" Background="{TemplateBinding Background}">
                             <ContentPresenter
@@ -127,7 +127,7 @@
             <Setter Property="Margin" Value="2"/>
             <Setter Property="Padding" Value="12"/>
         </Style>
-        
+
         <Style x:Key="ButonPaymentStyle" TargetType="Button" BasedOn="{StaticResource ButtonBase}" >
             <Setter Property="Height" Value="42"/>
             <Setter Property="Background" Value="{StaticResource bg-button-green}"/>
@@ -147,6 +147,18 @@
             <Setter Property="Margin" Value="1"/>
         </Style>
 
+        <Style x:Key="ButtonOrderTabStyle" TargetType="Button" BasedOn="{StaticResource ButtonBase}">
+            <Setter Property="Width" Value="70"/>
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="Margin" Value="2"/>
+        </Style>
+        <Style x:Key="ButtonAddNewOrderTabStyle" TargetType="Button" BasedOn="{StaticResource ButtonBase}">
+            <Setter Property="Width" Value="25"/>
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="FontSize" Value="18"/>
+        </Style>
+
         <Style x:Key="KeypadButtonNumberStyle" TargetType="Button" BasedOn="{StaticResource KeypadNumberBaseStyle}">
             <Setter Property="FontWeight" Value="Medium"/>
             <Setter Property="FontSize" Value="15"/>
@@ -163,6 +175,29 @@
             <Setter Property="Background" Value="{StaticResource bg-button-green}" />
             <Setter Property="Foreground" Value="#FFFFFF" />
         </Style>
+
+
+        <Style x:Key="HeaderBoxStyle" TargetType="StackPanel">
+            <Setter Property="Margin" Value="15,0" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+        
+        <Style x:Key="HeaderLabelStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="FontFamily" Value="Be Vietnam Pro"/>
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Foreground" Value="#AFC7DD" />
+        </Style>
+
+        <Style x:Key="HeaderValueStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="FontFamily" Value="JetBrains Mono"/>
+            <Setter Property="FontWeight" Value="Medium" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Margin" Value="0,5,0,0" />
+        </Style>
+        
+        
     </UserControl.Resources>
 
     <Grid Background="#CCD2E3">
@@ -171,7 +206,69 @@
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Name="panelHeader" Background="{StaticResource backgroundColorHeader}"/>
+        <Grid Grid.Row="0" Name="panelHeader" Background="{StaticResource backgroundColorHeader}">
+            <!--<Image Source="/Assets/Images/Logo/header-logo.png"
+            Height="25" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>-->
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="130"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Logo -->
+                <StackPanel Grid.Column="0"
+                    Orientation="Horizontal"
+                    VerticalAlignment="Center"
+                    Margin="10,0">
+
+                    <TextBlock Text="S3POS"
+                        FontSize="25"
+                        FontWeight="Bold"
+                        Foreground="White"
+                        VerticalAlignment="Center"/>
+
+                    <Border Width="1"
+                        Background="#8CB3D9"
+                        Margin="30,0,0,0"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Style="{StaticResource HeaderBoxStyle}">
+                    <TextBlock Text="SỐ POS" Style="{StaticResource HeaderLabelStyle}"/>
+                    <TextBlock Text="0016" Style="{StaticResource HeaderValueStyle}"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="2" Style="{StaticResource HeaderBoxStyle}">
+                    <TextBlock Text="MÃ SỐ" Style="{StaticResource HeaderLabelStyle}"/>
+                    <TextBlock Text="0198" Style="{StaticResource HeaderValueStyle}"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="3" Style="{StaticResource HeaderBoxStyle}">
+                    <TextBlock Text="NGÀY THÁNG" Style="{StaticResource HeaderLabelStyle}"/>
+                    <TextBlock Text="28-11-1998 15:02:33" Style="{StaticResource HeaderValueStyle}"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="4" Style="{StaticResource HeaderBoxStyle}">
+                    <TextBlock Text="NHÂN VIÊN" Style="{StaticResource HeaderLabelStyle}"/>
+                    <TextBlock Text="Lê Tâm" Style="{StaticResource HeaderValueStyle}"/>
+                </StackPanel>
+                
+                <StackPanel Grid.Column="5" Style="{StaticResource HeaderBoxStyle}">
+                    <TextBlock Text="CA LÀM VIỆC" Style="{StaticResource HeaderLabelStyle}"/>
+                    <TextBlock Text="K00001" Style="{StaticResource HeaderValueStyle}"/>
+                </StackPanel>
+            </Grid>
+
+        </Grid>
 
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
@@ -195,14 +292,37 @@
             <Grid Grid.Column="1"
                 Name="panelRight"
                 Background="#F6F8FC"
-                Margin="1,0,0,0">
+                Margin="1">
 
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="30" />
                     <RowDefinition />
                     <RowDefinition MaxHeight="250" />
                 </Grid.RowDefinitions>
 
-                <StackPanel Grid.Row="0">
+                <Grid Grid.Row="0" VerticalAlignment="Center" >
+                    <WrapPanel>
+                    <Button Style="{StaticResource ButtonOrderTabStyle}" Background="{StaticResource bg-button-green}">
+                        <StackPanel>
+                            <TextBlock Text="Đơn 1" Foreground="#FFFFFF" />
+                        </StackPanel>
+                    </Button>
+
+                    <Button Style="{StaticResource ButtonOrderTabStyle}">
+                        <StackPanel>
+                                <TextBlock Text="Đơn 2" Foreground="#2E384E" />
+                        </StackPanel>
+                    </Button>
+
+                        <Button Style="{StaticResource ButtonAddNewOrderTabStyle}">
+                            <StackPanel>
+                                <TextBlock Text="+" Foreground="#2E384E" />
+                            </StackPanel>
+                        </Button>
+                        
+                    </WrapPanel>
+                </Grid>
+                <StackPanel Grid.Row="1">
                     <WrapPanel Name="UniformGridFunctions">
                         <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-refund}">
                             <StackPanel>
@@ -316,9 +436,7 @@
                         }"
                     Content="THANH TOÁN - F12"/>
                 </StackPanel>
-
-                <Grid Grid.Row="1" Margin="1">
-
+                <Grid Grid.Row="2">
                     <Grid.RowDefinitions>
                         <RowDefinition/>
                         <RowDefinition/>
