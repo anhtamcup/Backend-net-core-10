@@ -4,9 +4,22 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:POS_App.Views" xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" >
 
     <UserControl.Resources>
+        <GridLength x:Key="RightPanelWidth">
+            250
+        </GridLength>
+
+        <sys:Double x:Key="ActionButtonWidth">
+            78
+        </sys:Double>
+
+        <sys:Double x:Key="KeyboardButtonWidth">
+            60
+        </sys:Double>
+
 
         <!--Màu linear-->
         <LinearGradientBrush x:Key="backgroundColorHeader" StartPoint="0,0" EndPoint="0,1">
@@ -116,16 +129,16 @@
         </Style>
 
         <Style x:Key="ActionButtonStyle" TargetType="Button" BasedOn="{StaticResource ButtonBase}" >
-            <Setter Property="Width" Value="117"/>
+            <Setter Property="Width" Value="{StaticResource ActionButtonWidth}"/>
             <Setter Property="FontFamily" Value="Arial"/>
             <Setter Property="FontWeight" Value="Normal"/>
             <Setter Property="FontStyle" Value="Normal"/>
-            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontSize" Value="10"/>
             <Setter Property="Foreground" Value="#374151"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="Margin" Value="2"/>
-            <Setter Property="Padding" Value="12"/>
+            <Setter Property="Padding" Value="5, 10"/>
         </Style>
 
         <Style x:Key="ButonPaymentStyle" TargetType="Button" BasedOn="{StaticResource ButtonBase}" >
@@ -143,14 +156,18 @@
         </Style>
 
         <Style x:Key="KeypadNumberBaseStyle" TargetType="Button" BasedOn="{StaticResource ButtonBase}">
-            <Setter Property="Width" Value="90"/>
+            <Setter Property="Width" Value="{StaticResource KeyboardButtonWidth}"/>
             <Setter Property="Margin" Value="1"/>
+        </Style>
+
+        <Style x:Key="ButtonDeleteItemStyle" TargetType="Button" BasedOn="{StaticResource ButtonBase}">
+            <Setter Property="Background" Value="Transparent"/>
         </Style>
 
         <Style x:Key="ButtonOrderTabStyle" TargetType="Button" BasedOn="{StaticResource ButtonBase}">
             <Setter Property="Width" Value="70"/>
             <Setter Property="Height" Value="25"/>
-            <Setter Property="Margin" Value="2"/>
+            <Setter Property="Margin" Value="2,0"/>
         </Style>
         <Style x:Key="ButtonAddNewOrderTabStyle" TargetType="Button" BasedOn="{StaticResource ButtonBase}">
             <Setter Property="Width" Value="25"/>
@@ -161,7 +178,7 @@
 
         <Style x:Key="KeypadButtonNumberStyle" TargetType="Button" BasedOn="{StaticResource KeypadNumberBaseStyle}">
             <Setter Property="FontWeight" Value="Medium"/>
-            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontSize" Value="12"/>
             <Setter Property="Background" Value="#FFFFFF"/>
         </Style>
 
@@ -178,31 +195,29 @@
 
 
         <Style x:Key="HeaderBoxStyle" TargetType="StackPanel">
-            <Setter Property="Margin" Value="15,0" />
+            <Setter Property="Margin" Value="12,0" />
             <Setter Property="VerticalAlignment" Value="Center" />
         </Style>
-        
+
         <Style x:Key="HeaderLabelStyle" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="12" />
+            <Setter Property="FontSize" Value="10" />
             <Setter Property="FontFamily" Value="Be Vietnam Pro"/>
             <Setter Property="FontWeight" Value="SemiBold" />
             <Setter Property="Foreground" Value="#AFC7DD" />
         </Style>
 
         <Style x:Key="HeaderValueStyle" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="15" />
+            <Setter Property="FontSize" Value="12" />
             <Setter Property="FontFamily" Value="JetBrains Mono"/>
             <Setter Property="FontWeight" Value="Medium" />
             <Setter Property="Foreground" Value="White" />
-            <Setter Property="Margin" Value="0,5,0,0" />
+            <Setter Property="Margin" Value="0,3,0,0" />
         </Style>
-        
-        
     </UserControl.Resources>
 
     <Grid Background="#CCD2E3">
         <Grid.RowDefinitions>
-            <RowDefinition Height="55"/>
+            <RowDefinition Height="40"/>
             <RowDefinition />
         </Grid.RowDefinitions>
 
@@ -261,7 +276,7 @@
                     <TextBlock Text="NHÂN VIÊN" Style="{StaticResource HeaderLabelStyle}"/>
                     <TextBlock Text="Lê Tâm" Style="{StaticResource HeaderValueStyle}"/>
                 </StackPanel>
-                
+
                 <StackPanel Grid.Column="5" Style="{StaticResource HeaderBoxStyle}">
                     <TextBlock Text="CA LÀM VIỆC" Style="{StaticResource HeaderLabelStyle}"/>
                     <TextBlock Text="K00001" Style="{StaticResource HeaderValueStyle}"/>
@@ -273,7 +288,7 @@
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition MaxWidth="370"/>
+                <ColumnDefinition Width="{StaticResource RightPanelWidth}"/>
             </Grid.ColumnDefinitions>
 
             <Grid Grid.Column="0"
@@ -283,11 +298,131 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="170"/>
                 </Grid.RowDefinitions>
-                <StackPanel Grid.Row="0"
-                Background="White"/>
-                <StackPanel Grid.Row="1"
-                Background="#F6F8FC"/>
+                <StackPanel Grid.Row="0" Background="White">
 
+                    <DataGrid
+                        HorizontalGridLinesBrush="#CBD5E1"
+                        VerticalGridLinesBrush="#CBD5E1"
+                        GridLinesVisibility="All"
+                        Name="grCartItems"
+                        AutoGenerateColumns="False"
+                        CanUserAddRows="False"
+                        HeadersVisibility="Column"
+                        RowHeight="30"
+                        ColumnHeaderHeight="25"
+                        Background="White"
+                        BorderThickness="0"
+                        FontSize="10"
+                        IsReadOnly="True"
+                        SelectionMode="Single"
+                        SelectionUnit="Cell"
+                        Focusable="False" >
+
+                        <!-- Header style -->
+                        <DataGrid.ColumnHeaderStyle>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="Background" Value="#E9EBF3"/>
+                                <Setter Property="Foreground" Value="#5A6B82"/>
+                                <Setter Property="FontWeight" Value="Bold"/>
+                                <Setter Property="BorderBrush" Value="#CCD2E3"/>
+                                <Setter Property="BorderThickness" Value="0,0,1,1"/>
+                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                            </Style>
+                        </DataGrid.ColumnHeaderStyle>
+                        <!-- Row style -->
+                        <DataGrid.RowStyle>
+                            <Style TargetType="DataGridRow">
+                                <Setter Property="BorderBrush" Value="#CCD2E3"/>
+                                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                            </Style>
+                        </DataGrid.RowStyle>
+
+                        <DataGrid.CellStyle>
+                            <Style TargetType="DataGridCell">
+                                <Setter Property="Focusable" Value="False"/>
+                                <Setter Property="BorderThickness" Value="0"/>
+                                <Setter Property="Background" Value="White"/>
+                                <Setter Property="Foreground" Value="Black"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter Property="Background" Value="White"/>
+                                        <Setter Property="Foreground" Value="Black"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGrid.CellStyle>
+                        <DataGrid.Columns>
+                            <!-- STT -->
+                            <DataGridTextColumn Header="#" Width="25" Binding="{Binding Index}"/>
+
+                            <!-- Mã SP -->
+                            <DataGridTextColumn Header="MÃ SP" Width="100" Binding="{Binding Code}"/>
+
+                            <!-- Sản phẩm -->
+                            <DataGridTextColumn Header="SẢN PHẨM" Width="*" Binding="{Binding Name}"/>
+
+                            <!-- Giá -->
+                            <DataGridTextColumn Header="GIÁ" Width="70" Binding="{Binding OriginalPrice}"/>
+
+                            <!-- Số lượng -->
+                            <!--<DataGridTemplateColumn Header="SỐ LƯỢNG"
+                                Width="80">
+
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+
+                                        <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Center">
+
+                                            <Button Content="-"
+                                Width="10"
+                                Height="10"
+                                Margin="0,0,8,0"/>
+
+                                            <TextBlock Text="{Binding Quantity}"
+                                   VerticalAlignment="Center"
+                                   FontWeight="Bold"
+                                   FontSize="10"/>
+
+                                            <Button Content="+"
+                                Width="10"
+                                Height="10"
+                                Margin="8,0,0,0"/>
+
+                                        </StackPanel>
+
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+
+                            </DataGridTemplateColumn>-->
+
+                            <!-- Đơn vị -->
+                            <DataGridTextColumn Header="ĐƠN VỊ" Width="60" Binding="{Binding Unit}"/>
+
+                            <!-- Giảm giá -->
+                            <DataGridTextColumn Header="GIẢM GIÁ" Width="70" Binding="{Binding DiscountPrice}"/>
+
+                            <!-- Thành tiền -->
+                            <DataGridTextColumn Header="SỐ TIỀN" Width="70" Binding="{Binding TotalPrice}"/>
+
+                            <!-- Ghi chú -->
+                            <DataGridTextColumn Header="GHI CHÚ" Width="100" Binding="{Binding Note}"/>
+
+                            <DataGridTemplateColumn Header="" Width="40">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Style="{StaticResource ButtonDeleteItemStyle}">
+                                            <svgc:SvgViewbox Source="/Assets/Icons/ico-trash.svg" Style="{StaticResource KeypadIconStyle}"/>
+                                        </Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                </StackPanel>
+                <StackPanel Grid.Row="1" Background="#F6F8FC"/>
             </Grid>
             <Grid Grid.Column="1"
                 Name="panelRight"
@@ -295,31 +430,31 @@
                 Margin="1">
 
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="30" />
+                    <RowDefinition Height="25" />
                     <RowDefinition />
                     <RowDefinition MaxHeight="250" />
                 </Grid.RowDefinitions>
 
                 <Grid Grid.Row="0" VerticalAlignment="Center" >
                     <WrapPanel>
-                    <Button Style="{StaticResource ButtonOrderTabStyle}" Background="{StaticResource bg-button-green}">
-                        <StackPanel>
-                            <TextBlock Text="Đơn 1" Foreground="#FFFFFF" />
-                        </StackPanel>
-                    </Button>
+                        <Button Style="{StaticResource ButtonOrderTabStyle}" Background="{StaticResource bg-button-green}">
+                            <StackPanel>
+                                <TextBlock Text="Đơn 1" Foreground="#FFFFFF" FontSize="9" />
+                            </StackPanel>
+                        </Button>
 
-                    <Button Style="{StaticResource ButtonOrderTabStyle}">
-                        <StackPanel>
-                                <TextBlock Text="Đơn 2" Foreground="#2E384E" />
-                        </StackPanel>
-                    </Button>
+                        <Button Style="{StaticResource ButtonOrderTabStyle}">
+                            <StackPanel>
+                                <TextBlock Text="Đơn 2" Foreground="#2E384E" FontSize="9" />
+                            </StackPanel>
+                        </Button>
 
                         <Button Style="{StaticResource ButtonAddNewOrderTabStyle}">
                             <StackPanel>
                                 <TextBlock Text="+" Foreground="#2E384E" />
                             </StackPanel>
                         </Button>
-                        
+
                     </WrapPanel>
                 </Grid>
                 <StackPanel Grid.Row="1">
@@ -432,8 +567,7 @@
 
                     <Button
                     Grid.Row="0"
-                    Style="{StaticResource ButonPaymentStyle
-                        }"
+                    Style="{StaticResource ButonPaymentStyle}"
                     Content="THANH TOÁN - F12"/>
                 </StackPanel>
                 <Grid Grid.Row="2">

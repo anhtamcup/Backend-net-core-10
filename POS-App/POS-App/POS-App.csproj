@@ -27,6 +27,7 @@
     <None Remove="Assets\Icons\ico-restore.svg" />
     <None Remove="Assets\Icons\ico-save.svg" />
     <None Remove="Assets\Icons\ico-search-product.svg" />
+    <None Remove="Assets\Icons\ico-trash.svg" />
     <None Remove="Assets\Icons\ico-up.svg" />
     <None Remove="Assets\Images\Logo\header-logo.png" />
   </ItemGroup>
@@ -81,6 +82,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Icons\ico-search-product.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Icons\ico-trash.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Icons\ico-up.svg">
