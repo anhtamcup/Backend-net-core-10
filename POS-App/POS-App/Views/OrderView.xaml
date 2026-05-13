@@ -213,6 +213,24 @@
             <Setter Property="Foreground" Value="White" />
             <Setter Property="Margin" Value="0,3,0,0" />
         </Style>
+
+        <Style x:Key="GridViewTextStyleBase" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="10" />
+            <Setter Property="FontFamily" Value="Be Vietnam Pro"/>
+        </Style>
+
+        <Style x:Key="GridViewTextStyleLeft" TargetType="TextBlock" BasedOn="{StaticResource GridViewTextStyleBase}">
+            <Setter Property="TextAlignment" Value="Left"/>
+            <Setter Property="Margin" Value="5,0,0,0"/>
+        </Style>
+        
+        <Style x:Key="GridViewTextStyleRight" TargetType="TextBlock" BasedOn="{StaticResource GridViewTextStyleBase}">
+            <Setter Property="TextAlignment" Value="Right"/>
+            <Setter Property="Margin" Value="0,0,5,0"/>
+
+        </Style>
+
     </UserControl.Resources>
 
     <Grid Background="#CCD2E3">
@@ -308,7 +326,7 @@
                         AutoGenerateColumns="False"
                         CanUserAddRows="False"
                         HeadersVisibility="Column"
-                        RowHeight="30"
+                        RowHeight="25"
                         ColumnHeaderHeight="25"
                         Background="White"
                         BorderThickness="0"
@@ -354,60 +372,52 @@
                         </DataGrid.CellStyle>
                         <DataGrid.Columns>
                             <!-- STT -->
-                            <DataGridTextColumn Header="#" Width="25" Binding="{Binding Index}"/>
+                            <DataGridTextColumn Header="#" Width="25" Binding="{Binding Index}" ElementStyle="{StaticResource GridViewTextStyleLeft}"/>
 
                             <!-- Mã SP -->
-                            <DataGridTextColumn Header="MÃ SP" Width="100" Binding="{Binding Code}"/>
+                            <DataGridTextColumn Header="MÃ SP" Width="100" Binding="{Binding Code}" ElementStyle="{StaticResource GridViewTextStyleLeft}"/>
 
                             <!-- Sản phẩm -->
-                            <DataGridTextColumn Header="SẢN PHẨM" Width="*" Binding="{Binding Name}"/>
+                            <DataGridTextColumn Header="SẢN PHẨM" Width="*" Binding="{Binding Name}" ElementStyle="{StaticResource GridViewTextStyleLeft}"/>
 
                             <!-- Giá -->
-                            <DataGridTextColumn Header="GIÁ" Width="70" Binding="{Binding OriginalPrice}"/>
+                            <DataGridTextColumn Header="GIÁ" Width="70" Binding="{Binding OriginalPrice,StringFormat={}{0:N0}}" ElementStyle="{StaticResource GridViewTextStyleRight}"/>
 
                             <!-- Số lượng -->
-                            <!--<DataGridTemplateColumn Header="SỐ LƯỢNG"
+                            <DataGridTemplateColumn Header="SỐ LƯỢNG"
                                 Width="80">
 
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
 
-                                        <StackPanel Orientation="Horizontal"
-                                HorizontalAlignment="Center">
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                            <Button Style="{StaticResource ButtonDeleteItemStyle}">
+                                                <svgc:SvgViewbox Source="/Assets/Icons/ico-decrease-quantity.svg" Style="{StaticResource KeypadIconStyle}"/>
+                                            </Button>
+                                            
+                                            <TextBlock Text="{Binding Quantity}" Margin="5,0,5,0" Style="{StaticResource GridViewTextStyleLeft}"/>
 
-                                            <Button Content="-"
-                                Width="10"
-                                Height="10"
-                                Margin="0,0,8,0"/>
-
-                                            <TextBlock Text="{Binding Quantity}"
-                                   VerticalAlignment="Center"
-                                   FontWeight="Bold"
-                                   FontSize="10"/>
-
-                                            <Button Content="+"
-                                Width="10"
-                                Height="10"
-                                Margin="8,0,0,0"/>
-
+                                            <Button Style="{StaticResource ButtonDeleteItemStyle}">
+                                                <svgc:SvgViewbox Source="/Assets/Icons/ico-increase-quantity.svg" Style="{StaticResource KeypadIconStyle}"/>
+                                            </Button>
                                         </StackPanel>
 
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
 
-                            </DataGridTemplateColumn>-->
+                            </DataGridTemplateColumn>
 
                             <!-- Đơn vị -->
-                            <DataGridTextColumn Header="ĐƠN VỊ" Width="60" Binding="{Binding Unit}"/>
+                            <DataGridTextColumn Header="ĐƠN VỊ" Width="60" Binding="{Binding Unit}" ElementStyle="{StaticResource GridViewTextStyleRight}"/>
 
                             <!-- Giảm giá -->
-                            <DataGridTextColumn Header="GIẢM GIÁ" Width="70" Binding="{Binding DiscountPrice}"/>
+                            <DataGridTextColumn Header="GIẢM GIÁ" Width="70" Binding="{Binding DiscountPrice,StringFormat={}{0:N0}}" ElementStyle="{StaticResource GridViewTextStyleRight}"/>
 
                             <!-- Thành tiền -->
-                            <DataGridTextColumn Header="SỐ TIỀN" Width="70" Binding="{Binding TotalPrice}"/>
+                            <DataGridTextColumn Header="SỐ TIỀN" Width="70" Binding="{Binding TotalPrice,StringFormat={}{0:N0}}" ElementStyle="{StaticResource GridViewTextStyleRight}"/>
 
                             <!-- Ghi chú -->
-                            <DataGridTextColumn Header="GHI CHÚ" Width="100" Binding="{Binding Note}"/>
+                            <DataGridTextColumn Header="GHI CHÚ" Width="100" Binding="{Binding Note}" ElementStyle="{StaticResource GridViewTextStyleLeft}"/>
 
                             <DataGridTemplateColumn Header="" Width="40">
                                 <DataGridTemplateColumn.CellTemplate>
