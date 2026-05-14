@@ -10,6 +10,7 @@ namespace POS_App.Dto
         private string _code = string.Empty;
         private string _name = string.Empty;
         private decimal _originalPrice;
+        private decimal _vatPrice;
         private decimal _discountPrice;
         private int _quantity;
         private string _note = string.Empty;
@@ -47,6 +48,16 @@ namespace POS_App.Dto
             {
                 if (SetField(ref _originalPrice, value))
                     OnPropertyChanged(nameof(TotalPrice));
+            }
+        }
+
+        public decimal VATPrice
+        {
+            get => _vatPrice;
+            set
+            {
+                if (SetField(ref _vatPrice, value))
+                    OnPropertyChanged(nameof(VATPrice));
             }
         }
 

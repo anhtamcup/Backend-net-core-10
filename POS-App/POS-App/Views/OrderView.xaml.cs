@@ -17,7 +17,7 @@ namespace POS_App.Views
 
             cartItems = new ObservableCollection<CartItemRow>();
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 5; i++)
             {
                 cartItems.Add(new CartItemRow
                 {
@@ -41,6 +41,7 @@ namespace POS_App.Views
                     System.ComponentModel.ListSortDirection.Descending));
 
             grCartItems.ItemsSource = cvs.View;
+            Calculator();
         }
 
         private void btnPlus_Click(object sender, RoutedEventArgs e)
@@ -51,6 +52,7 @@ namespace POS_App.Views
                 return;
 
             item.Quantity++;
+            Calculator();
         }
 
         private void btnMinus_Click(object sender, RoutedEventArgs e)
@@ -66,6 +68,7 @@ namespace POS_App.Views
             {
                 cartItems.Remove(item);
             }
+            Calculator();
         }
 
         private void btnRemoveItem_Click(object sender, RoutedEventArgs e)
@@ -76,6 +79,30 @@ namespace POS_App.Views
                 return;
 
             cartItems.Remove(item);
+            Calculator();
+        }
+
+        private void Calculator()
+        {
+            var totalItem = cartItems.Sum(item => item.Quantity);
+            var discountPrice = cartItems.Sum(item => item.DiscountPrice);
+            var subTotalAmount = cartItems.Sum(item => item.Quantity * item.OriginalPrice);
+            var totalAmount = cartItems.Sum(item => item.TotalPrice);
+            var vatAmount = cartItems.Sum(item => item.VATPrice);
+            var cartSummary = new CartSummary
+            {
+                TotalItem = totalItem,
+                PromotionAmount = discountPrice,
+                SubTotalAmount = subTotalAmount,
+                TotalAmount = totalAmount,
+                VATAmount = vatAmount
+            };
+
+            summaryTotalItem.Text = cartSummary.TotalItem.ToString();
+            summarySubTotalAmount.Text = cartSummary.SubTotalAmount.ToString("N0") + " đ";
+            summaryPromotionAmount.Text = cartSummary.PromotionAmount.ToString("N0") + " đ";
+            summaryVATAmount.Text = cartSummary.VATAmount.ToString("N0") + " đ";
+            summaryTotalAmount.Text = cartSummary.TotalAmount.ToString("N0") + " đ";
         }
     }
 }
