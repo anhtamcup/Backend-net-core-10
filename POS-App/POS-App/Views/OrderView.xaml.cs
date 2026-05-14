@@ -14,23 +14,22 @@ namespace POS_App.Views
         public OrderView()
         {
             InitializeComponent();
-
             cartItems = new ObservableCollection<CartItemRow>();
 
-            for (int i = 0; i < 5; i++)
-            {
-                cartItems.Add(new CartItemRow
-                {
-                    ID = i,
-                    Index = i + 1,
-                    Code = "0000000" + i,
-                    Name = "Nước suối Lavie 500ml",
-                    OriginalPrice = 10000,
-                    Quantity = 2,
-                    Unit = "Chai",
-                    DiscountPrice = 0
-                });
-            }
+            //for (int i = 0; i < 5; i++)
+            //{
+            //    cartItems.Add(new CartItemRow
+            //    {
+            //        ID = i,
+            //        Index = i + 1,
+            //        Code = "0000000" + i,
+            //        Name = "Nước suối Lavie 500ml",
+            //        OriginalPrice = 10000,
+            //        Quantity = 2,
+            //        Unit = "Chai",
+            //        DiscountPrice = 0
+            //    });
+            //}
 
             cvs = new CollectionViewSource();
             cvs.Source = cartItems;
@@ -103,6 +102,24 @@ namespace POS_App.Views
             summaryPromotionAmount.Text = cartSummary.PromotionAmount.ToString("N0") + " đ";
             summaryVATAmount.Text = cartSummary.VATAmount.ToString("N0") + " đ";
             summaryTotalAmount.Text = cartSummary.TotalAmount.ToString("N0") + " đ";
+        }
+
+        private void btnSearchProduct_Click(object sender, RoutedEventArgs e)
+        {
+            var totalCartItem = cartItems.Count;
+            cartItems.Add(new CartItemRow
+            {
+                ID = 1000,
+                Index = totalCartItem + 1,
+                Code = "0000000",
+                Name = "Nước suối Lavie 500ml",
+                OriginalPrice = 10000,
+                Quantity = 1,
+                Unit = "Chai",
+                DiscountPrice = 0
+            });
+
+            Calculator();
         }
     }
 }

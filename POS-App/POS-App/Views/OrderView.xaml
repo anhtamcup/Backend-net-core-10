@@ -598,7 +598,7 @@
                             </StackPanel>
                         </Button>
 
-                        <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-search-product}">
+                        <Button x:Name="btnSearchProduct" Click="btnSearchProduct_Click" Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-search-product}">
                             <StackPanel>
                                 <svgc:SvgViewbox Source="/Assets/Icons/ico-search-product.svg" Style="{StaticResource ActionButtonIconStyle}"/>
                                 <TextBlock Text="Tìm kiếm SP" Foreground="#78350F" />
