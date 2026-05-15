@@ -257,6 +257,7 @@
             <Setter Property="FontWeight" Value="Regular"/>
             <Setter Property="FontFamily" Value="Be Vietnam Pro"/>
             <Setter Property="Foreground" Value="#2E384E"/>
+            <Setter Property="Margin" Value="0,0,0,5"/>
         </Style>
 
         <Style x:Key="SummarySubtotalPriceValue" TargetType="TextBlock">
@@ -265,7 +266,7 @@
             <Setter Property="FontWeight" Value="Medium"/>
             <Setter Property="FontFamily" Value="Be Vietnam Pro"/>
             <Setter Property="Foreground" Value="#2E384E"/>
-            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Margin" Value="0,0,0,5"/>
         </Style>
 
         <Style x:Key="CustomerSelectedNameLabel" TargetType="TextBlock">
@@ -454,6 +455,7 @@
                         </Grid.ColumnDefinitions>
                         <Grid Grid.Column="0">
                             <Grid.RowDefinitions>
+                                <RowDefinition />
                                 <RowDefinition />
                                 <RowDefinition />
                                 <RowDefinition />
