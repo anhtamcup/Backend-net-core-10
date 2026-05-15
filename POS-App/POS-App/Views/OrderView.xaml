@@ -161,7 +161,7 @@
 
         <Style x:Key="KeypadButtonNumberStyle" TargetType="Button" BasedOn="{StaticResource KeypadNumberBaseStyle}">
             <Setter Property="FontWeight" Value="Medium"/>
-            <Setter Property="FontSize" Value="{StaticResource FontSizeM}"/>
+            <Setter Property="FontSize" Value="{StaticResource FontSizeL}"/>
             <Setter Property="Background" Value="#FFFFFF"/>
         </Style>
 
@@ -555,14 +555,14 @@
                         <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-invoice}">
                             <StackPanel>
                                 <svgc:SvgViewbox Source="/Assets/Icons/ico-invoice.svg" Style="{StaticResource ActionButtonIconStyle}"/>
-                                <TextBlock Text="Bán đặt trước" Foreground="#0C4A6E" />
+                                <TextBlock Text="Bán trước" Foreground="#0C4A6E" />
                             </StackPanel>
                         </Button>
 
                         <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-preorder}">
                             <StackPanel>
                                 <svgc:SvgViewbox Source="/Assets/Icons/ico-preorder.svg" Style="{StaticResource ActionButtonIconStyle}"/>
-                                <TextBlock Text="Nhận đặt trước" Foreground="#0C4A6E" />
+                                <TextBlock Text="Đặt trước" Foreground="#0C4A6E" />
                             </StackPanel>
                         </Button>
 
@@ -597,7 +597,7 @@
                         <Button x:Name="btnSearchProduct" Click="btnSearchProduct_Click" Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-search-product}">
                             <StackPanel>
                                 <svgc:SvgViewbox Source="/Assets/Icons/ico-search-product.svg" Style="{StaticResource ActionButtonIconStyle}"/>
-                                <TextBlock Text="Tìm kiếm SP" Foreground="#78350F" />
+                                <TextBlock Text="Tìm SP" Foreground="#78350F" />
                             </StackPanel>
                         </Button>
 
@@ -611,7 +611,7 @@
                         <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-cancel}">
                             <StackPanel>
                                 <svgc:SvgViewbox Source="/Assets/Icons/ico-cancel.svg" Style="{StaticResource ActionButtonIconStyle}"/>
-                                <TextBlock Text="Hủy giao dịch" Foreground="#7F1D1D" />
+                                <TextBlock Text="Hủy" Foreground="#7F1D1D" />
                             </StackPanel>
                         </Button>
                     </WrapPanel>
