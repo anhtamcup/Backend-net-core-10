@@ -1,0 +1,675 @@
+﻿<UserControl x:Class="POS_App.Views.OrderView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:POS_App.Views" xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             mc:Ignorable="d" >
+
+    <UserControl.Resources>
+        <GridLength x:Key="RightPanelWidth">
+            250
+        </GridLength>
+
+        <sys:Double x:Key="ActionButtonWidth">
+            78
+        </sys:Double>
+
+        <sys:Double x:Key="KeyboardButtonWidth">
+            60
+        </sys:Double>
+
+
+        <!--Màu linear-->
+        <LinearGradientBrush x:Key="backgroundColorHeader" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#0A3D62" Offset="0"/>
+            <GradientStop Color="#134D75" Offset="1"/>
+        </LinearGradientBrush>
+
+        <SolidColorBrush x:Key="bg-button-white" Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="bg-button-gray" Color="#B3D8EE"/>
+        <SolidColorBrush x:Key="keyboard-button-text" Color="#2E384E"/>
+        <LinearGradientBrush x:Key="bg-button-green" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#00A35D" Offset="0"/>
+            <GradientStop Color="#00824A" Offset="1"/>
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="bg-btn-action-refund" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#FDEBE9" Offset="0"/>
+            <GradientStop Color="#FFBAB1" Offset="1"/>
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="bg-btn-action-restore" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#E3F2FB" Offset="0"/>
+            <GradientStop Color="#CCE6F5" Offset="1"/>
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="bg-btn-action-promotion" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#E8F7EF" Offset="0"/>
+            <GradientStop Color="#D3EEDD" Offset="1"/>
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="bg-btn-action-customer" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#E8F7EF" Offset="0"/>
+            <GradientStop Color="#D3EEDD" Offset="1"/>
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="bg-btn-action-discount" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#FEF3C7" Offset="0"/>
+            <GradientStop Color="#FDE68A" Offset="1"/>
+        </LinearGradientBrush>
+
+        <SolidColorBrush x:Key="bg-btn-action-note" Color="#FFFFFF"/>
+
+        <LinearGradientBrush x:Key="bg-btn-action-invoice" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#E3F2FB" Offset="0"/>
+            <GradientStop Color="#CCE6F5" Offset="1"/>
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="bg-btn-action-preorder" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#E3F2FB" Offset="0"/>
+            <GradientStop Color="#CCE6F5" Offset="1"/>
+        </LinearGradientBrush>
+
+        <SolidColorBrush x:Key="bg-btn-action-help" Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="bg-btn-action-print" Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="bg-btn-action-open-cash" Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="bg-btn-action-save" Color="#FFFFFF"/>
+
+        <LinearGradientBrush x:Key="bg-btn-action-search-product" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#FEF3C7" Offset="0"/>
+            <GradientStop Color="#FDE68A" Offset="1"/>
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="bg-btn-action-delivery" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#E3F2FB" Offset="0"/>
+            <GradientStop Color="#CCE6F5" Offset="1"/>
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="bg-btn-action-cancel" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#FDEBE9" Offset="0"/>
+            <GradientStop Color="#FFBAB1" Offset="1"/>
+        </LinearGradientBrush>
+
+
+        <Style x:Key="ButtonBase" TargetType="Button">
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="FontFamily" Value="Be Vietnam Pro"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="5" x:Name="Bd" Background="{TemplateBinding Background}">
+                            <ContentPresenter
+                                Margin="{TemplateBinding Padding}"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"/>
+
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Bd" Property="Opacity" Value="0.7"/>
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+        <Style x:Key="ActionButtonIconStyle" TargetType="svgc:SvgViewbox">
+            <Setter Property="Width" Value="18"/>
+            <Setter Property="Height" Value="18"/>
+            <Setter Property="Margin" Value="0,0,0,8"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+
+        <Style x:Key="ActionButtonStyle" TargetType="Button" BasedOn="{StaticResource ButtonBase}" >
+            <Setter Property="Width" Value="{StaticResource ActionButtonWidth}"/>
+            <Setter Property="FontFamily" Value="Arial"/>
+            <Setter Property="FontWeight" Value="Normal"/>
+            <Setter Property="FontStyle" Value="Normal"/>
+            <Setter Property="FontSize" Value="10"/>
+            <Setter Property="Foreground" Value="#374151"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="Padding" Value="5, 10"/>
+        </Style>
+
+        <Style x:Key="ButonPaymentStyle" TargetType="Button" BasedOn="{StaticResource ButtonBase}" >
+            <Setter Property="Height" Value="42"/>
+            <Setter Property="Background" Value="{StaticResource bg-button-green}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+
+        <Style x:Key="KeypadIconStyle" TargetType="svgc:SvgViewbox">
+            <Setter Property="Width" Value="18"/>
+            <Setter Property="Height" Value="15"/>
+            <Setter Property="Stretch" Value="Uniform"/>
+        </Style>
+
+        <Style x:Key="KeypadNumberBaseStyle" TargetType="Button" BasedOn="{StaticResource ButtonBase}">
+            <Setter Property="Width" Value="{StaticResource KeyboardButtonWidth}"/>
+            <Setter Property="Margin" Value="1"/>
+        </Style>
+
+        <Style x:Key="ButtonDeleteItemStyle" TargetType="Button" BasedOn="{StaticResource ButtonBase}">
+            <Setter Property="Background" Value="Transparent"/>
+        </Style>
+
+        <Style x:Key="ButtonOrderTabStyle" TargetType="Button" BasedOn="{StaticResource ButtonBase}">
+            <Setter Property="Width" Value="70"/>
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="Margin" Value="2,0"/>
+        </Style>
+        <Style x:Key="ButtonAddNewOrderTabStyle" TargetType="Button" BasedOn="{StaticResource ButtonBase}">
+            <Setter Property="Width" Value="25"/>
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="FontSize" Value="18"/>
+        </Style>
+
+        <Style x:Key="KeypadButtonNumberStyle" TargetType="Button" BasedOn="{StaticResource KeypadNumberBaseStyle}">
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Background" Value="#FFFFFF"/>
+        </Style>
+
+        <Style x:Key="KeypadButtonIconStyle" TargetType="Button" BasedOn="{StaticResource KeypadNumberBaseStyle}">
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="Background" Value="#B3D8EE"/>
+            <Setter Property="FontSize" Value="10"/>
+        </Style>
+
+        <Style x:Key="KeypadButtonEnterStyle" TargetType="Button" BasedOn="{StaticResource KeypadNumberBaseStyle}">
+            <Setter Property="Background" Value="{StaticResource bg-button-green}" />
+            <Setter Property="Foreground" Value="#FFFFFF" />
+        </Style>
+
+
+        <Style x:Key="HeaderBoxStyle" TargetType="StackPanel">
+            <Setter Property="Margin" Value="12,0" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+
+        <Style x:Key="HeaderLabelStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="10" />
+            <Setter Property="FontFamily" Value="Be Vietnam Pro"/>
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Foreground" Value="#AFC7DD" />
+        </Style>
+
+        <Style x:Key="HeaderValueStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="FontFamily" Value="JetBrains Mono"/>
+            <Setter Property="FontWeight" Value="Medium" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Margin" Value="0,3,0,0" />
+        </Style>
+
+        <Style x:Key="GridViewTextStyleBase" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="10" />
+            <Setter Property="FontFamily" Value="Be Vietnam Pro"/>
+        </Style>
+
+        <Style x:Key="GridViewTextStyleCenter" TargetType="TextBlock" BasedOn="{StaticResource GridViewTextStyleBase}">
+            <Setter Property="TextAlignment" Value="Center"/>
+        </Style>
+
+        <Style x:Key="GridViewTextStyleLeft" TargetType="TextBlock" BasedOn="{StaticResource GridViewTextStyleBase}">
+            <Setter Property="TextAlignment" Value="Left"/>
+            <Setter Property="Margin" Value="5,0,0,0"/>
+        </Style>
+
+        <Style x:Key="GridViewTextStyleRight" TargetType="TextBlock" BasedOn="{StaticResource GridViewTextStyleBase}">
+            <Setter Property="TextAlignment" Value="Right"/>
+            <Setter Property="Margin" Value="0,0,5,0"/>
+
+        </Style>
+
+
+        <Style x:Key="SummaryTotalPriceLabel" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontFamily" Value="Be Vietnam Pro"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+        </Style>
+
+        <Style x:Key="SummaryTotalPriceValue" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#00824A"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontFamily" Value="Be Vietnam Pro"/>
+        </Style>
+
+        <Style x:Key="SummarySubtotalPriceLabel" TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="Regular"/>
+            <Setter Property="FontFamily" Value="Be Vietnam Pro"/>
+            <Setter Property="Foreground" Value="#2E384E"/>
+        </Style>
+
+        <Style x:Key="SummarySubtotalPriceValue" TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="FontFamily" Value="Be Vietnam Pro"/>
+            <Setter Property="Foreground" Value="#2E384E"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+
+    </UserControl.Resources>
+
+    <Grid Background="#CCD2E3">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Name="panelHeader" Background="{StaticResource backgroundColorHeader}">
+            <!--<Image Source="/Assets/Images/Logo/header-logo.png"
+            Height="25" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>-->
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="130"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Logo -->
+                <StackPanel Grid.Column="0"
+                    Orientation="Horizontal"
+                    VerticalAlignment="Center"
+                    Margin="10,0">
+
+                    <TextBlock Text="S3POS"
+                        FontSize="25"
+                        FontWeight="Bold"
+                        Foreground="White"
+                        VerticalAlignment="Center"/>
+
+                    <Border Width="1"
+                        Background="#8CB3D9"
+                        Margin="30,0,0,0"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Style="{StaticResource HeaderBoxStyle}">
+                    <TextBlock Text="SỐ POS" Style="{StaticResource HeaderLabelStyle}"/>
+                    <TextBlock Text="0016" Style="{StaticResource HeaderValueStyle}"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="2" Style="{StaticResource HeaderBoxStyle}">
+                    <TextBlock Text="MÃ SỐ" Style="{StaticResource HeaderLabelStyle}"/>
+                    <TextBlock Text="0198" Style="{StaticResource HeaderValueStyle}"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="3" Style="{StaticResource HeaderBoxStyle}">
+                    <TextBlock Text="NGÀY THÁNG" Style="{StaticResource HeaderLabelStyle}"/>
+                    <TextBlock Text="28-11-1998 15:02:33" Style="{StaticResource HeaderValueStyle}"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="4" Style="{StaticResource HeaderBoxStyle}">
+                    <TextBlock Text="NHÂN VIÊN" Style="{StaticResource HeaderLabelStyle}"/>
+                    <TextBlock Text="Lê Tâm" Style="{StaticResource HeaderValueStyle}"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="5" Style="{StaticResource HeaderBoxStyle}">
+                    <TextBlock Text="CA LÀM VIỆC" Style="{StaticResource HeaderLabelStyle}"/>
+                    <TextBlock Text="K00001" Style="{StaticResource HeaderValueStyle}"/>
+                </StackPanel>
+            </Grid>
+
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="{StaticResource RightPanelWidth}"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0"
+                Name="panelLeft"
+                Background="#FFFFFF">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+
+                <DataGrid
+                    Name="grCartItems"
+                    AutoGenerateColumns="False"
+                    IsReadOnly="True"
+                    CanUserAddRows="False"
+                    HorizontalGridLinesBrush="#CBD5E1"
+                    VerticalGridLinesBrush="#CBD5E1"
+                    GridLinesVisibility="All"
+                    RowHeight="25"
+                    ColumnHeaderHeight="25"
+                    Background="White"
+                    BorderThickness="0"
+                    FontSize="10"
+                    >
+                    <DataGrid.ColumnHeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Background" Value="#E9EBF3"/>
+                            <Setter Property="Foreground" Value="#5A6B82"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                            <Setter Property="BorderBrush" Value="#CCD2E3"/>
+                            <Setter Property="BorderThickness" Value="0,0,1,1"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        </Style>
+                    </DataGrid.ColumnHeaderStyle>
+                    <DataGrid.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="Focusable" Value="False"/>
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="Background" Value="White"/>
+                            <Setter Property="Foreground" Value="Black"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="Background" Value="White"/>
+                                    <Setter Property="Foreground" Value="Black"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGrid.CellStyle>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="#" Width="25" Binding="{Binding Index, StringFormat={}{0:00}}" ElementStyle="{StaticResource GridViewTextStyleCenter}"/>
+                        <DataGridTextColumn Header="MÃ SP" Width="80" Binding="{Binding Code}" ElementStyle="{StaticResource GridViewTextStyleLeft}"/>
+                        <DataGridTextColumn Header="SẢN PHẨM" Width="*" Binding="{Binding Name}" ElementStyle="{StaticResource GridViewTextStyleLeft}"/>
+                        <DataGridTextColumn Header="GIÁ" Width="70" Binding="{Binding OriginalPrice,StringFormat={}{0:N0}}" ElementStyle="{StaticResource GridViewTextStyleRight}"/>
+                        <DataGridTemplateColumn Header="SỐ LƯỢNG" Width="80">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <Button Style="{StaticResource ButtonDeleteItemStyle}" Name="btnMinus" Click="btnMinus_Click">
+                                            <svgc:SvgViewbox Source="/Assets/Icons/ico-decrease-quantity.svg" Style="{StaticResource KeypadIconStyle}"/>
+                                        </Button>
+                                        <TextBlock Text="{Binding Quantity}" Margin="5,0,5,0" Style="{StaticResource GridViewTextStyleLeft}"/>
+                                        <Button Style="{StaticResource ButtonDeleteItemStyle}" Name="btnPlus" Click="btnPlus_Click">
+                                            <svgc:SvgViewbox Source="/Assets/Icons/ico-increase-quantity.svg" Style="{StaticResource KeypadIconStyle}"/>
+                                        </Button>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="ĐƠN VỊ" Width="60" Binding="{Binding Unit}" ElementStyle="{StaticResource GridViewTextStyleRight}"/>
+                        <DataGridTextColumn Header="GIẢM GIÁ" Width="70" Binding="{Binding DiscountPrice,StringFormat={}{0:N0}}" ElementStyle="{StaticResource GridViewTextStyleRight}"/>
+                        <DataGridTextColumn Header="SỐ TIỀN" Width="70" Binding="{Binding TotalPrice,StringFormat={}{0:N0}}" ElementStyle="{StaticResource GridViewTextStyleRight}"/>
+                        <DataGridTextColumn Header="GHI CHÚ" Width="100" Binding="{Binding Note}" ElementStyle="{StaticResource GridViewTextStyleLeft}"/>
+                        <DataGridTemplateColumn Header="" Width="40">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Style="{StaticResource ButtonDeleteItemStyle}" Name="btnRemoveItem" Click="btnRemoveItem_Click">
+                                        <svgc:SvgViewbox Source="/Assets/Icons/ico-trash.svg" Style="{StaticResource KeypadIconStyle}"/>
+                                    </Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <Border Grid.Row="1"
+                    BorderBrush="#CCD2E3"
+                    BorderThickness="0,1,0,0"
+                    Background="#F6F8FC"
+                    Padding="5">
+
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+
+                        <WrapPanel Grid.Row="0">
+                            <TextBlock Grid.Row="0" Text="Tạm tính (" Style="{StaticResource SummarySubtotalPriceLabel}" />
+                            <TextBlock x:Name="summaryTotalItem" Grid.Row="0" Text="0" Style="{StaticResource SummarySubtotalPriceLabel}" />
+                            <TextBlock Grid.Row="0" Text=" mặt hàng)" Style="{StaticResource SummarySubtotalPriceLabel}" />
+                        </WrapPanel>
+                        <TextBlock Grid.Row="0" x:Name="summarySubTotalAmount" Text="0 đ"  Style="{StaticResource SummarySubtotalPriceValue}" />
+
+                        <TextBlock Grid.Row="1" Text="Khuyến mãi / Giảm giá" Style="{StaticResource SummarySubtotalPriceLabel}" />
+                        <TextBlock Grid.Row="1" x:Name="summaryPromotionAmount" Style="{StaticResource SummarySubtotalPriceValue}" Foreground="#C0392B" Text="0 đ" />
+
+                        <TextBlock Grid.Row="2" Text="VAT (đã bao gồm)" Style="{StaticResource SummarySubtotalPriceLabel}" />
+                        <TextBlock Grid.Row="2" x:Name="summaryVATAmount" Style="{StaticResource SummarySubtotalPriceValue}" Foreground="#5A6B82" Text="0 đ" />
+
+                        <Grid Grid.Row="3">
+                            <Rectangle Height="0.8"
+                            VerticalAlignment="Top"
+                            Stroke="#8A96B3"
+                            StrokeThickness="1"
+                            StrokeDashArray="1 3"
+                            Fill="#2E384E"
+                            IsHitTestVisible="False"/>
+
+                            <!-- CONTENT -->
+                            <Grid Margin="0,8,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="TỔNG CỘNG" Style="{StaticResource SummaryTotalPriceLabel}" />
+                                <TextBlock x:Name="summaryTotalAmount" Text="0 đ" Grid.Column="1" Style="{StaticResource SummaryTotalPriceValue}" />
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Border>
+            </Grid>
+
+
+            <Grid Grid.Column="1"
+                Name="panelRight"
+                Background="#F6F8FC"
+                Margin="1">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25" />
+                    <RowDefinition />
+                    <RowDefinition MaxHeight="250" />
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0" VerticalAlignment="Center" >
+                    <WrapPanel>
+                        <Button Style="{StaticResource ButtonOrderTabStyle}" Background="{StaticResource bg-button-green}">
+                            <StackPanel>
+                                <TextBlock Text="Đơn 1" Foreground="#FFFFFF" FontSize="9" />
+                            </StackPanel>
+                        </Button>
+
+                        <Button Style="{StaticResource ButtonOrderTabStyle}">
+                            <StackPanel>
+                                <TextBlock Text="Đơn 2" Foreground="#2E384E" FontSize="9" />
+                            </StackPanel>
+                        </Button>
+
+                        <Button Style="{StaticResource ButtonAddNewOrderTabStyle}">
+                            <StackPanel>
+                                <TextBlock Text="+" Foreground="#2E384E" />
+                            </StackPanel>
+                        </Button>
+
+                    </WrapPanel>
+                </Grid>
+                <StackPanel Grid.Row="1">
+                    <WrapPanel Name="UniformGridFunctions">
+                        <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-refund}">
+                            <StackPanel>
+                                <svgc:SvgViewbox Source="/Assets/Icons/ico-refund.svg" Style="{StaticResource ActionButtonIconStyle}"/>
+                                <TextBlock Text="Trả hàng" Foreground="#7F1D1D" />
+                            </StackPanel>
+                        </Button>
+
+                        <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-restore}">
+                            <StackPanel>
+                                <svgc:SvgViewbox Source="/Assets/Icons/ico-restore.svg" Style="{StaticResource ActionButtonIconStyle}"/>
+                                <TextBlock Text="Khôi phục" Foreground="#0C4A6E"/>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-promotion}">
+                            <StackPanel>
+                                <svgc:SvgViewbox Source="/Assets/Icons/ico-promotion.svg" Style="{StaticResource ActionButtonIconStyle}"/>
+                                <TextBlock Text="Khuyến mãi" Foreground="#064E30" />
+                            </StackPanel>
+                        </Button>
+
+                        <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-customer}">
+                            <StackPanel>
+                                <svgc:SvgViewbox Source="/Assets/Icons/ico-customer.svg" Style="{StaticResource ActionButtonIconStyle}"/>
+                                <TextBlock Text="Khách hàng" Foreground="#064E30" />
+                            </StackPanel>
+                        </Button>
+
+                        <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-discount}">
+                            <StackPanel>
+                                <svgc:SvgViewbox Source="/Assets/Icons/ico-discount.svg" Style="{StaticResource ActionButtonIconStyle}"/>
+                                <TextBlock Text="Giảm giá" Foreground="#78350F" />
+                            </StackPanel>
+                        </Button>
+
+                        <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-note}">
+                            <StackPanel>
+                                <svgc:SvgViewbox Source="/Assets/Icons/ico-note.svg" Style="{StaticResource ActionButtonIconStyle}"/>
+                                <TextBlock Text="Ghi chú" Foreground="#2E384E" />
+                            </StackPanel>
+                        </Button>
+
+                        <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-invoice}">
+                            <StackPanel>
+                                <svgc:SvgViewbox Source="/Assets/Icons/ico-invoice.svg" Style="{StaticResource ActionButtonIconStyle}"/>
+                                <TextBlock Text="Bán đặt trước" Foreground="#0C4A6E" />
+                            </StackPanel>
+                        </Button>
+
+                        <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-preorder}">
+                            <StackPanel>
+                                <svgc:SvgViewbox Source="/Assets/Icons/ico-preorder.svg" Style="{StaticResource ActionButtonIconStyle}"/>
+                                <TextBlock Text="Nhận đặt trước" Foreground="#0C4A6E" />
+                            </StackPanel>
+                        </Button>
+
+                        <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-help}">
+                            <StackPanel>
+                                <svgc:SvgViewbox Source="/Assets/Icons/ico-help.svg" Style="{StaticResource ActionButtonIconStyle}"/>
+                                <TextBlock Text="Trợ giúp" Foreground="#2E384E" />
+                            </StackPanel>
+                        </Button>
+
+                        <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-print}">
+                            <StackPanel>
+                                <svgc:SvgViewbox Source="/Assets/Icons/ico-print.svg" Style="{StaticResource ActionButtonIconStyle}"/>
+                                <TextBlock Text="In lại hóa đơn" Foreground="#2E384E" />
+                            </StackPanel>
+                        </Button>
+
+                        <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-open-cash}">
+                            <StackPanel>
+                                <svgc:SvgViewbox Source="/Assets/Icons/ico-open-cash.svg" Style="{StaticResource ActionButtonIconStyle}"/>
+                                <TextBlock Text="Mở két tiền" Foreground="#2E384E" />
+                            </StackPanel>
+                        </Button>
+
+                        <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-save}">
+                            <StackPanel>
+                                <svgc:SvgViewbox Source="/Assets/Icons/ico-save.svg" Style="{StaticResource ActionButtonIconStyle}"/>
+                                <TextBlock Text="Lưu đơn" Foreground="#2E384E" />
+                            </StackPanel>
+                        </Button>
+
+                        <Button x:Name="btnSearchProduct" Click="btnSearchProduct_Click" Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-search-product}">
+                            <StackPanel>
+                                <svgc:SvgViewbox Source="/Assets/Icons/ico-search-product.svg" Style="{StaticResource ActionButtonIconStyle}"/>
+                                <TextBlock Text="Tìm kiếm SP" Foreground="#78350F" />
+                            </StackPanel>
+                        </Button>
+
+                        <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-delivery}">
+                            <StackPanel>
+                                <svgc:SvgViewbox Source="/Assets/Icons/ico-delivery.svg" Style="{StaticResource ActionButtonIconStyle}"/>
+                                <TextBlock Text="Giao hàng" Foreground="#0C4A6E" />
+                            </StackPanel>
+                        </Button>
+
+                        <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-cancel}">
+                            <StackPanel>
+                                <svgc:SvgViewbox Source="/Assets/Icons/ico-cancel.svg" Style="{StaticResource ActionButtonIconStyle}"/>
+                                <TextBlock Text="Hủy giao dịch" Foreground="#7F1D1D" />
+                            </StackPanel>
+                        </Button>
+                    </WrapPanel>
+
+                    <Button
+                    Grid.Row="0"
+                    Style="{StaticResource ButonPaymentStyle}"
+                    Content="THANH TOÁN - F12"/>
+                </StackPanel>
+                <Grid Grid.Row="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button Style="{StaticResource KeypadButtonNumberStyle}" Content="7" Grid.Row="0" Grid.Column="0"/>
+                    <Button Style="{StaticResource KeypadButtonNumberStyle}" Content="8" Grid.Row="0" Grid.Column="1"/>
+                    <Button Style="{StaticResource KeypadButtonNumberStyle}" Content="9" Grid.Row="0" Grid.Column="2"/>
+                    <Button Style="{StaticResource KeypadButtonIconStyle}" Grid.Row="0" Grid.Column="3">
+                        <svgc:SvgViewbox Source="/Assets/Icons/ico-remove.svg" Style="{StaticResource KeypadIconStyle}"/>
+                    </Button>
+
+                    <Button Style="{StaticResource KeypadButtonNumberStyle}" Content="4" Grid.Row="1" Grid.Column="0"/>
+                    <Button Style="{StaticResource KeypadButtonNumberStyle}" Content="5" Grid.Row="1" Grid.Column="1"/>
+                    <Button Style="{StaticResource KeypadButtonNumberStyle}" Content="6" Grid.Row="1" Grid.Column="2"/>
+                    <Button Style="{StaticResource KeypadButtonIconStyle}" Grid.Row="1" Grid.Column="3">
+                        <svgc:SvgViewbox Source="/Assets/Icons/ico-up.svg" Style="{StaticResource KeypadIconStyle}"/>
+                    </Button>
+
+                    <Button Style="{StaticResource KeypadButtonNumberStyle}" Content="1" Grid.Row="2" Grid.Column="0"/>
+                    <Button Style="{StaticResource KeypadButtonNumberStyle}" Content="2" Grid.Row="2" Grid.Column="1"/>
+                    <Button Style="{StaticResource KeypadButtonNumberStyle}" Content="3" Grid.Row="2" Grid.Column="2"/>
+                    <Button Style="{StaticResource KeypadButtonIconStyle}" Grid.Row="2" Grid.Column="3">
+                        <svgc:SvgViewbox Source="/Assets/Icons/ico-down.svg" Style="{StaticResource KeypadIconStyle}"/>
+                    </Button>
+                    <Button Style="{StaticResource KeypadButtonNumberStyle}" Content="%" Grid.Row="3" Grid.Column="0"/>
+                    <Button Style="{StaticResource KeypadButtonNumberStyle}" Content="," Grid.Row="3" Grid.Column="1"/>
+                    <Button Style="{StaticResource KeypadButtonNumberStyle}" Content="0" Grid.Row="3" Grid.Column="2"/>
+                    <Button Style="{StaticResource KeypadButtonIconStyle}" Content="CANCEL" Grid.Row="4" Grid.Column="0"/>
+                    <Button Style="{StaticResource KeypadButtonIconStyle}" Content="DEL" Grid.Row="4" Grid.Column="1"/>
+                    <Button Style="{StaticResource KeypadButtonIconStyle}" Content="CLEAR" Grid.Row="4" Grid.Column="2"/>
+                    <Button Style="{StaticResource KeypadButtonEnterStyle}" Content="ENTER" Grid.Row="3" Grid.Column="3" Grid.RowSpan="2"/>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>
