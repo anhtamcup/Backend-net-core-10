@@ -32,6 +32,9 @@
     <None Remove="Assets\Icons\ico-trash.svg" />
     <None Remove="Assets\Icons\ico-up.svg" />
     <None Remove="Assets\Images\Logo\header-logo.png" />
+    <None Remove="Fonts\Inter-Bold.ttf" />
+    <None Remove="Fonts\Inter-Medium.ttf" />
+    <None Remove="Fonts\Inter-Regular.ttf" />
   </ItemGroup>
 
   <ItemGroup>
@@ -99,6 +102,15 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Images\Logo\header-logo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fonts\Inter-Bold.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fonts\Inter-Medium.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fonts\Inter-Regular.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

@@ -5,21 +5,18 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:POS_App.Views" xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
-             mc:Ignorable="d" >
+             mc:Ignorable="d"
+             FontFamily="/Fonts/#Inter"
+             >
 
     <UserControl.Resources>
-        <GridLength x:Key="RightPanelWidth">
-            250
-        </GridLength>
-
-        <sys:Double x:Key="ActionButtonWidth">
-            78
-        </sys:Double>
-
-        <sys:Double x:Key="KeyboardButtonWidth">
-            60
-        </sys:Double>
-
+        <GridLength x:Key="RightPanelWidth">250</GridLength>
+        <sys:Double x:Key="ActionButtonWidth">78</sys:Double>
+        <sys:Double x:Key="KeyboardButtonWidth">60</sys:Double>
+        <sys:Double x:Key="FontSizeS">10</sys:Double>
+        <sys:Double x:Key="FontSizeM">12</sys:Double>
+        <sys:Double x:Key="FontSizeL">14</sys:Double>
+        <sys:Double x:Key="FontSizeXL">16</sys:Double>
 
         <!--Màu linear-->
         <LinearGradientBrush x:Key="backgroundColorHeader" StartPoint="0,0" EndPoint="0,1">
@@ -97,7 +94,6 @@
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
-            <Setter Property="FontFamily" Value="Be Vietnam Pro"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
@@ -130,10 +126,9 @@
 
         <Style x:Key="ActionButtonStyle" TargetType="Button" BasedOn="{StaticResource ButtonBase}" >
             <Setter Property="Width" Value="{StaticResource ActionButtonWidth}"/>
-            <Setter Property="FontFamily" Value="Arial"/>
             <Setter Property="FontWeight" Value="Normal"/>
             <Setter Property="FontStyle" Value="Normal"/>
-            <Setter Property="FontSize" Value="10"/>
+            <Setter Property="FontSize" Value="{StaticResource FontSizeM}"/>
             <Setter Property="Foreground" Value="#374151"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
@@ -146,7 +141,7 @@
             <Setter Property="Background" Value="{StaticResource bg-button-green}"/>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontSize" Value="{StaticResource FontSizeM}"/>
         </Style>
 
         <Style x:Key="KeypadIconStyle" TargetType="svgc:SvgViewbox">
@@ -164,28 +159,16 @@
             <Setter Property="Background" Value="Transparent"/>
         </Style>
 
-        <Style x:Key="ButtonOrderTabStyle" TargetType="Button" BasedOn="{StaticResource ButtonBase}">
-            <Setter Property="Width" Value="70"/>
-            <Setter Property="Height" Value="25"/>
-            <Setter Property="Margin" Value="2,0"/>
-        </Style>
-        <Style x:Key="ButtonAddNewOrderTabStyle" TargetType="Button" BasedOn="{StaticResource ButtonBase}">
-            <Setter Property="Width" Value="25"/>
-            <Setter Property="Height" Value="25"/>
-            <Setter Property="Margin" Value="2"/>
-            <Setter Property="FontSize" Value="18"/>
-        </Style>
-
         <Style x:Key="KeypadButtonNumberStyle" TargetType="Button" BasedOn="{StaticResource KeypadNumberBaseStyle}">
             <Setter Property="FontWeight" Value="Medium"/>
-            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontSize" Value="{StaticResource FontSizeM}"/>
             <Setter Property="Background" Value="#FFFFFF"/>
         </Style>
 
         <Style x:Key="KeypadButtonIconStyle" TargetType="Button" BasedOn="{StaticResource KeypadNumberBaseStyle}">
             <Setter Property="Padding" Value="10"/>
             <Setter Property="Background" Value="#B3D8EE"/>
-            <Setter Property="FontSize" Value="10"/>
+            <Setter Property="FontSize" Value="{StaticResource FontSizeM}"/>
         </Style>
 
         <Style x:Key="KeypadButtonEnterStyle" TargetType="Button" BasedOn="{StaticResource KeypadNumberBaseStyle}">
@@ -200,15 +183,13 @@
         </Style>
 
         <Style x:Key="HeaderLabelStyle" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="10" />
-            <Setter Property="FontFamily" Value="Be Vietnam Pro"/>
+            <Setter Property="FontSize" Value="{StaticResource FontSizeM}" />
             <Setter Property="FontWeight" Value="SemiBold" />
             <Setter Property="Foreground" Value="#AFC7DD" />
         </Style>
 
         <Style x:Key="HeaderValueStyle" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="12" />
-            <Setter Property="FontFamily" Value="JetBrains Mono"/>
+            <Setter Property="FontSize" Value="{StaticResource FontSizeM}" />
             <Setter Property="FontWeight" Value="Medium" />
             <Setter Property="Foreground" Value="White" />
             <Setter Property="Margin" Value="0,3,0,0" />
@@ -216,8 +197,7 @@
 
         <Style x:Key="GridViewTextStyleBase" TargetType="TextBlock">
             <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="FontSize" Value="10" />
-            <Setter Property="FontFamily" Value="Be Vietnam Pro"/>
+            <Setter Property="FontSize" Value="{StaticResource FontSizeM}" />
         </Style>
 
         <Style x:Key="GridViewTextStyleCenter" TargetType="TextBlock" BasedOn="{StaticResource GridViewTextStyleBase}">
@@ -237,50 +217,44 @@
 
 
         <Style x:Key="SummaryTotalPriceLabel" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontSize" Value="{StaticResource FontSizeL}"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="FontFamily" Value="Be Vietnam Pro"/>
             <Setter Property="HorizontalAlignment" Value="Left"/>
         </Style>
 
         <Style x:Key="SummaryTotalPriceValue" TargetType="TextBlock">
             <Setter Property="Foreground" Value="#00824A"/>
             <Setter Property="HorizontalAlignment" Value="Right"/>
-            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontSize" Value="{StaticResource FontSizeXL}"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="FontFamily" Value="Be Vietnam Pro"/>
         </Style>
 
         <Style x:Key="SummarySubtotalPriceLabel" TargetType="TextBlock">
             <Setter Property="HorizontalAlignment" Value="Left"/>
-            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontSize" Value="{StaticResource FontSizeL}"/>
             <Setter Property="FontWeight" Value="Regular"/>
-            <Setter Property="FontFamily" Value="Be Vietnam Pro"/>
             <Setter Property="Foreground" Value="#2E384E"/>
             <Setter Property="Margin" Value="0,0,0,5"/>
         </Style>
 
         <Style x:Key="SummarySubtotalPriceValue" TargetType="TextBlock">
             <Setter Property="HorizontalAlignment" Value="Right"/>
-            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontSize" Value="{StaticResource FontSizeL}"/>
             <Setter Property="FontWeight" Value="Medium"/>
-            <Setter Property="FontFamily" Value="Be Vietnam Pro"/>
             <Setter Property="Foreground" Value="#2E384E"/>
             <Setter Property="Margin" Value="0,0,0,5"/>
         </Style>
 
         <Style x:Key="CustomerSelectedNameLabel" TargetType="TextBlock">
             <Setter Property="Foreground" Value="#2E384E"/>
-            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontSize" Value="{StaticResource FontSizeL}"/>
             <Setter Property="FontWeight" Value="Regular"/>
-            <Setter Property="FontFamily" Value="Be Vietnam Pro"/>
         </Style>
         
         <Style x:Key="CustomerSelectedNameValue" TargetType="TextBlock">
             <Setter Property="Foreground" Value="#2E384E"/>
-            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontSize" Value="{StaticResource FontSizeL}"/>
             <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="FontFamily" Value="Be Vietnam Pro"/>
         </Style>
 
     </UserControl.Resources>
@@ -381,7 +355,7 @@
                     ColumnHeaderHeight="25"
                     Background="White"
                     BorderThickness="0"
-                    FontSize="10"
+                    FontSize="{StaticResource FontSizeM}"
                     >
                     <DataGrid.ColumnHeaderStyle>
                         <Style TargetType="DataGridColumnHeader">
@@ -497,7 +471,7 @@
                         </Grid>
                         <Border
                             Grid.Column="1"
-                            Width="250"
+                            Width="200"
                             BorderBrush="#CCD2E3"
                             BorderThickness="1,0,0,0"
                             Background="#F6F8FC"
@@ -512,10 +486,10 @@
                                 </Grid.RowDefinitions>
 
                                 <TextBlock Grid.Row="0" Text="Thành viên:" Style="{StaticResource CustomerSelectedNameLabel}" />
-                                <TextBlock Grid.Row="1" x:Name="customerSelectedName" Text="Nguyễn Thị Bảo Nghi" Style="{StaticResource CustomerSelectedNameValue}"/>
+                                <TextBlock Grid.Row="1" x:Name="customerSelectedName" Text="Nguyễn Bảo Nghi" Style="{StaticResource CustomerSelectedNameValue}"/>
                                 <WrapPanel Grid.Row="2">
                                     <TextBlock Text="Điểm hiện tại: " HorizontalAlignment="Left" Style="{StaticResource CustomerSelectedNameLabel}" />
-                                    <TextBlock Text="0" HorizontalAlignment="Right" Style="{StaticResource CustomerSelectedNameValue}"/>
+                                    <TextBlock Text="10.000 điểm" HorizontalAlignment="Right" Style="{StaticResource CustomerSelectedNameValue}"/>
                                 </WrapPanel>
                             </Grid>
                         </Border>
@@ -602,7 +576,7 @@
                         <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-print}">
                             <StackPanel>
                                 <svgc:SvgViewbox Source="/Assets/Icons/ico-print.svg" Style="{StaticResource ActionButtonIconStyle}"/>
-                                <TextBlock Text="In lại hóa đơn" Foreground="#2E384E" />
+                                <TextBlock Text="In hóa đơn" Foreground="#2E384E" />
                             </StackPanel>
                         </Button>
 
