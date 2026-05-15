@@ -107,6 +107,7 @@ namespace S3.Gateway.Integrations.Ekyc.Napas
             public string BranchAccount { get; set; } = string.Empty;
             public string BranchBankId { get; set; } = string.Empty;
             public string BeneficiaryName { get; set; } = string.Empty;
+            public string BranchAlias { get; set; } = string.Empty;
         }
     }
 
