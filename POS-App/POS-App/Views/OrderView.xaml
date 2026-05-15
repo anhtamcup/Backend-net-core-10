@@ -178,12 +178,12 @@
 
 
         <Style x:Key="HeaderBoxStyle" TargetType="StackPanel">
-            <Setter Property="Margin" Value="12,0" />
+            <Setter Property="Margin" Value="0,0,10,0" />
             <Setter Property="VerticalAlignment" Value="Center" />
         </Style>
 
         <Style x:Key="HeaderLabelStyle" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="{StaticResource FontSizeM}" />
+            <Setter Property="FontSize" Value="{StaticResource FontSizeS}" />
             <Setter Property="FontWeight" Value="SemiBold" />
             <Setter Property="Foreground" Value="#AFC7DD" />
         </Style>
@@ -276,10 +276,10 @@
 
             <Grid Grid.Column="0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="130"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="140"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
@@ -288,19 +288,18 @@
                 <StackPanel Grid.Column="0"
                     Orientation="Horizontal"
                     VerticalAlignment="Center"
-                    Margin="10,0">
-
+                    Margin="10,0,0,0">
                     <TextBlock Text="S3POS"
                         FontSize="25"
                         FontWeight="Bold"
                         Foreground="White"
                         VerticalAlignment="Center"/>
-
                     <Border Width="1"
-                        Background="#8CB3D9"
-                        Margin="30,0,0,0"/>
-                </StackPanel>
+                        Background="#FFFFFF"
+                        Margin="10,0"/>
 
+                </StackPanel>
+        
                 <StackPanel Grid.Column="1" Style="{StaticResource HeaderBoxStyle}">
                     <TextBlock Text="SỐ POS" Style="{StaticResource HeaderLabelStyle}"/>
                     <TextBlock Text="0016" Style="{StaticResource HeaderValueStyle}"/>
@@ -313,7 +312,7 @@
 
                 <StackPanel Grid.Column="3" Style="{StaticResource HeaderBoxStyle}">
                     <TextBlock Text="NGÀY THÁNG" Style="{StaticResource HeaderLabelStyle}"/>
-                    <TextBlock Text="28-11-1998 15:02:33" Style="{StaticResource HeaderValueStyle}"/>
+                    <TextBlock Text="{Binding CurrentTime}" Style="{StaticResource HeaderValueStyle}"/>
                 </StackPanel>
 
                 <StackPanel Grid.Column="4" Style="{StaticResource HeaderBoxStyle}">

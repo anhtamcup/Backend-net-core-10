@@ -1,4 +1,5 @@
-﻿using POS_App.Views;
+﻿using POS_App.Dto;
+using POS_App.Views;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -19,10 +20,10 @@ namespace POS_App
     {
         public MainWindow()
         {
-            RenderOptions.ProcessRenderMode =
-                System.Windows.Interop.RenderMode.SoftwareOnly;
+            RenderOptions.ProcessRenderMode = System.Windows.Interop.RenderMode.SoftwareOnly;
             InitializeComponent();
             MainContent.Content = new OrderView();
+            DataContext = new HeaderView();
         }
     }
 }
