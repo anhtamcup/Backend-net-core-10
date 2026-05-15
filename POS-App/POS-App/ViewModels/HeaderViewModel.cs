@@ -55,9 +55,6 @@ namespace POS_App.ViewModels
             ShiftID = "SHIFT-A";
             StaffName = "Lê Anh Tâm";
 
-            CurrentTime =
-                DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
-
             var timer = new DispatcherTimer
             {
                 Interval = TimeSpan.FromSeconds(1)
