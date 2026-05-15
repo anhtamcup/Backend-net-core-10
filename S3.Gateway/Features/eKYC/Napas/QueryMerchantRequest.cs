@@ -23,7 +23,8 @@ namespace S3.Gateway.Features.Ekyc.Napas
             try
             {
                 var data = await _napasClient.QueryMerchant(request);
-                response.IsSuccess = true;
+                response.Data = data;
+                response.IsSuccess = (data != null);
                 return response;
             }
             catch
