@@ -13,6 +13,9 @@ namespace POS_App.ViewModels
         public CartSummaryViewModel Summary { get; }
             = new();
 
+        public HeaderViewModel Header { get; }
+            = new();
+
         public ObservableCollection<CartItemRow> CartItems
         { get; } = new();
 

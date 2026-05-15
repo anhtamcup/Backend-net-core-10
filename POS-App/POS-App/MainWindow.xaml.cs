@@ -23,7 +23,6 @@ namespace POS_App
             RenderOptions.ProcessRenderMode = System.Windows.Interop.RenderMode.SoftwareOnly;
             InitializeComponent();
             MainContent.Content = new OrderView();
-            DataContext = new HeaderView();
         }
     }
 }
