@@ -343,6 +343,7 @@
                 </Grid.RowDefinitions>
 
                 <DataGrid
+                    ItemsSource="{Binding CartItemsView}"
                     Name="grCartItems"
                     AutoGenerateColumns="False"
                     IsReadOnly="True"
@@ -435,18 +436,14 @@
                                 <RowDefinition />
                             </Grid.RowDefinitions>
 
-                            <WrapPanel Grid.Row="0">
-                                <TextBlock Grid.Row="0" Text="Tạm tính (" Style="{StaticResource SummarySubtotalPriceLabel}" />
-                                <TextBlock x:Name="summaryTotalItem" Grid.Row="0" Text="0" Style="{StaticResource SummarySubtotalPriceLabel}" />
-                                <TextBlock Grid.Row="0" Text=" mặt hàng)" Style="{StaticResource SummarySubtotalPriceLabel}" />
-                            </WrapPanel>
-                            <TextBlock Grid.Row="0" x:Name="summarySubTotalAmount" Text="0 đ"  Style="{StaticResource SummarySubtotalPriceValue}" />
+                            <TextBlock Grid.Row="0" Text="{Binding Summary.ItemCount, StringFormat='Tổng: {0} sản phẩm'}" Style="{StaticResource SummarySubtotalPriceLabel}" />
+                            <TextBlock Grid.Row="0" Text="{Binding Summary.SubTotalAmount,StringFormat='{}{0:N0} đ'}" Style="{StaticResource SummarySubtotalPriceValue}" />
 
                             <TextBlock Grid.Row="1" Text="Khuyến mãi / Giảm giá" Style="{StaticResource SummarySubtotalPriceLabel}" />
-                            <TextBlock Grid.Row="1" x:Name="summaryPromotionAmount" Style="{StaticResource SummarySubtotalPriceValue}" Foreground="#C0392B" Text="0 đ" />
+                            <TextBlock Grid.Row="1" Text="{Binding Summary.PromotionAmount,StringFormat='{}{0:N0} đ'}" Style="{StaticResource SummarySubtotalPriceValue}" Foreground="#C0392B" />
 
                             <TextBlock Grid.Row="2" Text="VAT (đã bao gồm)" Style="{StaticResource SummarySubtotalPriceLabel}" />
-                            <TextBlock Grid.Row="2" x:Name="summaryVATAmount" Style="{StaticResource SummarySubtotalPriceValue}" Foreground="#5A6B82" Text="0 đ" />
+                            <TextBlock Grid.Row="2" Text="{Binding Summary.VATAmount,StringFormat='{}{0:N0} đ'}" Style="{StaticResource SummarySubtotalPriceValue}" Foreground="#5A6B82" />
 
                             <Grid Grid.Row="3">
                                 <Rectangle Height="0.8"
@@ -464,7 +461,7 @@
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
                                     <TextBlock Text="TỔNG CỘNG" Style="{StaticResource SummaryTotalPriceLabel}" />
-                                    <TextBlock x:Name="summaryTotalAmount" Text="0 đ" Grid.Column="1" Style="{StaticResource SummaryTotalPriceValue}" />
+                                    <TextBlock Text="{Binding Summary.TotalAmount,StringFormat='{}{0:N0} đ'}" Grid.Column="1" Style="{StaticResource SummaryTotalPriceValue}" />
                                 </Grid>
                             </Grid>
                         </Grid>
