@@ -268,6 +268,20 @@
             <Setter Property="Margin" Value="5"/>
         </Style>
 
+        <Style x:Key="CustomerSelectedNameLabel" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#2E384E"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="Regular"/>
+            <Setter Property="FontFamily" Value="Be Vietnam Pro"/>
+        </Style>
+        
+        <Style x:Key="CustomerSelectedNameValue" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#2E384E"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontFamily" Value="Be Vietnam Pro"/>
+        </Style>
+
     </UserControl.Resources>
 
     <Grid Background="#CCD2E3">
@@ -415,7 +429,7 @@
                         <DataGridTextColumn Header="ĐƠN VỊ" Width="60" Binding="{Binding Unit}" ElementStyle="{StaticResource GridViewTextStyleRight}"/>
                         <DataGridTextColumn Header="GIẢM GIÁ" Width="70" Binding="{Binding DiscountPrice,StringFormat={}{0:N0}}" ElementStyle="{StaticResource GridViewTextStyleRight}"/>
                         <DataGridTextColumn Header="SỐ TIỀN" Width="70" Binding="{Binding TotalPrice,StringFormat={}{0:N0}}" ElementStyle="{StaticResource GridViewTextStyleRight}"/>
-                        <DataGridTextColumn Header="GHI CHÚ" Width="100" Binding="{Binding Note}" ElementStyle="{StaticResource GridViewTextStyleLeft}"/>
+                        <DataGridTextColumn Header="GHI CHÚ" Width="60" Binding="{Binding Note}" ElementStyle="{StaticResource GridViewTextStyleLeft}"/>
                         <DataGridTemplateColumn Header="" Width="40">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
@@ -432,48 +446,77 @@
                     BorderBrush="#CCD2E3"
                     BorderThickness="0,1,0,0"
                     Background="#F6F8FC"
-                    Padding="5">
-
+                    Padding="10">
                     <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
 
-                        <WrapPanel Grid.Row="0">
-                            <TextBlock Grid.Row="0" Text="Tạm tính (" Style="{StaticResource SummarySubtotalPriceLabel}" />
-                            <TextBlock x:Name="summaryTotalItem" Grid.Row="0" Text="0" Style="{StaticResource SummarySubtotalPriceLabel}" />
-                            <TextBlock Grid.Row="0" Text=" mặt hàng)" Style="{StaticResource SummarySubtotalPriceLabel}" />
-                        </WrapPanel>
-                        <TextBlock Grid.Row="0" x:Name="summarySubTotalAmount" Text="0 đ"  Style="{StaticResource SummarySubtotalPriceValue}" />
+                            <WrapPanel Grid.Row="0">
+                                <TextBlock Grid.Row="0" Text="Tạm tính (" Style="{StaticResource SummarySubtotalPriceLabel}" />
+                                <TextBlock x:Name="summaryTotalItem" Grid.Row="0" Text="0" Style="{StaticResource SummarySubtotalPriceLabel}" />
+                                <TextBlock Grid.Row="0" Text=" mặt hàng)" Style="{StaticResource SummarySubtotalPriceLabel}" />
+                            </WrapPanel>
+                            <TextBlock Grid.Row="0" x:Name="summarySubTotalAmount" Text="0 đ"  Style="{StaticResource SummarySubtotalPriceValue}" />
 
-                        <TextBlock Grid.Row="1" Text="Khuyến mãi / Giảm giá" Style="{StaticResource SummarySubtotalPriceLabel}" />
-                        <TextBlock Grid.Row="1" x:Name="summaryPromotionAmount" Style="{StaticResource SummarySubtotalPriceValue}" Foreground="#C0392B" Text="0 đ" />
+                            <TextBlock Grid.Row="1" Text="Khuyến mãi / Giảm giá" Style="{StaticResource SummarySubtotalPriceLabel}" />
+                            <TextBlock Grid.Row="1" x:Name="summaryPromotionAmount" Style="{StaticResource SummarySubtotalPriceValue}" Foreground="#C0392B" Text="0 đ" />
 
-                        <TextBlock Grid.Row="2" Text="VAT (đã bao gồm)" Style="{StaticResource SummarySubtotalPriceLabel}" />
-                        <TextBlock Grid.Row="2" x:Name="summaryVATAmount" Style="{StaticResource SummarySubtotalPriceValue}" Foreground="#5A6B82" Text="0 đ" />
+                            <TextBlock Grid.Row="2" Text="VAT (đã bao gồm)" Style="{StaticResource SummarySubtotalPriceLabel}" />
+                            <TextBlock Grid.Row="2" x:Name="summaryVATAmount" Style="{StaticResource SummarySubtotalPriceValue}" Foreground="#5A6B82" Text="0 đ" />
 
-                        <Grid Grid.Row="3">
-                            <Rectangle Height="0.8"
-                            VerticalAlignment="Top"
-                            Stroke="#8A96B3"
-                            StrokeThickness="1"
-                            StrokeDashArray="1 3"
-                            Fill="#2E384E"
-                            IsHitTestVisible="False"/>
+                            <Grid Grid.Row="3">
+                                <Rectangle Height="0.8"
+                                    VerticalAlignment="Top"
+                                    Stroke="#8A96B3"
+                                    StrokeThickness="1"
+                                    StrokeDashArray="1 3"
+                                    Fill="#2E384E"
+                                    IsHitTestVisible="False"/>
 
-                            <!-- CONTENT -->
-                            <Grid Margin="0,8,0,0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Text="TỔNG CỘNG" Style="{StaticResource SummaryTotalPriceLabel}" />
-                                <TextBlock x:Name="summaryTotalAmount" Text="0 đ" Grid.Column="1" Style="{StaticResource SummaryTotalPriceValue}" />
+                                <!-- CONTENT -->
+                                <Grid Margin="0,8,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="TỔNG CỘNG" Style="{StaticResource SummaryTotalPriceLabel}" />
+                                    <TextBlock x:Name="summaryTotalAmount" Text="0 đ" Grid.Column="1" Style="{StaticResource SummaryTotalPriceValue}" />
+                                </Grid>
                             </Grid>
                         </Grid>
+                        <Border
+                            Grid.Column="1"
+                            Width="250"
+                            BorderBrush="#CCD2E3"
+                            BorderThickness="1,0,0,0"
+                            Background="#F6F8FC"
+                            Margin="10,0,0,0"
+                            Padding="10,0,0,0" >
+                            
+                            <Grid >
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+
+                                <TextBlock Grid.Row="0" Text="Thành viên:" Style="{StaticResource CustomerSelectedNameLabel}" />
+                                <TextBlock Grid.Row="1" x:Name="customerSelectedName" Text="Nguyễn Thị Bảo Nghi" Style="{StaticResource CustomerSelectedNameValue}"/>
+                                <WrapPanel Grid.Row="2">
+                                    <TextBlock Text="Điểm hiện tại: " HorizontalAlignment="Left" Style="{StaticResource CustomerSelectedNameLabel}" />
+                                    <TextBlock Text="0" HorizontalAlignment="Right" Style="{StaticResource CustomerSelectedNameValue}"/>
+                                </WrapPanel>
+                            </Grid>
+                        </Border>
                     </Grid>
                 </Border>
             </Grid>
@@ -481,38 +524,15 @@
 
             <Grid Grid.Column="1"
                 Name="panelRight"
-                Background="#F6F8FC"
+                Background="#DCE5EF"
                 Margin="1">
 
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="25" />
                     <RowDefinition />
                     <RowDefinition MaxHeight="250" />
                 </Grid.RowDefinitions>
 
-                <Grid Grid.Row="0" VerticalAlignment="Center" >
-                    <WrapPanel>
-                        <Button Style="{StaticResource ButtonOrderTabStyle}" Background="{StaticResource bg-button-green}">
-                            <StackPanel>
-                                <TextBlock Text="Đơn 1" Foreground="#FFFFFF" FontSize="9" />
-                            </StackPanel>
-                        </Button>
-
-                        <Button Style="{StaticResource ButtonOrderTabStyle}">
-                            <StackPanel>
-                                <TextBlock Text="Đơn 2" Foreground="#2E384E" FontSize="9" />
-                            </StackPanel>
-                        </Button>
-
-                        <Button Style="{StaticResource ButtonAddNewOrderTabStyle}">
-                            <StackPanel>
-                                <TextBlock Text="+" Foreground="#2E384E" />
-                            </StackPanel>
-                        </Button>
-
-                    </WrapPanel>
-                </Grid>
-                <StackPanel Grid.Row="1">
+                <StackPanel Grid.Row="0">
                     <WrapPanel Name="UniformGridFunctions">
                         <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-refund}">
                             <StackPanel>
@@ -625,7 +645,7 @@
                     Style="{StaticResource ButonPaymentStyle}"
                     Content="THANH TOÁN - F12"/>
                 </StackPanel>
-                <Grid Grid.Row="2">
+                <Grid Grid.Row="1">
                     <Grid.RowDefinitions>
                         <RowDefinition/>
                         <RowDefinition/>
