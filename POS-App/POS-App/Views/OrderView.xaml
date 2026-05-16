@@ -250,13 +250,25 @@
             <Setter Property="FontSize" Value="{StaticResource FontSizeL}"/>
             <Setter Property="FontWeight" Value="Regular"/>
         </Style>
-        
+
         <Style x:Key="CustomerSelectedNameValue" TargetType="TextBlock">
             <Setter Property="Foreground" Value="#2E384E"/>
             <Setter Property="FontSize" Value="{StaticResource FontSizeL}"/>
             <Setter Property="FontWeight" Value="Bold"/>
         </Style>
 
+        <Style x:Key="ButtonHeaderStyle" TargetType="Button" BasedOn="{StaticResource ButtonBase}">
+            <Setter Property="Background" Value="#1AFFFFFF"/>
+            <Setter Property="Height" Value="28"/>
+            <Setter Property="Width" Value="28"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Margin" Value="0, 0, 10, 0"/>
+        </Style>
+
+        <Style x:Key="IconButtonHeaderStyle" TargetType="svgc:SvgViewbox">
+            <Setter Property="Height" Value="15"/>
+            <Setter Property="Width" Value="15"/>
+        </Style>
     </UserControl.Resources>
 
     <Grid Background="#CCD2E3">
@@ -266,22 +278,16 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0" Name="panelHeader" Background="{StaticResource backgroundColorHeader}">
-            <!--<Image Source="/Assets/Images/Logo/header-logo.png"
-            Height="25" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>-->
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-
-            <Grid Grid.Column="0" DataContext="{Binding Header}">
+            <Grid DataContext="{Binding Header}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="140"/>
                     <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
                 <!-- Logo -->
@@ -299,7 +305,7 @@
                         Margin="10,0"/>
 
                 </StackPanel>
-        
+
                 <StackPanel Grid.Column="1" Style="{StaticResource HeaderBoxStyle}">
                     <TextBlock Text="SỐ POS" Style="{StaticResource HeaderLabelStyle}"/>
                     <TextBlock Text="{Binding POSNumber}" Style="{StaticResource HeaderValueStyle}"/>
@@ -324,6 +330,32 @@
                     <TextBlock Text="CA LÀM VIỆC" Style="{StaticResource HeaderLabelStyle}"/>
                     <TextBlock Text="{Binding ShiftID}" Style="{StaticResource HeaderValueStyle}"/>
                 </StackPanel>
+
+                <WrapPanel Grid.Column="6" HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <Button Style="{StaticResource ButtonHeaderStyle}" >
+                        <svgc:SvgViewbox Style="{StaticResource IconButtonHeaderStyle}" Source="/Assets/Icons/ico-setting.svg"/>
+                    </Button>
+
+                    <Button Style="{StaticResource ButtonHeaderStyle}" >
+                        <svgc:SvgViewbox Style="{StaticResource IconButtonHeaderStyle}" Source="/Assets/Icons/ico-report.svg"/>
+                    </Button>
+
+                    <Button Style="{StaticResource ButtonHeaderStyle}" >
+                        <svgc:SvgViewbox Style="{StaticResource IconButtonHeaderStyle}" Source="/Assets/Icons/ico-history.svg"/>
+                    </Button>
+
+                    <Button Style="{StaticResource ButtonHeaderStyle}" >
+                        <svgc:SvgViewbox Style="{StaticResource IconButtonHeaderStyle}" Source="/Assets/Icons/ico-destop.svg"/>
+                    </Button>
+
+                    <Button Style="{StaticResource ButtonHeaderStyle}" >
+                        <svgc:SvgViewbox Style="{StaticResource IconButtonHeaderStyle}" Source="/Assets/Icons/ico-lock.svg"/>
+                    </Button>
+
+                    <Button Style="{StaticResource ButtonHeaderStyle}" >
+                        <svgc:SvgViewbox Style="{StaticResource IconButtonHeaderStyle}" Source="/Assets/Icons/ico-log-out.svg"/>
+                    </Button>
+                </WrapPanel>
             </Grid>
 
         </Grid>
@@ -389,22 +421,43 @@
                         <DataGridTemplateColumn Header="SỐ LƯỢNG" Width="80">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
+  
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                        <Button Style="{StaticResource ButtonDeleteItemStyle}" Name="btnMinus" Click="btnMinus_Click">
+
+                                        <Button Style="{StaticResource ButtonDeleteItemStyle}"
+                                            Name="btnMinus"
+                                            Click="btnMinus_Click">
                                             <svgc:SvgViewbox Source="/Assets/Icons/ico-decrease-quantity.svg" Style="{StaticResource KeypadIconStyle}"/>
                                         </Button>
-                                        <TextBlock Text="{Binding Quantity}" Margin="5,0,5,0" Style="{StaticResource GridViewTextStyleLeft}"/>
-                                        <Button Style="{StaticResource ButtonDeleteItemStyle}" Name="btnPlus" Click="btnPlus_Click">
+
+                                        <TextBox
+                                            x:Name="tbQuantity"
+                                            Width="30"
+                                            Margin="5,0"
+                                            PreviewTextInput="tbQuantity_PreviewTextInput"
+                                            TextChanged="tbQuantity_TextChanged"
+                                            Text="{Binding Quantity, UpdateSourceTrigger=PropertyChanged}"
+                                            HorizontalContentAlignment="Center"
+                                            VerticalContentAlignment="Center"
+                                            Background="Transparent"
+                                            BorderThickness="0"
+                                            Foreground="Black"/>
+
+                                        <Button Style="{StaticResource ButtonDeleteItemStyle}"
+                                            Name="btnPlus"
+                                            Click="btnPlus_Click">
                                             <svgc:SvgViewbox Source="/Assets/Icons/ico-increase-quantity.svg" Style="{StaticResource KeypadIconStyle}"/>
                                         </Button>
+
                                     </StackPanel>
+                                    
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
                         <DataGridTextColumn Header="ĐƠN VỊ" Width="60" Binding="{Binding Unit}" ElementStyle="{StaticResource GridViewTextStyleRight}"/>
                         <DataGridTextColumn Header="GIẢM GIÁ" Width="70" Binding="{Binding DiscountPrice,StringFormat={}{0:N0}}" ElementStyle="{StaticResource GridViewTextStyleRight}"/>
                         <DataGridTextColumn Header="SỐ TIỀN" Width="70" Binding="{Binding TotalPrice,StringFormat={}{0:N0}}" ElementStyle="{StaticResource GridViewTextStyleRight}"/>
-                        <DataGridTextColumn Header="GHI CHÚ" Width="60" Binding="{Binding Note}" ElementStyle="{StaticResource GridViewTextStyleLeft}"/>
+                        <DataGridTextColumn Header="GHI CHÚ" Width="60" Binding="{Binding Note}" ElementStyle="{StaticResource GridViewTextStyleLeft}" />
                         <DataGridTemplateColumn Header="" Width="40">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
@@ -473,8 +526,8 @@
                             Background="#F6F8FC"
                             Margin="10,0,0,0"
                             Padding="10,0,0,0" >
-                            
-                            <Grid >
+
+                            <Grid DataContext="{Binding Customer}" >
                                 <Grid.RowDefinitions>
                                     <RowDefinition />
                                     <RowDefinition />
@@ -482,10 +535,10 @@
                                 </Grid.RowDefinitions>
 
                                 <TextBlock Grid.Row="0" Text="Thành viên:" Style="{StaticResource CustomerSelectedNameLabel}" />
-                                <TextBlock Grid.Row="1" x:Name="customerSelectedName" Text="Nguyễn Bảo Nghi" Style="{StaticResource CustomerSelectedNameValue}"/>
+                                <TextBlock Grid.Row="1" x:Name="customerSelectedName" Text="{Binding Name}" Style="{StaticResource CustomerSelectedNameValue}"/>
                                 <WrapPanel Grid.Row="2">
                                     <TextBlock Text="Điểm hiện tại: " HorizontalAlignment="Left" Style="{StaticResource CustomerSelectedNameLabel}" />
-                                    <TextBlock Text="10.000 điểm" HorizontalAlignment="Right" Style="{StaticResource CustomerSelectedNameValue}"/>
+                                    <TextBlock Text="{Binding Point}" HorizontalAlignment="Right" Style="{StaticResource CustomerSelectedNameValue}"/>
                                 </WrapPanel>
                             </Grid>
                         </Border>

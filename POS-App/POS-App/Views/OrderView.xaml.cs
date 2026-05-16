@@ -65,5 +65,15 @@ namespace POS_App.Views
         {
             VM.AddCart();
         }
+
+        private void tbQuantity_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        {
+            e.Handled = !int.TryParse(e.Text, out _);
+        }
+
+        private void tbQuantity_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            VM.Recalculate();
+        }
     }
 }

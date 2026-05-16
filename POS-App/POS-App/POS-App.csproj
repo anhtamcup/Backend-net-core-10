@@ -14,11 +14,15 @@
     <None Remove="Assets\Icons\ico-customer.svg" />
     <None Remove="Assets\Icons\ico-decrease-quantity.svg" />
     <None Remove="Assets\Icons\ico-delivery.svg" />
+    <None Remove="Assets\Icons\ico-destop.svg" />
     <None Remove="Assets\Icons\ico-discount.svg" />
     <None Remove="Assets\Icons\ico-down.svg" />
     <None Remove="Assets\Icons\ico-help.svg" />
+    <None Remove="Assets\Icons\ico-history.svg" />
     <None Remove="Assets\Icons\ico-increase-quantity.svg" />
     <None Remove="Assets\Icons\ico-invoice.svg" />
+    <None Remove="Assets\Icons\ico-lock.svg" />
+    <None Remove="Assets\Icons\ico-log-out.svg" />
     <None Remove="Assets\Icons\ico-note.svg" />
     <None Remove="Assets\Icons\ico-open-cash.svg" />
     <None Remove="Assets\Icons\ico-preorder.svg" />
@@ -26,9 +30,11 @@
     <None Remove="Assets\Icons\ico-promotion.svg" />
     <None Remove="Assets\Icons\ico-refund.svg" />
     <None Remove="Assets\Icons\ico-remove.svg" />
+    <None Remove="Assets\Icons\ico-report.svg" />
     <None Remove="Assets\Icons\ico-restore.svg" />
     <None Remove="Assets\Icons\ico-save.svg" />
     <None Remove="Assets\Icons\ico-search-product.svg" />
+    <None Remove="Assets\Icons\ico-setting.svg" />
     <None Remove="Assets\Icons\ico-trash.svg" />
     <None Remove="Assets\Icons\ico-up.svg" />
     <None Remove="Assets\Images\Logo\header-logo.png" />
@@ -50,6 +56,9 @@
     <Content Include="Assets\Icons\ico-delivery.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\Icons\ico-destop.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\Icons\ico-discount.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -59,10 +68,19 @@
     <Content Include="Assets\Icons\ico-help.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\Icons\ico-history.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\Icons\ico-increase-quantity.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Icons\ico-invoice.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Icons\ico-lock.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Icons\ico-log-out.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Icons\ico-note.svg">
@@ -86,6 +104,9 @@
     <Content Include="Assets\Icons\ico-remove.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\Icons\ico-report.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\Icons\ico-restore.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -93,6 +114,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Icons\ico-search-product.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Icons\ico-setting.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Icons\ico-trash.svg">

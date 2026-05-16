@@ -35,6 +35,12 @@ namespace POS_App.ViewModels
             AddCart();
         }
 
+        public void Recalculate()
+        {
+            Summary.Recalculate(CartItems);
+        }
+
+
         public void AddCart()
         {
             CartItems.Add(new CartItemRow
