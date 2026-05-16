@@ -4,8 +4,12 @@
              xmlns:local="clr-namespace:POS_App"
              StartupUri="MainWindow.xaml"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:converter="clr-namespace:POS_App.Converters"
             >
     <Application.Resources>
+
+        <converter:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
+        
         <GridLength x:Key="RightPanelWidth">250</GridLength>
         <sys:Double x:Key="ActionButtonWidth">78</sys:Double>
         <sys:Double x:Key="KeyboardButtonWidth">60</sys:Double>

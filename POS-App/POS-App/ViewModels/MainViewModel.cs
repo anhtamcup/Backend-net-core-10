@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using POS_App.Services;
+using System.ComponentModel;
 using System.Windows.Threading;
 
 namespace POS_App.ViewModels
@@ -51,11 +50,7 @@ namespace POS_App.ViewModels
 
         public HeaderViewModel()
         {
-            POSNumber = "POS-01";
-            Code = "HD000123";
-            StaffCode = "NV001";
-            ShiftID = "SHIFT-A";
-            StaffName = "Lê Anh Tâm";
+            AppServices.Session.PropertyChanged += Session_PropertyChanged;
 
             var timer = new DispatcherTimer
             {
@@ -64,12 +59,37 @@ namespace POS_App.ViewModels
 
             timer.Tick += (_, _) =>
             {
-                CurrentTime =
-                    DateTime.Now.ToString(
-                        "dd-MM-yyyy HH:mm:ss");
+                CurrentTime = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
             };
 
             timer.Start();
+        }
+
+        private void Session_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName ==
+                nameof(AppServices.Session.CurrentUser))
+            {
+                LoadUser();
+            }
+        }
+
+        private void LoadUser()
+        {
+            var user = AppServices.Session.CurrentUser;
+            StaffCode = user?.Code ?? string.Empty;
+            StaffName = user?.Name ?? string.Empty;
+
+            if (user == null)
+            {
+                POSNumber = string.Empty;
+                ShiftID = string.Empty;
+            }
+            else
+            {
+                POSNumber = "P01";
+                ShiftID = "K001";
+            }
         }
     }
 
@@ -97,6 +117,13 @@ namespace POS_App.ViewModels
         public void OpenOrder()
         {
             CurrentView = new OrderViewModel();
+        }
+
+        public void Logout()
+        {
+            AppServices.Session.Logout();
+
+            CurrentView = new LoginViewModel(this);
         }
     }
 }

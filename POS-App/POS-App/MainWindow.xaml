@@ -10,6 +10,7 @@
         xmlns:local="clr-namespace:POS_App.Views" xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
         xmlns:views="clr-namespace:POS_App.Views"
         xmlns:vm="clr-namespace:POS_App.ViewModels"
+        xmlns:services="clr-namespace:POS_App.Services"
         >
 
     <Window.Resources>
@@ -26,8 +27,16 @@
             <GradientStop Color="#134D75" Offset="1"/>
         </LinearGradientBrush>
 
-        <Style x:Key="HeaderBoxStyle" TargetType="StackPanel">
-            <Setter Property="Margin" Value="0,0,10,0" />
+        <Style x:Key="LoginRequiredStyle" TargetType="FrameworkElement">
+            <Setter Property="Visibility"
+            Value="{Binding
+            Source={x:Static services:AppServices.Session},
+            Path=CurrentUser,
+            Converter={StaticResource NullToVisibilityConverter}}"/>
+        </Style>
+        
+        <Style x:Key="HeaderBoxStyle" TargetType="StackPanel" BasedOn="{StaticResource LoginRequiredStyle}">
+            <Setter Property="Margin" Value="0,0,20,0" />
             <Setter Property="VerticalAlignment" Value="Center" />
         </Style>
 
@@ -44,8 +53,6 @@
             <Setter Property="Margin" Value="0,3,0,0" />
         </Style>
 
-       
-        
         <Style x:Key="ButtonHeaderStyle" TargetType="Button" BasedOn="{StaticResource ButtonBase}">
             <Setter Property="Background" Value="#1AFFFFFF"/>
             <Setter Property="Height" Value="28"/>
@@ -99,8 +106,7 @@
 
             </Style.Triggers>
 
-            </Style>
-
+        </Style>
 
     </Window.Resources>
 
@@ -118,30 +124,30 @@
             <Grid DataContext="{Binding Header}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="100"/>
                     <ColumnDefinition Width="140"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="100" />
                     <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="auto" />
                 </Grid.ColumnDefinitions>
 
                 <!-- Logo -->
                 <StackPanel Grid.Column="0"
-            Orientation="Horizontal"
-            VerticalAlignment="Center"
-            Margin="10,0,0,0">
+                    Orientation="Horizontal"
+                    VerticalAlignment="Center"
+                    Margin="10,0,0,0">
                     <TextBlock
-                Text="S3POS"
-                FontSize="25"
-                FontWeight="Bold"
-                Foreground="White"
-                VerticalAlignment="Center"/>
+                        Text="S3POS"
+                        FontSize="25"
+                        FontWeight="Bold"
+                        Foreground="White"
+                        VerticalAlignment="Center"/>
                     <Border
-                Width="1"
-                Background="#FFFFFF"
-                Margin="10,0"/>
+                        Width="1"
+                        Background="#FFFFFF"
+                        Margin="10,0"/>
                 </StackPanel>
 
                 <StackPanel Grid.Column="1" Style="{StaticResource HeaderBoxStyle}">
@@ -151,7 +157,7 @@
 
                 <StackPanel Grid.Column="2" Style="{StaticResource HeaderBoxStyle}">
                     <TextBlock Text="MÃ SỐ" Style="{StaticResource HeaderLabelStyle}"/>
-                    <TextBlock Text="{Binding Code}" Style="{StaticResource HeaderValueStyle}"/>
+                    <TextBlock Text="{Binding StaffCode}" Style="{StaticResource HeaderValueStyle}"/>
                 </StackPanel>
 
                 <StackPanel Grid.Column="3" Style="{StaticResource HeaderBoxStyle}">
@@ -169,8 +175,7 @@
                     <TextBlock Text="{Binding ShiftID}" Style="{StaticResource HeaderValueStyle}"/>
                 </StackPanel>
 
-                <StackPanel Grid.Column="6"
-    Style="{StaticResource HeaderBoxStyle}">
+                <StackPanel Grid.Column="6" Style="{StaticResource HeaderBoxStyle}">
 
                     <Border Background="#1AFFFFFF"
                         CornerRadius="5"
@@ -186,7 +191,7 @@
 
                             <TextBox x:Name="tbSearch"
                                      Style="{StaticResource SearchPlaceholderStyle}"
-                                    Width="200"
+                                    Width="210"
                                     Margin="5,0,0,0"
                                     Foreground="#CCD2E3"
                                     CaretBrush="#CCD2E3"
@@ -199,7 +204,7 @@
 
                 </StackPanel>
 
-                <WrapPanel Grid.Column="7" HorizontalAlignment="Right" VerticalAlignment="Center">
+                <WrapPanel Grid.Column="7" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource LoginRequiredStyle}">
                     <Button Style="{StaticResource ButtonHeaderStyle}" >
                         <svgc:SvgViewbox Style="{StaticResource IconButtonHeaderStyle}" Source="/Assets/Icons/ico-setting.svg"/>
                     </Button>
@@ -216,7 +221,7 @@
                         <svgc:SvgViewbox Style="{StaticResource IconButtonHeaderStyle}" Source="/Assets/Icons/ico-destop.svg"/>
                     </Button>
 
-                    <Button Style="{StaticResource ButtonHeaderStyle}" >
+                    <Button Style="{StaticResource ButtonHeaderStyle}" Name="btnLog" Click="btnLog_Click" >
                         <svgc:SvgViewbox Style="{StaticResource IconButtonHeaderStyle}" Source="/Assets/Icons/ico-lock.svg"/>
                     </Button>
 
@@ -224,6 +229,7 @@
                         <svgc:SvgViewbox Style="{StaticResource IconButtonHeaderStyle}" Source="/Assets/Icons/ico-log-out.svg"/>
                     </Button>
                 </WrapPanel>
+
             </Grid>
 
         </Grid>

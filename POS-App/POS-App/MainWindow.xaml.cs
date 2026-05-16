@@ -1,16 +1,6 @@
-﻿using POS_App.Dto;
-using POS_App.ViewModels;
-using POS_App.Views;
-using System.Text;
+﻿using POS_App.ViewModels;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace POS_App
 {
@@ -24,6 +14,12 @@ namespace POS_App
             RenderOptions.ProcessRenderMode = System.Windows.Interop.RenderMode.SoftwareOnly;
             InitializeComponent();
             DataContext = new MainViewModel();
+        }
+
+        private void btnLog_Click(object sender, RoutedEventArgs e)
+        {
+            var vm = DataContext as MainViewModel;
+            vm?.Logout();
         }
     }
 }

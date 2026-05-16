@@ -141,8 +141,6 @@ namespace POS_App.ViewModels
                 new SortDescription(
                     nameof(CartItemRow.Index),
                     ListSortDirection.Descending));
-
-            AddCart();
         }
 
         public void Recalculate()
