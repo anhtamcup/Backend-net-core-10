@@ -1,4 +1,5 @@
-﻿using System;
+﻿using POS_App.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -18,6 +19,9 @@ namespace POS_App.Views
     /// </summary>
     public partial class LoginView : UserControl
     {
+        private LoginViewModel VM => DataContext as LoginViewModel;
+        private readonly MainViewModel _main;
+
         public LoginView()
         {
             InitializeComponent();
@@ -69,10 +73,12 @@ namespace POS_App.Views
 
             if (pin == "0000")
             {
-                MainWindow main =
-                    (MainWindow)Application.Current.MainWindow;
+                VM.Login();
+                //var mainVM =
+                //Application.Current.MainWindow.DataContext
+                //as MainViewModel;
 
-                //main.MainContent.Content = new OrderView();
+                //mainVM.CurrentView = new OrderViewModel();
             }
             else
             {

@@ -73,12 +73,12 @@ namespace POS_App.ViewModels
         }
     }
 
-    public class MainViewModel: BaseViewModel
+    public class MainViewModel : BaseViewModel
     {
         public HeaderViewModel Header { get; } = new();
-        public OrderViewModel OrderVM { get; } = new();
 
         private object _currentView;
+
         public object CurrentView
         {
             get => _currentView;
@@ -91,7 +91,12 @@ namespace POS_App.ViewModels
 
         public MainViewModel()
         {
-            CurrentView = OrderVM;
+            CurrentView = new LoginViewModel(this);
+        }
+
+        public void OpenOrder()
+        {
+            CurrentView = new OrderViewModel();
         }
     }
 }
