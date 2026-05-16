@@ -72,7 +72,7 @@ namespace POS_App.Views
                 MainWindow main =
                     (MainWindow)Application.Current.MainWindow;
 
-                main.MainContent.Content = new OrderView();
+                //main.MainContent.Content = new OrderView();
             }
             else
             {
