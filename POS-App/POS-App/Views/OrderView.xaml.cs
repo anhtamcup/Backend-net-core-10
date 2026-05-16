@@ -7,14 +7,11 @@ namespace POS_App.Views
 {
     public partial class OrderView : UserControl
     {
-        private OrderViewModel VM =>
-            (OrderViewModel)DataContext;
+        private OrderViewModel VM => DataContext as OrderViewModel;
 
         public OrderView()
         {
             InitializeComponent();
-
-            DataContext = new OrderViewModel();
         }
 
         private void btnPlus_Click(
@@ -22,10 +19,9 @@ namespace POS_App.Views
             RoutedEventArgs e)
         {
             var item =
-            (sender as Button)?
-            .DataContext as CartItemRow;
+                (sender as Button)?.DataContext as CartItemRow;
 
-            if (item == null)
+            if (item == null || VM == null)
                 return;
 
             VM.Increase(item);
@@ -36,10 +32,9 @@ namespace POS_App.Views
             RoutedEventArgs e)
         {
             var item =
-            (sender as Button)?
-            .DataContext as CartItemRow;
+                (sender as Button)?.DataContext as CartItemRow;
 
-            if (item == null)
+            if (item == null || VM == null)
                 return;
 
             VM.Decrease(item);
@@ -50,10 +45,9 @@ namespace POS_App.Views
             RoutedEventArgs e)
         {
             var item =
-            (sender as Button)?
-            .DataContext as CartItemRow;
+                (sender as Button)?.DataContext as CartItemRow;
 
-            if (item == null)
+            if (item == null || VM == null)
                 return;
 
             VM.Remove(item);
@@ -63,17 +57,21 @@ namespace POS_App.Views
             object sender,
             RoutedEventArgs e)
         {
-            VM.AddCart();
+            VM?.AddCart();
         }
 
-        private void tbQuantity_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        private void tbQuantity_PreviewTextInput(
+            object sender,
+            System.Windows.Input.TextCompositionEventArgs e)
         {
             e.Handled = !int.TryParse(e.Text, out _);
         }
 
-        private void tbQuantity_TextChanged(object sender, TextChangedEventArgs e)
+        private void tbQuantity_TextChanged(
+            object sender,
+            TextChangedEventArgs e)
         {
-            VM.Recalculate();
+            VM?.Recalculate();
         }
     }
 }

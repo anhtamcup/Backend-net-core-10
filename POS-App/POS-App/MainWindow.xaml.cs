@@ -1,4 +1,5 @@
 ﻿using POS_App.Dto;
+using POS_App.ViewModels;
 using POS_App.Views;
 using System.Text;
 using System.Windows;
@@ -22,7 +23,7 @@ namespace POS_App
         {
             RenderOptions.ProcessRenderMode = System.Windows.Interop.RenderMode.SoftwareOnly;
             InitializeComponent();
-            MainContent.Content = new OrderView();
+            DataContext = new MainViewModel();
         }
     }
 }

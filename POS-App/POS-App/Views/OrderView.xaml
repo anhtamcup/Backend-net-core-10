@@ -4,21 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:POS_App.Views" xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
-             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d"
-             FontFamily="/Fonts/#Inter"
              >
 
     <UserControl.Resources>
-        <GridLength x:Key="RightPanelWidth">250</GridLength>
-        <sys:Double x:Key="ActionButtonWidth">78</sys:Double>
-        <sys:Double x:Key="KeyboardButtonWidth">60</sys:Double>
-        <sys:Double x:Key="FontSizeS">10</sys:Double>
-        <sys:Double x:Key="FontSizeM">12</sys:Double>
-        <sys:Double x:Key="FontSizeL">14</sys:Double>
-        <sys:Double x:Key="FontSizeXL">16</sys:Double>
-
-
         <SolidColorBrush x:Key="bg-button-white" Color="#FFFFFF"/>
         <SolidColorBrush x:Key="bg-button-gray" Color="#B3D8EE"/>
         <SolidColorBrush x:Key="keyboard-button-text" Color="#2E384E"/>

@@ -6,6 +6,9 @@
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
             >
     <Application.Resources>
+        <GridLength x:Key="RightPanelWidth">250</GridLength>
+        <sys:Double x:Key="ActionButtonWidth">78</sys:Double>
+        <sys:Double x:Key="KeyboardButtonWidth">60</sys:Double>
         <sys:Double x:Key="FontSizeS">10</sys:Double>
         <sys:Double x:Key="FontSizeM">12</sys:Double>
         <sys:Double x:Key="FontSizeL">14</sys:Double>
