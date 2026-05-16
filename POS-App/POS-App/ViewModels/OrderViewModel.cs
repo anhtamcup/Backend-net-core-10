@@ -5,6 +5,119 @@ using System.Windows.Data;
 
 namespace POS_App.ViewModels
 {
+    public class CustomerInfoViewModel : BaseViewModel
+    {
+        public CustomerInfoViewModel()
+        {
+            Name = "Nguyễn Thượng Đế";
+            Point = 25000;
+        }
+
+        private string _name = "";
+        public string Name
+        {
+            get => _name;
+            set => SetProperty(ref _name, value);
+        }
+
+        private string _phone = "";
+        public string Phone
+        {
+            get => _phone;
+            set => SetProperty(ref _phone, value);
+        }
+
+        private int _point;
+        public int Point
+        {
+            get => _point;
+            set => SetProperty(ref _point, value);
+        }
+    }
+
+    public class CartSummaryViewModel : BaseViewModel
+    {
+        private int _itemCount;
+        public int ItemCount
+        {
+            get => _itemCount;
+            set
+            {
+                _itemCount = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private decimal _subTotalAmount;
+        public decimal SubTotalAmount
+        {
+            get => _subTotalAmount;
+            set
+            {
+                _subTotalAmount = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private decimal _promotionAmount;
+        public decimal PromotionAmount
+        {
+            get => _promotionAmount;
+            set
+            {
+                _promotionAmount = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private decimal _vatAmout;
+        public decimal VATAmount
+        {
+            get => _vatAmout;
+            set
+            {
+                _vatAmout = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private decimal _totalAmount;
+        public decimal TotalAmount
+        {
+            get => _totalAmount;
+            set
+            {
+                _totalAmount = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public void Recalculate(ObservableCollection<CartItemRow> cartItems)
+        {
+            var itemCount = 0;
+            var promotionAmount = 0m;
+            var subTotalAmount = 0m;
+            var vatAmount = 0m;
+            var totalAmount = 0m;
+
+            foreach (var item in cartItems)
+            {
+                itemCount += item.Quantity;
+                promotionAmount += item.DiscountPrice;
+                subTotalAmount += item.Quantity * item.OriginalPrice;
+                totalAmount += item.TotalPrice;
+                vatAmount += item.VATPrice;
+            }
+
+            ItemCount = itemCount;
+            SubTotalAmount = subTotalAmount;
+            PromotionAmount = promotionAmount;
+            VATAmount = vatAmount;
+            TotalAmount = totalAmount;
+        }
+    }
+
+
     public class OrderViewModel : BaseViewModel
     {
         public CustomerInfoViewModel Customer { get; }

@@ -70,7 +70,7 @@
 
                     <VisualBrush.Visual>
                         <TextBlock
-                    Text="Quét mã vạch sản phẩm hoặc nhập mã sản phẩm"
+                    Text="Quét mã vạch hoặc nhập mã sản phẩm"
                     Foreground="#CCD2E3"
                     Opacity="0.7"
                     FontSize="12"
@@ -183,7 +183,7 @@
 
                             <TextBox x:Name="tbSearch"
                                      Style="{StaticResource SearchPlaceholderStyle}"
-                                    Width="250"
+                                    Width="200"
                                     Margin="5,0,0,0"
                                     Foreground="#CCD2E3"
                                     CaretBrush="#CCD2E3"
