@@ -157,6 +157,8 @@
 
         <Style x:Key="ButtonDeleteItemStyle" TargetType="Button" BasedOn="{StaticResource ButtonBase}">
             <Setter Property="Background" Value="Transparent"/>
+            <!--<Setter Property="Width" Value="30"/>
+            <Setter Property="Height" Value="30"/>-->
         </Style>
 
         <Style x:Key="KeypadButtonNumberStyle" TargetType="Button" BasedOn="{StaticResource KeypadNumberBaseStyle}">
@@ -269,6 +271,47 @@
             <Setter Property="Height" Value="15"/>
             <Setter Property="Width" Value="15"/>
         </Style>
+
+        <Style x:Key="SearchPlaceholderStyle"
+       TargetType="TextBox">
+
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+
+            <Style.Resources>
+                <VisualBrush x:Key="PlaceholderBrush"
+                     Stretch="None"
+                     AlignmentX="Left"
+                     AlignmentY="Center">
+
+                    <VisualBrush.Visual>
+                        <TextBlock Text="Quét mã vạch sản phẩm hoặc nhập mã sản phẩm"
+                           Foreground="#CCD2E3"
+                           Opacity="0.7"
+                           FontSize="{StaticResource FontSizeS}"
+                           Margin="0,0,0,1"/>
+                    </VisualBrush.Visual>
+
+                </VisualBrush>
+            </Style.Resources>
+
+            <Style.Triggers>
+
+                <Trigger Property="Text"
+                 Value="">
+                    <Setter Property="Background"
+                    Value="{StaticResource PlaceholderBrush}"/>
+                </Trigger>
+
+                <Trigger Property="IsKeyboardFocused"
+                 Value="True">
+                    <Setter Property="Background"
+                    Value="Transparent"/>
+                </Trigger>
+
+            </Style.Triggers>
+
+        </Style>
     </UserControl.Resources>
 
     <Grid Background="#CCD2E3">
@@ -287,6 +330,7 @@
                     <ColumnDefinition Width="140"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
@@ -295,15 +339,16 @@
                     Orientation="Horizontal"
                     VerticalAlignment="Center"
                     Margin="10,0,0,0">
-                    <TextBlock Text="S3POS"
+                    <TextBlock
+                        Text="S3POS"
                         FontSize="25"
                         FontWeight="Bold"
                         Foreground="White"
                         VerticalAlignment="Center"/>
-                    <Border Width="1"
+                    <Border
+                        Width="1"
                         Background="#FFFFFF"
                         Margin="10,0"/>
-
                 </StackPanel>
 
                 <StackPanel Grid.Column="1" Style="{StaticResource HeaderBoxStyle}">
@@ -331,7 +376,37 @@
                     <TextBlock Text="{Binding ShiftID}" Style="{StaticResource HeaderValueStyle}"/>
                 </StackPanel>
 
-                <WrapPanel Grid.Column="6" HorizontalAlignment="Right" VerticalAlignment="Center">
+                <StackPanel Grid.Column="6"
+            Style="{StaticResource HeaderBoxStyle}">
+
+                    <Border Background="#1AFFFFFF"
+            CornerRadius="5"
+            Padding="10,5"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center">
+
+                        <WrapPanel>
+
+                            <svgc:SvgViewbox
+                Style="{StaticResource IconButtonHeaderStyle}"
+                Source="/Assets/Icons/ico-scan-barcode.svg"/>
+
+                            <TextBox x:Name="tbSearch"
+                     Width="250"
+                     Margin="5,0,0,0"
+                     Style="{StaticResource SearchPlaceholderStyle}"
+                     Foreground="#CCD2E3"
+                     CaretBrush="#CCD2E3"
+                     FontSize="{StaticResource FontSizeM}"
+                     VerticalContentAlignment="Center"/>
+
+                        </WrapPanel>
+
+                    </Border>
+
+                </StackPanel>
+
+                <WrapPanel Grid.Column="7" HorizontalAlignment="Right" VerticalAlignment="Center">
                     <Button Style="{StaticResource ButtonHeaderStyle}" >
                         <svgc:SvgViewbox Style="{StaticResource IconButtonHeaderStyle}" Source="/Assets/Icons/ico-setting.svg"/>
                     </Button>
@@ -432,7 +507,6 @@
 
                                         <TextBox
                                             x:Name="tbQuantity"
-                                            Width="30"
                                             Margin="5,0"
                                             PreviewTextInput="tbQuantity_PreviewTextInput"
                                             TextChanged="tbQuantity_TextChanged"
@@ -538,7 +612,7 @@
                                 <TextBlock Grid.Row="1" x:Name="customerSelectedName" Text="{Binding Name}" Style="{StaticResource CustomerSelectedNameValue}"/>
                                 <WrapPanel Grid.Row="2">
                                     <TextBlock Text="Điểm hiện tại: " HorizontalAlignment="Left" Style="{StaticResource CustomerSelectedNameLabel}" />
-                                    <TextBlock Text="{Binding Point}" HorizontalAlignment="Right" Style="{StaticResource CustomerSelectedNameValue}"/>
+                                    <TextBlock Text="{Binding Point, StringFormat='{}{0:N0}'}" HorizontalAlignment="Right" Style="{StaticResource CustomerSelectedNameValue}"/>
                                 </WrapPanel>
                             </Grid>
                         </Border>

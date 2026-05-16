@@ -33,6 +33,7 @@
     <None Remove="Assets\Icons\ico-report.svg" />
     <None Remove="Assets\Icons\ico-restore.svg" />
     <None Remove="Assets\Icons\ico-save.svg" />
+    <None Remove="Assets\Icons\ico-scan-barcode.svg" />
     <None Remove="Assets\Icons\ico-search-product.svg" />
     <None Remove="Assets\Icons\ico-setting.svg" />
     <None Remove="Assets\Icons\ico-trash.svg" />
@@ -111,6 +112,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Icons\ico-save.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Icons\ico-scan-barcode.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Icons\ico-search-product.svg">
