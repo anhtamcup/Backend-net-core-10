@@ -3,7 +3,8 @@ using POS_App.ViewModels;
 using POS_App.Views;
 using System.Windows;
 using System.Windows.Media;
-//using System.Windows.Forms;
+using WpfScreenHelper;
+
 namespace POS_App
 {
     /// <summary>
@@ -15,26 +16,11 @@ namespace POS_App
         {
             RenderOptions.ProcessRenderMode = System.Windows.Interop.RenderMode.SoftwareOnly;
             InitializeComponent();
-            DataContext = new MainViewModel();
-
-            //Loaded += MainWindow_Loaded;
-            //OpenCustomerScreen();
+            var mainVm = new MainViewModel();
+            DataContext = mainVm;
+            OpenCustomerScreen(mainVm);
         }
 
-        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
-        {
-            WindowStyle = WindowStyle.None;
-            ResizeMode = ResizeMode.NoResize;
-
-            var area = SystemParameters.WorkArea;
-
-            Left = area.Left;
-            Top = area.Top;
-            Width = area.Width;
-            Height = area.Height;
-
-            Topmost = true;
-        }
 
         private void btnLog_Click(object sender, RoutedEventArgs e)
         {
@@ -42,18 +28,20 @@ namespace POS_App
             vm?.Logout();
         }
 
-        private void OpenCustomerScreen()
+        // Ở MainWindow hoặc nơi bạn mở CustomerWindow
+        private CustomerWindow _customerWindow;
+        private void OpenCustomerScreen(MainViewModel mainVm)
         {
-            var rect = MonitorUtil.GetSecondaryScreen(this);
+            var secondScreen = Screen.AllScreens.FirstOrDefault(s => !s.Primary);
+            if (secondScreen == null) return;
 
-            var w = new CustomerWindow();
-
-            w.WindowStartupLocation = WindowStartupLocation.Manual;
-            w.Left = rect.Left;
-            w.Top = rect.Top;
-            w.WindowState = WindowState.Maximized;
-
-            w.Show();
+            _customerWindow = new CustomerWindow(mainVm);
+            _customerWindow.Left = secondScreen.WorkingArea.Left;
+            _customerWindow.Top = secondScreen.WorkingArea.Top;
+            _customerWindow.WindowStartupLocation = WindowStartupLocation.Manual;
+            _customerWindow.WindowState = WindowState.Maximized;
+            _customerWindow.Show();
         }
+
     }
 }

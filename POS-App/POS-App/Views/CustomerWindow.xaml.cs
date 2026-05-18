@@ -1,4 +1,5 @@
-﻿using System;
+﻿using POS_App.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -17,9 +18,27 @@ namespace POS_App.Views
     /// </summary>
     public partial class CustomerWindow : Window
     {
-        public CustomerWindow()
+        public CustomerWindow(MainViewModel mainVm)
         {
             InitializeComponent();
+            DataContext = mainVm;
+
+            // Lắng nghe khi CurrentView thay đổi
+            mainVm.PropertyChanged += (s, e) =>
+            {
+                if (e.PropertyName == nameof(MainViewModel.CurrentView))
+                    UpdateUI();
+            };
+
+            Loaded += (s, e) => UpdateUI();
+        }
+
+        private void UpdateUI()
+        {
+            var vm = DataContext as MainViewModel;
+            OrderPanel.Visibility = vm?.CurrentView is OrderViewModel
+                ? Visibility.Visible
+                : Visibility.Collapsed;
         }
     }
 }
