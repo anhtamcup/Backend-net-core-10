@@ -17,8 +17,8 @@ namespace POS_App
             InitializeComponent();
             DataContext = new MainViewModel();
 
-            Loaded += MainWindow_Loaded;
-            OpenCustomerScreen();
+            //Loaded += MainWindow_Loaded;
+            //OpenCustomerScreen();
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)

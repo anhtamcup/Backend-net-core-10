@@ -7,8 +7,12 @@
              xmlns:converter="clr-namespace:POS_App.Converters"
             >
     <Application.Resources>
-
         <converter:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
+        
+        <LinearGradientBrush x:Key="bg-button-green" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#00A35D" Offset="0"/>
+            <GradientStop Color="#00824A" Offset="1"/>
+        </LinearGradientBrush>
         
         <GridLength x:Key="RightPanelWidth">250</GridLength>
         <sys:Double x:Key="ActionButtonWidth">78</sys:Double>

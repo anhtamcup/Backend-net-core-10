@@ -1,90 +1,97 @@
 ﻿using POS_App.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace POS_App.Views
 {
-    /// <summary>
-    /// Interaction logic for LoginView.xaml
-    /// </summary>
     public partial class LoginView : UserControl
     {
         private LoginViewModel VM => DataContext as LoginViewModel;
         private readonly MainViewModel _main;
 
+        // Password thật
+        private string _password = "";
+
+        // Danh sách chấm hiển thị
+        private ObservableCollection<string> _dots =
+            new ObservableCollection<string>();
+
         public LoginView()
         {
             InitializeComponent();
+
+            InitPasswordDisplay();
+
+            PasswordDots.ItemsSource = _dots;
         }
 
-        private void txt1_TextChanged(object sender, TextChangedEventArgs e)
+        private void InitPasswordDisplay()
         {
-            if (txt1.Text.Length == 1)
-            {
-                txt2.Focus();
-            }
-        }
+            _dots.Clear();
 
-        private void txt2_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (txt2.Text.Length == 1)
+            // Luôn hiển thị 6 ô
+            for (int i = 0; i < 6; i++)
             {
-                txt3.Focus();
-            }
-        }
-
-        private void txt3_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (txt3.Text.Length == 1)
-            {
-                txt4.Focus();
+                _dots.Add("○");
             }
         }
 
-        private void txt4_TextChanged(object sender, TextChangedEventArgs e)
+        private void UpdatePasswordDisplay()
         {
-            if (string.IsNullOrWhiteSpace(txt1.Text) == false &&
-                string.IsNullOrWhiteSpace(txt2.Text) == false &&
-                string.IsNullOrWhiteSpace(txt3.Text) == false &&
-                string.IsNullOrWhiteSpace(txt4.Text) == false
-                )
+            for (int i = 0; i < 6; i++)
             {
-                Button_Click(sender, e);
+                _dots[i] =
+                    i < _password.Length
+                        ? "●"
+                        : "○";
+            }
+
+            // ép refresh UI
+            PasswordDots.Items.Refresh();
+        }
+
+        private void Number_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button btn)
+            {
+                // giới hạn 6 số
+                if (_password.Length >= 6)
+                    return;
+
+                _password += btn.Content.ToString();
+
+                UpdatePasswordDisplay();
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Backspace_Click(object sender, RoutedEventArgs e)
         {
-            string pin =
-                txt1.Text +
-                txt2.Text +
-                txt3.Text +
-                txt4.Text;
-
-            if (pin == "0000")
+            if (!string.IsNullOrEmpty(_password))
             {
-                VM.Login();
-                //var mainVM =
-                //Application.Current.MainWindow.DataContext
-                //as MainViewModel;
+                _password = _password.Substring(
+                    0,
+                    _password.Length - 1);
 
-                //mainVM.CurrentView = new OrderViewModel();
+                UpdatePasswordDisplay();
             }
-            else
-            {
-                txtError.Text = "Sai mã PIN";
-                txtError.Visibility = Visibility.Visible;
-            }
+        }
+
+        private void Clear_Click(object sender, RoutedEventArgs e)
+        {
+            _password = "";
+
+            UpdatePasswordDisplay();
+        }
+
+        private void Enter_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show(
+                $"Password: {_password}",
+                "Login");
+
+            // ví dụ:
+            // VM.LoginCommand.Execute(_password);
         }
     }
 }

@@ -11,10 +11,7 @@
         <SolidColorBrush x:Key="bg-button-white" Color="#FFFFFF"/>
         <SolidColorBrush x:Key="bg-button-gray" Color="#B3D8EE"/>
         <SolidColorBrush x:Key="keyboard-button-text" Color="#2E384E"/>
-        <LinearGradientBrush x:Key="bg-button-green" StartPoint="0,0" EndPoint="0,1">
-            <GradientStop Color="#00A35D" Offset="0"/>
-            <GradientStop Color="#00824A" Offset="1"/>
-        </LinearGradientBrush>
+
 
         <LinearGradientBrush x:Key="bg-btn-action-refund" StartPoint="0,0" EndPoint="0,1">
             <GradientStop Color="#FDEBE9" Offset="0"/>
