@@ -73,5 +73,15 @@ namespace POS_App.Views
         {
             VM?.Recalculate();
         }
+
+        private void btnCustomerFunction_Click(object sender, RoutedEventArgs e)
+        {
+            VM.SetCustomer(new CustomerInfoViewModel
+            {
+                Name = "Cao Hùng",
+                Phone = "0338162614",
+                Point = 1000
+            });
+        }
     }
 }

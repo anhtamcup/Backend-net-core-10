@@ -9,8 +9,6 @@ namespace POS_App.ViewModels
     {
         public CustomerInfoViewModel()
         {
-            Name = "Nguyễn Thượng Đế";
-            Point = 25000;
         }
 
         private string _name = "";
@@ -148,6 +146,12 @@ namespace POS_App.ViewModels
             Summary.Recalculate(CartItems);
         }
 
+        public void SetCustomer(CustomerInfoViewModel customer)
+        {
+            Customer.Name = customer.Name;
+            Customer.Point = customer.Point;
+            Customer.Phone = customer.Phone;
+        }
 
         public void AddCart()
         {

@@ -59,7 +59,7 @@ namespace POS_App.ViewModels
 
             timer.Tick += (_, _) =>
             {
-                CurrentTime = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
+                CurrentTime = DateTime.Now.ToString("HH:mm:ss dd-MM-yyyy");
             };
 
             timer.Start();

@@ -416,7 +416,7 @@
                             </StackPanel>
                         </Button>
 
-                        <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-customer}">
+                        <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-customer}" Name="btnCustomerFunction" Click="btnCustomerFunction_Click">
                             <StackPanel>
                                 <svgc:SvgViewbox Source="/Assets/Icons/ico-customer.svg" Style="{StaticResource ActionButtonIconStyle}"/>
                                 <TextBlock Text="Khách hàng" Foreground="#064E30" />

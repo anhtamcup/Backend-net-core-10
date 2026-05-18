@@ -2,96 +2,132 @@
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace POS_App.Views
 {
     public partial class LoginView : UserControl
     {
+        private ObservableCollection<Brush> dots = new();
         private LoginViewModel VM => DataContext as LoginViewModel;
-        private readonly MainViewModel _main;
-
-        // Password thật
-        private string _password = "";
-
-        // Danh sách chấm hiển thị
-        private ObservableCollection<string> _dots =
-            new ObservableCollection<string>();
 
         public LoginView()
         {
             InitializeComponent();
 
-            InitPasswordDisplay();
+            PasswordDots.ItemsSource = dots;
 
-            PasswordDots.ItemsSource = _dots;
+            InitDots();
+
+            Loaded += (_, __) =>
+            {
+                PasswordInput.Focus();
+            };
         }
 
-        private void InitPasswordDisplay()
+        void InitDots()
         {
-            _dots.Clear();
+            dots.Clear();
 
-            // Luôn hiển thị 6 ô
             for (int i = 0; i < 6; i++)
             {
-                _dots.Add("○");
+                dots.Add(
+                    new SolidColorBrush(
+                        (Color)ColorConverter.ConvertFromString("#D4D4D4")
+                    )
+                );
             }
         }
 
-        private void UpdatePasswordDisplay()
+        void RefreshDots()
         {
+            dots.Clear();
+
+            int length = PasswordInput.Password.Length;
+
             for (int i = 0; i < 6; i++)
             {
-                _dots[i] =
-                    i < _password.Length
-                        ? "●"
-                        : "○";
+                dots.Add(
+                    i < length
+                    ? Brushes.Black
+                    : new SolidColorBrush(
+                        (Color)ColorConverter.ConvertFromString("#D4D4D4")
+                    )
+                );
             }
-
-            // ép refresh UI
-            PasswordDots.Items.Refresh();
         }
 
-        private void Number_Click(object sender, RoutedEventArgs e)
+        private void PasswordInput_PasswordChanged(
+            object sender,
+            RoutedEventArgs e)
         {
-            if (sender is Button btn)
+            RefreshDots();
+        }
+
+        private void Number_Click(
+            object sender,
+            RoutedEventArgs e)
+        {
+            if (PasswordInput.Password.Length >= 6)
+                return;
+
+            var value =
+                ((Button)sender)
+                .Content
+                .ToString();
+
+            PasswordInput.Password += value;
+
+            RefreshDots();
+
+            PasswordInput.Focus();
+        }
+
+        private void Backspace_Click(
+            object sender,
+            RoutedEventArgs e)
+        {
+            if (PasswordInput.Password.Length > 0)
             {
-                // giới hạn 6 số
-                if (_password.Length >= 6)
-                    return;
-
-                _password += btn.Content.ToString();
-
-                UpdatePasswordDisplay();
+                PasswordInput.Password =
+                    PasswordInput.Password.Substring(
+                        0,
+                        PasswordInput.Password.Length - 1);
             }
+
+            RefreshDots();
+
+            PasswordInput.Focus();
         }
 
-        private void Backspace_Click(object sender, RoutedEventArgs e)
+        private void Clear_Click(
+            object sender,
+            RoutedEventArgs e)
         {
-            if (!string.IsNullOrEmpty(_password))
+            PasswordInput.Clear();
+
+            RefreshDots();
+
+            PasswordInput.Focus();
+        }
+
+        private void Enter_Click(
+            object sender,
+            RoutedEventArgs e)
+        {
+            PasswordInput.Focus();
+            if (PasswordInput.Password == "000000")
             {
-                _password = _password.Substring(
-                    0,
-                    _password.Length - 1);
-
-                UpdatePasswordDisplay();
-            }
+                VM.Login();
+            }   else
+            {
+                MessageBox.Show("Sai thông tin tài khoản hoặc mật khẩu");
+            }    
         }
 
-        private void Clear_Click(object sender, RoutedEventArgs e)
+        private void BtnExitFunction_Click(object sender, RoutedEventArgs e)
         {
-            _password = "";
-
-            UpdatePasswordDisplay();
-        }
-
-        private void Enter_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show(
-                $"Password: {_password}",
-                "Login");
-
-            // ví dụ:
-            // VM.LoginCommand.Execute(_password);
+            Application.Current.Shutdown();
         }
     }
 }

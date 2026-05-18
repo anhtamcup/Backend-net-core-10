@@ -26,6 +26,7 @@
         <Style x:Key="ActionButtonStyle"
                TargetType="Button"
                BasedOn="{StaticResource ButtonBase}">
+
             <Setter Property="Height" Value="80"/>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="FontWeight" Value="Medium"/>
@@ -33,7 +34,9 @@
 
             <Setter Property="Template">
                 <Setter.Value>
+
                     <ControlTemplate TargetType="Button">
+
                         <Border x:Name="Bd"
                                 Background="{TemplateBinding Background}"
                                 CornerRadius="0">
@@ -45,22 +48,26 @@
                         </Border>
 
                         <ControlTemplate.Triggers>
+
                             <Trigger Property="IsPressed"
                                      Value="True">
+
                                 <Setter TargetName="Bd"
                                         Property="Opacity"
                                         Value="0.7"/>
+
                             </Trigger>
+
                         </ControlTemplate.Triggers>
 
                     </ControlTemplate>
+
                 </Setter.Value>
             </Setter>
 
         </Style>
 
     </UserControl.Resources>
-
 
     <Grid Background="White">
 
@@ -92,6 +99,7 @@
                                HorizontalAlignment="Center"/>
 
                     <Grid Margin="0,15,0,5">
+
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                             <ColumnDefinition Width="Auto"/>
@@ -106,41 +114,63 @@
                         <TextBlock Grid.Column="1"
                                    Text="Thay đổi"
                                    Foreground="#1E73E8"/>
+
                     </Grid>
 
 
+                    <!-- PASSWORD -->
+
                     <TextBlock Text="Mật khẩu"
-                        FontSize="{StaticResource FontSizeL}"
-                        Margin="0,5"/>
+                               FontSize="{StaticResource FontSizeL}"
+                               Margin="0,5"/>
 
-                    <Border Height="45"
-                        BorderBrush="#D9D9D9"
-                        BorderThickness="1"
-                        CornerRadius="6"
-                        Margin="0,5,0,10">
+                    <Grid Margin="0,3,0,10">
 
-                        <ItemsControl x:Name="PasswordDots"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center">
+                        <PasswordBox x:Name="PasswordInput"
+                                     MaxLength="6"
+                                     Opacity="0"
+                                     Width="1"
+                                     Height="1"
+                                     PasswordChanged="PasswordInput_PasswordChanged"/>
 
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <StackPanel Orientation="Horizontal"/>
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
+                        <Border Height="35"
+                                Background="#80CCD2E3"
+                                BorderBrush="#D9D9D9"
+                                BorderThickness="1"
+                                CornerRadius="6">
 
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding}"
-                                        FontSize="{StaticResource FontSizeXL}"
-                                        Margin="2"
-                                        Foreground="#1A1A1A"/>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </Border>
+                            <ItemsControl x:Name="PasswordDots"
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center">
+
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Horizontal"/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+
+                                <ItemsControl.ItemTemplate>
+
+                                    <DataTemplate>
+
+                                        <Ellipse Width="14"
+                                                 Height="14"
+                                                 Margin="6"
+                                                 Fill="{Binding}"/>
+
+                                    </DataTemplate>
+
+                                </ItemsControl.ItemTemplate>
+
+                            </ItemsControl>
+
+                        </Border>
+
+                    </Grid>
+
 
                     <!-- keypad -->
+
                     <Grid>
 
                         <Grid.RowDefinitions>
@@ -158,18 +188,23 @@
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
 
+
                         <!-- hàng 1 -->
-                        <Button Grid.Row="0" Grid.Column="0"
+
+                        <Button Grid.Row="0"
+                                Grid.Column="0"
                                 Content="7"
                                 Click="Number_Click"
                                 Style="{StaticResource KeypadButtonNumberStyle}"/>
 
-                        <Button Grid.Row="0" Grid.Column="1"
+                        <Button Grid.Row="0"
+                                Grid.Column="1"
                                 Content="8"
                                 Click="Number_Click"
                                 Style="{StaticResource KeypadButtonNumberStyle}"/>
 
-                        <Button Grid.Row="0" Grid.Column="2"
+                        <Button Grid.Row="0"
+                                Grid.Column="2"
                                 Content="9"
                                 Click="Number_Click"
                                 Style="{StaticResource KeypadButtonNumberStyle}"/>
@@ -185,17 +220,21 @@
 
 
                         <!-- hàng 2 -->
-                        <Button Grid.Row="1" Grid.Column="0"
+
+                        <Button Grid.Row="1"
+                                Grid.Column="0"
                                 Content="4"
                                 Click="Number_Click"
                                 Style="{StaticResource KeypadButtonNumberStyle}"/>
 
-                        <Button Grid.Row="1" Grid.Column="1"
+                        <Button Grid.Row="1"
+                                Grid.Column="1"
                                 Content="5"
                                 Click="Number_Click"
                                 Style="{StaticResource KeypadButtonNumberStyle}"/>
 
-                        <Button Grid.Row="1" Grid.Column="2"
+                        <Button Grid.Row="1"
+                                Grid.Column="2"
                                 Content="6"
                                 Click="Number_Click"
                                 Style="{StaticResource KeypadButtonNumberStyle}"/>
@@ -211,17 +250,21 @@
 
 
                         <!-- hàng 3 -->
-                        <Button Grid.Row="2" Grid.Column="0"
+
+                        <Button Grid.Row="2"
+                                Grid.Column="0"
                                 Content="1"
                                 Click="Number_Click"
                                 Style="{StaticResource KeypadButtonNumberStyle}"/>
 
-                        <Button Grid.Row="2" Grid.Column="1"
+                        <Button Grid.Row="2"
+                                Grid.Column="1"
                                 Content="2"
                                 Click="Number_Click"
                                 Style="{StaticResource KeypadButtonNumberStyle}"/>
 
-                        <Button Grid.Row="2" Grid.Column="2"
+                        <Button Grid.Row="2"
+                                Grid.Column="2"
                                 Content="3"
                                 Click="Number_Click"
                                 Style="{StaticResource KeypadButtonNumberStyle}"/>
@@ -234,7 +277,9 @@
                                 Click="Enter_Click"
                                 Style="{StaticResource KeypadButtonEnterStyle}"/>
 
+
                         <!-- hàng cuối -->
+
                         <Button Grid.Row="3"
                                 Grid.Column="0"
                                 Grid.ColumnSpan="3"
@@ -252,35 +297,31 @@
 
 
         <!-- BUTTON HÀNG 1 -->
+
         <UniformGrid Grid.Row="1"
                      Columns="4">
 
-            <Button Content="Bán hàng"
-                    Style="{StaticResource ActionButtonStyle}"
-                    Background="#18D56D"/>
-
-            <Button Content="Bảng kê quyết toán"
-                    Style="{StaticResource ActionButtonStyle}"
-                    Background="#6172F3"/>
-
-            <Button Content="Mở ca / Kết ca"
-                    Style="{StaticResource ActionButtonStyle}"
-                    Background="#2D31A6"/>
-
-            <Button Content="Nộp / Rút tiền"
-                    Style="{StaticResource ActionButtonStyle}"
-                    Background="#E0A000"/>
+            <Button Content="Bán hàng" Style="{StaticResource ActionButtonStyle}" Background="#18D56D"/>
+            <Button Content="Bảng kê quyết toán" Style="{StaticResource ActionButtonStyle}" Background="#6172F3"/>
+            <Button Content="Mở ca / Kết ca" Style="{StaticResource ActionButtonStyle}" Background="#2D31A6"/>
+            <Button Content="Nộp / Rút tiền" Style="{StaticResource ActionButtonStyle}" Background="#E0A000"/>
 
         </UniformGrid>
 
 
-        <!-- BUTTON HÀNG 2 -->
-        <UniformGrid Grid.Row="2" Columns="5">
+        <UniformGrid Grid.Row="2"
+                     Columns="5">
+
             <Button Content="Quản lý" Style="{StaticResource ActionButtonStyle}" Background="#0B4A6F"/>
             <Button Content="Mở ca / Kết ca" Style="{StaticResource ActionButtonStyle}" Background="#2D31A6"/>
             <Button Content="Đồng bộ" Style="{StaticResource ActionButtonStyle}" Background="#065986"/>
             <Button Content="Đối soát" Style="{StaticResource ActionButtonStyle}" Background="#2D3282"/>
-            <Button Content="Thoát" Style="{StaticResource ActionButtonStyle}" Background="#065986"/>
+            <Button Content="Thoát"
+                    Style="{StaticResource ActionButtonStyle}"
+                    Background="#065986"
+                    Name="BtnExitFunction"
+                    Click="BtnExitFunction_Click"/>
+
         </UniformGrid>
 
     </Grid>
