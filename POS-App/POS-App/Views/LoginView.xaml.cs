@@ -119,10 +119,11 @@ namespace POS_App.Views
             if (PasswordInput.Password == "000000")
             {
                 VM.Login();
-            }   else
+            }
+            else
             {
                 MessageBox.Show("Sai thông tin tài khoản hoặc mật khẩu");
-            }    
+            }
         }
 
         private void BtnExitFunction_Click(object sender, RoutedEventArgs e)
