@@ -33,36 +33,35 @@ namespace S3.Gateway.Integrations.Ekyc.Napas
 
     public class NpCallBackStatusRequest
     {
-        public string SenderReference { get; set; } = string.Empty;
-        public string CreationDateTime { get; set; } = string.Empty;
-        public string PlatformCode { get; set; } = string.Empty;
-        public string PlatformMerchantId { get; set; } = string.Empty;
-        public string MerchantName { get; set; } = string.Empty;
-        public string MerchantAddress { get; set; } = string.Empty;
-        public string MerchantCode { get; set; } = string.Empty;
-        public string MerchantAlias { get; set; } = string.Empty;
-        public string MerchantType { get; set; } = string.Empty;
-        public string Status { get; set; } = string.Empty;
+        public string? SenderReference { get; set; } = string.Empty;
+        public string? CreationDateTime { get; set; } = string.Empty;
+        public string? PlatformCode { get; set; } = string.Empty;
+        public string? PlatformMerchantId { get; set; } = string.Empty;
+        public string? MerchantName { get; set; } = string.Empty;
+        public string? MerchantAddress { get; set; } = string.Empty;
+        public string? MerchantCode { get; set; } = string.Empty;
+        public string? MerchantAlias { get; set; } = string.Empty;
+        public string? MerchantType { get; set; } = string.Empty;
+        public string? Status { get; set; } = string.Empty;
         public List<BranchInfo> Branch { get; set; } = new();
-        public string QrName { get; set; } = string.Empty;
-        public string PaymentChannel { get; set; } = string.Empty;
-        public string Website { get; set; } = string.Empty;
-        public string TaxId { get; set; } = string.Empty;
-        public string Email { get; set; } = string.Empty;
-        public string ContractId { get; set; } = string.Empty;
-        public string Mcc { get; set; } = string.Empty;
+        public string? QrName { get; set; } = string.Empty;
+        public string? PaymentChannel { get; set; } = string.Empty;
+        public string? Website { get; set; } = string.Empty;
+        public string? TaxId { get; set; } = string.Empty;
+        public string? Email { get; set; } = string.Empty;
+        public string? ContractId { get; set; } = string.Empty;
+        public string? Mcc { get; set; } = string.Empty;
         public decimal Fee { get; set; }
         public decimal MasterMerchantFee { get; set; }
         public class BranchInfo
         {
-            public string PlatformBranchId { get; set; } = string.Empty;
-            public string BranchName { get; set; } = string.Empty;
-            public string BranchCode { get; set; } = string.Empty;
-            public string BranchAccount { get; set; } = string.Empty;
-            public string BranchBankId { get; set; } = string.Empty;
-            public string BeneficiaryName { get; set; } = string.Empty;
-
-            public string BranchAlias { get; set; } = string.Empty;
+            public string? PlatformBranchId { get; set; } = string.Empty;
+            public string? BranchName { get; set; } = string.Empty;
+            public string? BranchCode { get; set; } = string.Empty;
+            public string? BranchAccount { get; set; } = string.Empty;
+            public string? BranchBankId { get; set; } = string.Empty;
+            public string? BeneficiaryName { get; set; } = string.Empty;
+            public string? BranchAlias { get; set; } = string.Empty;
         }
     }
 
