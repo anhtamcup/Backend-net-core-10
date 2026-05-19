@@ -31,6 +31,7 @@ namespace S3.Gateway.Features.Payments.Napas
         public string BillNumber { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public string CallbackUrl { get; set; } = string.Empty;
+        public bool IsStaticQR { get { return BillNumber == "NAPGSQR"; } }
     }
 
     public class NapasGenQRResponse
@@ -67,7 +68,7 @@ namespace S3.Gateway.Features.Payments.Napas
             if (string.IsNullOrWhiteSpace(request.RequestID))
                 errors.Add("RequestID là bắt buộc");
 
-            if (request.Amount <= 0)
+            if ((request.IsStaticQR == false) && request.Amount <= 0)
                 errors.Add("Amount phải > 0");
 
             if (string.IsNullOrWhiteSpace(request.BillNumber))
@@ -188,10 +189,11 @@ namespace S3.Gateway.Features.Payments.Napas
 
             var orderId = TransIdCodecHelper.Encode(callbackRouting.ID, TransIdCodecHelper.TransactionType.Forward);
             var qrInfor = request.QRInfo;
+            var accountNumber = qrInfor.AccountNumber + (request.IsStaticQR ? "NAPGSQR" : orderId);
             var genQRRequest = new GenQRRequest
             {
                 BankID = qrInfor.BankID,
-                AccountNumber = qrInfor.AccountNumber + orderId,
+                AccountNumber = accountNumber,
                 ServiceType = qrInfor.ServiceType,
                 BillNumber = request.BillNumber,
                 StoreLabel = request.PartnerCode,
