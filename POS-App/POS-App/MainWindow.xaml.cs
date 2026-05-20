@@ -27,15 +27,38 @@ namespace POS_App
             }
 
             DataContext = mainVm;
-            //OpenCustomerScreen(mainVm);
-            //RequestFullScreen();
+            KeyDown += MainWindow_KeyDown;
+            OpenCustomerScreen(mainVm);
+            ToggleFullScreen();
         }
 
-        private void RequestFullScreen()
+        private void MainWindow_KeyDown(object sender, KeyEventArgs e)
         {
-            WindowStyle = WindowStyle.None;
-            WindowState = WindowState.Normal; // Reset trước để tránh lỗi taskbar
-            WindowState = WindowState.Maximized;
+            if (e.Key == Key.F11)
+            {
+                ToggleFullScreen();
+                e.Handled = true;
+            }
+        }
+
+        private void ToggleFullScreen()
+        {
+            bool isFullScreen = WindowStyle == WindowStyle.None
+                             && WindowState == WindowState.Maximized;
+
+            if (isFullScreen)
+            {
+                // Thoát fullscreen
+                WindowStyle = WindowStyle.SingleBorderWindow;
+                WindowState = WindowState.Normal;
+            }
+            else
+            {
+                // Vào fullscreen
+                WindowStyle = WindowStyle.None;
+                WindowState = WindowState.Normal;  // Reset trước để tránh lỗi taskbar
+                WindowState = WindowState.Maximized;
+            }
         }
 
         private void btnLog_Click(object sender, RoutedEventArgs e)
@@ -102,6 +125,12 @@ namespace POS_App
             txt.Clear();
             txt.Focus();
             e.Handled = true;
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            _customerWindow?.Close();
+            base.OnClosed(e);
         }
     }
 }
