@@ -18,8 +18,8 @@ namespace POS_App
             InitializeComponent();
             var mainVm = new MainViewModel();
             DataContext = mainVm;
-            OpenCustomerScreen(mainVm);
-            RequestFullScreen();
+            //OpenCustomerScreen(mainVm);
+            //RequestFullScreen();
         }
 
         private void RequestFullScreen()
