@@ -256,7 +256,7 @@
                         <DataGridTextColumn Header="SẢN PHẨM" Width="*" Binding="{Binding Name}" ElementStyle="{StaticResource GridViewTextStyleLeft}"/>
                     <DataGridTextColumn Header="ĐƠN VỊ" Width="60" Binding="{Binding Unit}" ElementStyle="{StaticResource GridViewTextStyleLeft}"/>
                     <DataGridTextColumn Header="GIÁ" Width="70" Binding="{Binding OriginalPrice,StringFormat={}{0:N0}}" ElementStyle="{StaticResource GridViewTextStyleRight}"/>
-                    <DataGridTemplateColumn Header="SỐ LƯỢNG" Width="80">
+                    <DataGridTemplateColumn Header="SỐ LƯỢNG" Width="90">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
 
@@ -264,7 +264,8 @@
 
                                     <Button Style="{StaticResource ButtonDeleteItemStyle}"
                                             Name="btnMinus"
-                                            Click="btnMinus_Click">
+                                            Click="btnMinus_Click"
+                                            HorizontalAlignment="Left">
                                         <svgc:SvgViewbox Source="/Assets/Icons/ico-decrease-quantity.svg" Style="{StaticResource KeypadIconStyle}"/>
                                     </Button>
 
@@ -282,7 +283,8 @@
 
                                     <Button Style="{StaticResource ButtonDeleteItemStyle}"
                                             Name="btnPlus"
-                                            Click="btnPlus_Click">
+                                            Click="btnPlus_Click"
+                                            HorizontalAlignment="Right">
                                         <svgc:SvgViewbox Source="/Assets/Icons/ico-increase-quantity.svg" Style="{StaticResource KeypadIconStyle}"/>
                                     </Button>
 
@@ -291,8 +293,8 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTextColumn Header="GIẢM GIÁ" Width="70" Binding="{Binding DiscountPrice,StringFormat={}{0:N0}}" ElementStyle="{StaticResource GridViewTextStyleRight}"/>
-                        <DataGridTextColumn Header="SỐ TIỀN" Width="70" Binding="{Binding TotalPrice,StringFormat={}{0:N0}}" ElementStyle="{StaticResource GridViewTextStyleRight}"/>
+                    <DataGridTextColumn Header="GIẢM GIÁ" Width="80" Binding="{Binding DiscountPrice,StringFormat={}{0:N0}}" ElementStyle="{StaticResource GridViewTextStyleRight}"/>
+                        <DataGridTextColumn Header="SỐ TIỀN" Width="80" Binding="{Binding TotalPrice,StringFormat={}{0:N0}}" ElementStyle="{StaticResource GridViewTextStyleRight}"/>
                         <DataGridTextColumn Header="GHI CHÚ" Width="60" Binding="{Binding Note}" ElementStyle="{StaticResource GridViewTextStyleLeft}" />
                         <DataGridTemplateColumn Header="" Width="40">
                             <DataGridTemplateColumn.CellTemplate>

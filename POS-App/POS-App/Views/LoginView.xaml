@@ -171,7 +171,7 @@
 
                     <!-- keypad -->
 
-                    <Grid>
+                    <Grid Background="#DCE5EF">
 
                         <Grid.RowDefinitions>
                             <RowDefinition/>
