@@ -1,4 +1,7 @@
-﻿using POS_App.ViewModels;
+﻿using POS_App.Dto;
+using POS_App.Models;
+using POS_App.Services;
+using POS_App.ViewModels;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -120,6 +123,25 @@ namespace POS_App.Views
             PasswordInput.Focus();
             if (PasswordInput.Password == "000000")
             {
+                var user = new UserDto
+                {
+                    ID = 0001,
+                    Name = "Lê Văn Tâm",
+                    POSCode = "P0001",
+                    Code = "NV001",
+                    StoreName = "Tiệm Mì Đau Khổ",
+                    YS_AccountID = 7457
+                };
+
+                var auth = new AuthSession
+                {
+                    AccessToken = "",
+                    ExpiresAt = DateTime.Now.AddDays(1000),
+                    RefreshToken = "",
+                    SessionId = "ss01"
+                };
+
+                SessionService.Instance.Login(user, auth);
                 VM.Login();
             }
             else

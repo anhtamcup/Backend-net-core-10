@@ -50,7 +50,7 @@ namespace POS_App.ViewModels
 
         public HeaderViewModel()
         {
-            AppServices.Session.PropertyChanged += Session_PropertyChanged;
+            SessionService.Instance.PropertyChanged += Session_PropertyChanged;
 
             var timer = new DispatcherTimer
             {
@@ -68,8 +68,7 @@ namespace POS_App.ViewModels
 
         private void Session_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName ==
-                nameof(AppServices.Session.CurrentUser))
+            if (e.PropertyName == nameof(SessionService.Instance.CurrentUser))
             {
                 LoadUser();
             }
@@ -77,7 +76,7 @@ namespace POS_App.ViewModels
 
         private void LoadUser()
         {
-            var user = AppServices.Session.CurrentUser;
+            var user = SessionService.Instance.CurrentUser;
             StaffCode = user?.Code ?? string.Empty;
             StaffName = user?.Name ?? string.Empty;
 
@@ -122,8 +121,7 @@ namespace POS_App.ViewModels
 
         public void Logout()
         {
-            AppServices.Session.Logout();
-
+            SessionService.Instance.Logout();
             CurrentView = new LoginViewModel(this);
         }
     }

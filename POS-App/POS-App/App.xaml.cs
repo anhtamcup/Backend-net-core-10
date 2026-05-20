@@ -10,6 +10,16 @@ namespace POS_App
     {
         // App.xaml.cs
         public static DatabaseService Database { get; } = new DatabaseService();
+
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+
+            //if (SessionService.Instance.TryRestore())
+            //    new MainWindow().Show();
+            //else
+            //    new LoginWindow().Show();
+        }
     }
 
 }

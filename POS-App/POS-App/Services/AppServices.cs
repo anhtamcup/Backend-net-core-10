@@ -2,6 +2,6 @@
 {
     public static class AppServices
     {
-        public static SessionService Session = new SessionService();
+        //public static SessionService Session = new SessionService();
     }
 }

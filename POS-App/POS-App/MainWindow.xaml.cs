@@ -21,6 +21,11 @@ namespace POS_App
             RenderOptions.ProcessRenderMode = System.Windows.Interop.RenderMode.SoftwareOnly;
             InitializeComponent();
             var mainVm = new MainViewModel();
+            if (SessionService.Instance.TryRestore())
+            {
+                mainVm.CurrentView = new OrderViewModel();
+            }
+
             DataContext = mainVm;
             //OpenCustomerScreen(mainVm);
             //RequestFullScreen();

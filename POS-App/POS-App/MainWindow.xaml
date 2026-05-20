@@ -24,7 +24,7 @@
         <Style x:Key="LoginRequiredStyle" TargetType="FrameworkElement">
             <Setter Property="Visibility"
             Value="{Binding
-            Source={x:Static services:AppServices.Session},
+            Source={x:Static services:SessionService.Instance},
             Path=CurrentUser,
             Converter={StaticResource NullToVisibilityConverter}}"/>
         </Style>
