@@ -74,11 +74,11 @@
 
                     <VisualBrush.Visual>
                         <TextBlock
-                    Text="Quét mã vạch hoặc nhập mã sản phẩm"
-                    Foreground="#CCD2E3"
-                    Opacity="0.7"
-                    FontSize="12"
-                    Margin="0,0,0,1"/>
+                            Text="Quét mã / nhập mã sản phẩm"
+                            Foreground="#CCD2E3"
+                            Opacity="0.7"
+                            FontSize="12"
+                            Margin="0,0,0,1"/>
                     </VisualBrush.Visual>
 
                 </VisualBrush>
@@ -120,7 +120,7 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="140"/>
+                    <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="auto" />
                     <ColumnDefinition Width="*" />
@@ -155,7 +155,7 @@
                 </StackPanel>
 
                 <StackPanel Grid.Column="3" Style="{StaticResource HeaderBoxStyle}">
-                    <TextBlock Text="NGÀY THÁNG" Style="{StaticResource HeaderLabelStyle}"/>
+                    <TextBlock Text="THỜI GIAN" Style="{StaticResource HeaderLabelStyle}"/>
                     <TextBlock Text="{Binding CurrentTime}" Style="{StaticResource HeaderValueStyle}"/>
                 </StackPanel>
 
@@ -185,7 +185,7 @@
 
                             <TextBox x:Name="tbSearch"
                                      Style="{StaticResource SearchPlaceholderStyle}"
-                                    Width="210"
+                                    Width="180"
                                     Margin="5,0,0,0"
                                     Foreground="#CCD2E3"
                                     CaretBrush="#CCD2E3"

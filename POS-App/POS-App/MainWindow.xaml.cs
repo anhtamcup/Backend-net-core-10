@@ -19,8 +19,15 @@ namespace POS_App
             var mainVm = new MainViewModel();
             DataContext = mainVm;
             OpenCustomerScreen(mainVm);
+            RequestFullScreen();
         }
 
+        private void RequestFullScreen()
+        {
+            WindowStyle = WindowStyle.None;
+            WindowState = WindowState.Normal; // Reset trước để tránh lỗi taskbar
+            WindowState = WindowState.Maximized;
+        }
 
         private void btnLog_Click(object sender, RoutedEventArgs e)
         {
@@ -36,11 +43,20 @@ namespace POS_App
             if (secondScreen == null) return;
 
             _customerWindow = new CustomerWindow(mainVm);
-            _customerWindow.Left = secondScreen.WorkingArea.Left;
-            _customerWindow.Top = secondScreen.WorkingArea.Top;
+            _customerWindow.WindowStyle = WindowStyle.None;
+            _customerWindow.ResizeMode = ResizeMode.NoResize;
             _customerWindow.WindowStartupLocation = WindowStartupLocation.Manual;
-            _customerWindow.WindowState = WindowState.Maximized;
+            _customerWindow.Left = secondScreen.WpfBounds.Left;
+            _customerWindow.Top = secondScreen.WpfBounds.Top;
+            _customerWindow.Width = secondScreen.WpfBounds.Width;
+            _customerWindow.Height = secondScreen.WpfBounds.Height;
             _customerWindow.Show();
+
+            // Delay để WPF render xong vị trí rồi mới Maximize
+            _customerWindow.Dispatcher.InvokeAsync(() =>
+            {
+                _customerWindow.WindowState = WindowState.Maximized;
+            }, System.Windows.Threading.DispatcherPriority.Loaded);
         }
 
     }
