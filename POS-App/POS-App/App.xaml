@@ -8,6 +8,12 @@
             >
     <Application.Resources>
         <converter:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
+
+        <!--Màu linear-->
+        <LinearGradientBrush x:Key="BackgroundColorHeader" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#0A3D62" Offset="0"/>
+            <GradientStop Color="#134D75" Offset="1"/>
+        </LinearGradientBrush>
         
         <LinearGradientBrush x:Key="bg-button-green" StartPoint="0,0" EndPoint="0,1">
             <GradientStop Color="#00A35D" Offset="0"/>

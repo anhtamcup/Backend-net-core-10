@@ -322,7 +322,6 @@
                                 <RowDefinition />
                                 <RowDefinition />
                                 <RowDefinition />
-                                <RowDefinition />
                             </Grid.RowDefinitions>
 
                             <TextBlock Grid.Row="0" Text="{Binding Summary.ItemCount, StringFormat='Tổng: {0} sản phẩm'}" Style="{StaticResource SummarySubtotalPriceLabel}" />

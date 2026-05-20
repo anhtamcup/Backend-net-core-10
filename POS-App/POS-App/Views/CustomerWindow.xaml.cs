@@ -35,10 +35,10 @@ namespace POS_App.Views
 
         private void UpdateUI()
         {
-            var vm = DataContext as MainViewModel;
-            OrderPanel.Visibility = vm?.CurrentView is OrderViewModel
-                ? Visibility.Visible
-                : Visibility.Collapsed;
+            //var vm = DataContext as MainViewModel;
+            //OrderPanel.Visibility = vm?.CurrentView is OrderViewModel
+            //    ? Visibility.Visible
+            //    : Visibility.Collapsed;
         }
     }
 }

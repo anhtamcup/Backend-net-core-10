@@ -21,12 +21,6 @@
             <views:LoginView/>
         </DataTemplate>
 
-        <!--Màu linear-->
-        <LinearGradientBrush x:Key="BackgroundColorHeader" StartPoint="0,0" EndPoint="0,1">
-            <GradientStop Color="#0A3D62" Offset="0"/>
-            <GradientStop Color="#134D75" Offset="1"/>
-        </LinearGradientBrush>
-
         <Style x:Key="LoginRequiredStyle" TargetType="FrameworkElement">
             <Setter Property="Visibility"
             Value="{Binding
