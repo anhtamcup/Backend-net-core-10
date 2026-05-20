@@ -1,7 +1,11 @@
-﻿using POS_App.Helpers;
+﻿using POS_App.Dto;
+using POS_App.Helpers;
+using POS_App.Services;
 using POS_App.ViewModels;
 using POS_App.Views;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using WpfScreenHelper;
 
@@ -59,5 +63,40 @@ namespace POS_App
             }, System.Windows.Threading.DispatcherPriority.Loaded);
         }
 
+        private void tbSearch_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key != Key.Enter) return;
+
+            var txt = (TextBox)sender;
+            var barcode = txt.Text.Trim();
+            if (string.IsNullOrEmpty(barcode)) return;
+
+            var productService = new ProductService();
+            var product = productService.GetByBarcode(barcode);
+
+            if (product != null)
+            {
+                var main = DataContext as MainViewModel;
+                var orderViewModel = main.CurrentView as OrderViewModel;
+
+                var cart = new CartItemRow
+                {
+                    ID = product.YS_ProductID,
+                    Code = product.ProductCode,
+                    Name = product.ProductName,
+                    Quantity = 1,
+                    Unit = "Chai",
+                    OriginalPrice = product.RetailPrice ?? 0m
+                };
+
+                orderViewModel.AddCart(cart);
+            }
+            else
+                MessageBox.Show("Không tìm thấy sản phẩm!");
+
+            txt.Clear();
+            txt.Focus();
+            e.Handled = true;
+        }
     }
 }

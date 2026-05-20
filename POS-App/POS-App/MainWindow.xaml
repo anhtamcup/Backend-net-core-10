@@ -184,13 +184,15 @@
                                 Source="/Assets/Icons/ico-scan-barcode.svg"/>
 
                             <TextBox x:Name="tbSearch"
-                                     Style="{StaticResource SearchPlaceholderStyle}"
+                                    Style="{StaticResource SearchPlaceholderStyle}"
                                     Width="180"
                                     Margin="5,0,0,0"
                                     Foreground="#CCD2E3"
                                     CaretBrush="#CCD2E3"
                                     FontSize="{StaticResource FontSizeM}"
-                                    VerticalContentAlignment="Center"/>
+                                    VerticalContentAlignment="Center"
+                                     KeyDown="tbSearch_KeyDown"
+                                     />
 
                         </WrapPanel>
 

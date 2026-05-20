@@ -252,22 +252,23 @@
                     </DataGrid.CellStyle>
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="#" Width="25" Binding="{Binding Index, StringFormat={}{0:00}}" ElementStyle="{StaticResource GridViewTextStyleCenter}"/>
-                        <DataGridTextColumn Header="MÃ SP" Width="80" Binding="{Binding Code}" ElementStyle="{StaticResource GridViewTextStyleLeft}"/>
+                        <DataGridTextColumn Header="MÃ SP" Width="110" Binding="{Binding Code}" ElementStyle="{StaticResource GridViewTextStyleLeft}"/>
                         <DataGridTextColumn Header="SẢN PHẨM" Width="*" Binding="{Binding Name}" ElementStyle="{StaticResource GridViewTextStyleLeft}"/>
-                        <DataGridTextColumn Header="GIÁ" Width="70" Binding="{Binding OriginalPrice,StringFormat={}{0:N0}}" ElementStyle="{StaticResource GridViewTextStyleRight}"/>
-                        <DataGridTemplateColumn Header="SỐ LƯỢNG" Width="80">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-  
-                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <DataGridTextColumn Header="ĐƠN VỊ" Width="60" Binding="{Binding Unit}" ElementStyle="{StaticResource GridViewTextStyleLeft}"/>
+                    <DataGridTextColumn Header="GIÁ" Width="70" Binding="{Binding OriginalPrice,StringFormat={}{0:N0}}" ElementStyle="{StaticResource GridViewTextStyleRight}"/>
+                    <DataGridTemplateColumn Header="SỐ LƯỢNG" Width="80">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
 
-                                        <Button Style="{StaticResource ButtonDeleteItemStyle}"
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+
+                                    <Button Style="{StaticResource ButtonDeleteItemStyle}"
                                             Name="btnMinus"
                                             Click="btnMinus_Click">
-                                            <svgc:SvgViewbox Source="/Assets/Icons/ico-decrease-quantity.svg" Style="{StaticResource KeypadIconStyle}"/>
-                                        </Button>
+                                        <svgc:SvgViewbox Source="/Assets/Icons/ico-decrease-quantity.svg" Style="{StaticResource KeypadIconStyle}"/>
+                                    </Button>
 
-                                        <TextBox
+                                    <TextBox
                                             x:Name="tbQuantity"
                                             Margin="5,0"
                                             PreviewTextInput="tbQuantity_PreviewTextInput"
@@ -279,19 +280,18 @@
                                             BorderThickness="0"
                                             Foreground="Black"/>
 
-                                        <Button Style="{StaticResource ButtonDeleteItemStyle}"
+                                    <Button Style="{StaticResource ButtonDeleteItemStyle}"
                                             Name="btnPlus"
                                             Click="btnPlus_Click">
-                                            <svgc:SvgViewbox Source="/Assets/Icons/ico-increase-quantity.svg" Style="{StaticResource KeypadIconStyle}"/>
-                                        </Button>
+                                        <svgc:SvgViewbox Source="/Assets/Icons/ico-increase-quantity.svg" Style="{StaticResource KeypadIconStyle}"/>
+                                    </Button>
 
-                                    </StackPanel>
-                                    
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTextColumn Header="ĐƠN VỊ" Width="60" Binding="{Binding Unit}" ElementStyle="{StaticResource GridViewTextStyleRight}"/>
-                        <DataGridTextColumn Header="GIẢM GIÁ" Width="70" Binding="{Binding DiscountPrice,StringFormat={}{0:N0}}" ElementStyle="{StaticResource GridViewTextStyleRight}"/>
+                                </StackPanel>
+
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="GIẢM GIÁ" Width="70" Binding="{Binding DiscountPrice,StringFormat={}{0:N0}}" ElementStyle="{StaticResource GridViewTextStyleRight}"/>
                         <DataGridTextColumn Header="SỐ TIỀN" Width="70" Binding="{Binding TotalPrice,StringFormat={}{0:N0}}" ElementStyle="{StaticResource GridViewTextStyleRight}"/>
                         <DataGridTextColumn Header="GHI CHÚ" Width="60" Binding="{Binding Note}" ElementStyle="{StaticResource GridViewTextStyleLeft}" />
                         <DataGridTemplateColumn Header="" Width="40">

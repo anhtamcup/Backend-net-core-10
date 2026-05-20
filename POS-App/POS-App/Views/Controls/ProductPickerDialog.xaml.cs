@@ -149,7 +149,7 @@ namespace POS_App.Views.Controls
         {
             if (sender is Border b && b.DataContext is ProductItem p)
             {
-                VM.AddCart();
+                //VM.AddCart();
                 SelectedProduct = p;
                 DialogResult = true;
                 Close();

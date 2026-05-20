@@ -98,8 +98,11 @@ namespace POS_App.ViewModels
             var vatAmount = 0m;
             var totalAmount = 0m;
 
+            var index = 1;
             foreach (var item in cartItems)
             {
+                item.Index = index;
+                index++;
                 itemCount += item.Quantity;
                 promotionAmount += item.DiscountPrice;
                 subTotalAmount += item.Quantity * item.OriginalPrice;
@@ -153,18 +156,17 @@ namespace POS_App.ViewModels
             Customer.Phone = customer.Phone;
         }
 
-        public void AddCart()
+        public void AddCart(CartItemRow cart)
         {
-            CartItems.Add(new CartItemRow
+            var existCart = CartItems.Where(item => item.ID == cart.ID).FirstOrDefault();
+            if (existCart != null)
             {
-                ID = 1000,
-                Index = CartItems.Count + 1,
-                Code = "00000",
-                Name = "Nước suối Lavie",
-                Quantity = 1,
-                Unit = "Chai",
-                OriginalPrice = 10000
-            });
+                existCart.Quantity += cart.Quantity;
+            }
+            else
+            {
+                CartItems.Insert(0, cart);
+            }
 
             Summary.Recalculate(CartItems);
         }

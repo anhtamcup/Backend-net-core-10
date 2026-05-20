@@ -1,5 +1,4 @@
-﻿using System.Configuration;
-using System.Data;
+﻿using POS_App.Services;
 using System.Windows;
 
 namespace POS_App
@@ -9,6 +8,8 @@ namespace POS_App
     /// </summary>
     public partial class App : Application
     {
+        // App.xaml.cs
+        public static DatabaseService Database { get; } = new DatabaseService();
     }
 
 }

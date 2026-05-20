@@ -13,6 +13,7 @@ namespace POS_App.Views
 
         public LoginView()
         {
+
             InitializeComponent();
 
             PasswordDots.ItemsSource = dots;
@@ -23,6 +24,7 @@ namespace POS_App.Views
             {
                 PasswordInput.Focus();
             };
+
         }
 
         void InitDots()
