@@ -1,0 +1,113 @@
+﻿<Window x:Class="POS_App.Views.Controls.AppModal"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:POS_App.Views.Controls"
+        mc:Ignorable="d"
+        xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        ResizeMode="NoResize"
+        ShowInTaskbar="False">
+
+    <Window.Resources>
+
+        <LinearGradientBrush x:Key="BackgroundColorHeader"
+            StartPoint="0,0"
+            EndPoint="0,1">
+            <GradientStop Color="#0C2340" Offset="0"/>
+            <GradientStop Color="#163659" Offset="1"/>
+        </LinearGradientBrush>
+
+        <Style x:Key="HeaderLabel" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="18"/>
+        </Style>
+
+        <Style x:Key="ButtonCloseHeaderStyle" TargetType="Button" BasedOn="{StaticResource ButtonBase}">
+
+            <Setter Property="Background" Value="#1AFFFFFF"/>
+            <Setter Property="Height" Value="28"/>
+            <Setter Property="Width" Value="28"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Margin" Value="10,8"/>
+
+        </Style>
+
+    </Window.Resources>
+
+
+    <Grid Background="#66000000">
+
+        <Border Width="{Binding ModalWidth, RelativeSource={RelativeSource AncestorType=Window}}"
+                Height="{Binding ModalHeight, RelativeSource={RelativeSource AncestorType=Window}}"
+
+                CornerRadius="12"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                Background="{StaticResource BackgroundColorHeader}"
+                >
+
+        <Grid>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- HEADER -->
+                <Border Grid.Row="0"
+                         Background="{StaticResource BackgroundColorHeader}"
+                         CornerRadius="12,12,0,0">
+
+                    <Grid>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <svgc:SvgViewbox
+                            Grid.Column="0"
+                            Source="/Assets/Icons/ico-payment.svg"
+                            Height="16"/>
+
+                        <TextBlock Grid.Column="1"
+                                   VerticalAlignment="Center"
+                                   Style="{StaticResource HeaderLabel}"
+                                   Text="{Binding ModalTitle,
+                                          RelativeSource={RelativeSource AncestorType=Window}}"/>
+
+                        <Button Grid.Column="2"
+                                Click="btnCloseModal_Click"
+                                Style="{StaticResource ButtonCloseHeaderStyle}">
+
+                            <svgc:SvgViewbox
+                                Source="/Assets/Icons/ico-close.svg"
+                                Height="15"/>
+
+                        </Button>
+
+                    </Grid>
+
+                </Border>
+
+                <!-- BODY -->
+                <ContentPresenter
+                    Grid.Row="1"
+                    Margin="15"
+                    Content="{Binding ModalContent,
+                    RelativeSource={RelativeSource AncestorType=Window}}"/>
+
+            </Grid>
+
+        </Border>
+
+    </Grid>
+
+
+</Window>
