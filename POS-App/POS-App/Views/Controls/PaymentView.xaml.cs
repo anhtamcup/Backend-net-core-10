@@ -1,4 +1,5 @@
-﻿using System;
+﻿using POS_App.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -18,9 +19,10 @@ namespace POS_App.Views.Controls
     /// </summary>
     public partial class PaymentView : UserControl
     {
-        public PaymentView()
+        public PaymentView(OrderViewModel orderVM)
         {
             InitializeComponent();
+            DataContext = orderVM;
         }
 
         private void btnConfirmPayment_Click(object sender, RoutedEventArgs e)

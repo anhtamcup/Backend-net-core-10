@@ -68,7 +68,7 @@
                 <StackPanel Grid.Column="0" Margin="18" Orientation="Vertical">
                     <TextBlock Text="Số tiền cần thu" FontSize="13" Foreground="#666" Margin="0,0,0,6"/>
                     <Border Style="{StaticResource InfoBox}" Margin="0,0,0,16">
-                        <TextBlock x:Name="txtAmountDue" Text="4.412.000 VND" FontSize="14" FontFamily="Consolas"/>
+                        <TextBlock x:Name="txtAmountDue" Text="{Binding Summary.TotalAmount,StringFormat='{}{0:N0} đ'}" FontSize="14" FontFamily="Consolas"/>
                     </Border>
 
                     <WrapPanel Margin="0,0,0,16">

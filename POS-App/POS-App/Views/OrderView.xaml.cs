@@ -98,7 +98,7 @@ namespace POS_App.Views
                 ModalTitle = "Thanh toán hóa đơn",
                 ModalWidth = 800,
                 ModalHeight = 500,
-                ModalContent = new PaymentView()
+                ModalContent = new PaymentView(VM)
             };
 
             modal.ShowDialog();
