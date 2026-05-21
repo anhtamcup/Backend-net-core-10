@@ -26,3 +26,4 @@ appsettings.Development.json
 # Rider / VSCode (nếu có)
 .vscode/
 .idea/
+/POS-App/POS-App/Properties/PublishProfiles

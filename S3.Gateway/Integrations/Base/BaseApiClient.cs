@@ -172,8 +172,7 @@ namespace S3.Gateway.Integrations.Base
                     handler.ClientCertificates.Add(clientCert);
                 }
 
-                var request = new HttpRequestMessage(HttpMethod.Post, url);
-                request.Version = HttpVersion.Version11;
+
                 if (string.IsNullOrWhiteSpace(token) == false)
                 {
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
@@ -189,6 +188,12 @@ namespace S3.Gateway.Integrations.Base
 
                 async Task<(HttpStatusCode StatusCode, string Content)> SendRequestAsync(bool retry = false)
                 {
+                    // ✅ Tạo request MỚI mỗi lần gọi
+                    using var request = new HttpRequestMessage(HttpMethod.Post, url)
+                    {
+                        Version = HttpVersion.Version11
+                    };
+
                     HttpContent content;
                     if (data is IEnumerable<KeyValuePair<string, string>> formData)
                     {
@@ -203,9 +208,12 @@ namespace S3.Gateway.Integrations.Base
                     }
 
                     request.Content = content;
+
+                    // ✅ Đọc request body TRƯỚC khi send
+                    var requestBody = await request.Content.ReadAsStringAsync();
+
                     var response = await client.SendAsync(request);
                     var responseString = await response.Content.ReadAsStringAsync();
-                    var requestBody = await request.Content.ReadAsStringAsync();
 
                     if (retry)
                     {
