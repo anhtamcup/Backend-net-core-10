@@ -1,5 +1,4 @@
 ﻿using POS_App.Dto;
-using POS_App.Helpers;
 using POS_App.Services;
 using POS_App.ViewModels;
 using POS_App.Views;
@@ -28,8 +27,10 @@ namespace POS_App
 
             DataContext = mainVm;
             KeyDown += MainWindow_KeyDown;
-            OpenCustomerScreen(mainVm);
-            ToggleFullScreen();
+
+
+            //OpenCustomerScreen(mainVm);
+            //ToggleFullScreen();
         }
 
         private void MainWindow_KeyDown(object sender, KeyEventArgs e)

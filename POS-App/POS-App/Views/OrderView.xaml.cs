@@ -13,6 +13,9 @@ namespace POS_App.Views
         public OrderView()
         {
             InitializeComponent();
+
+            var paymentDiaglog = new PaymentDialog();
+            paymentDiaglog.Show();
         }
 
         private void btnPlus_Click(
