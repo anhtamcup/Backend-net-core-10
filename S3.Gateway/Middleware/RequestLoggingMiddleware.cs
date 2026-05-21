@@ -1,6 +1,8 @@
-﻿using S3.Gateway.Common;
+﻿using Newtonsoft.Json;
+using S3.Gateway.Common;
 using S3.Gateway.Entities;
 using S3.Gateway.Features.Logs;
+using System.Reflection.PortableExecutable;
 
 namespace S3.Gateway.Middleware
 {
@@ -75,7 +77,8 @@ namespace S3.Gateway.Middleware
                         Duration = duration,
                         IpAddress = context.Connection.RemoteIpAddress?.ToString() ?? string.Empty,
                         ErrorMessage = errorMessage,
-                        StackTrace = stackTrace
+                        StackTrace = stackTrace,
+                        RequestHeader = JsonConvert.SerializeObject(context.Request.Headers)
                     });
                 }
             }

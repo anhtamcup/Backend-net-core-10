@@ -23,5 +23,7 @@ namespace S3.Gateway.Entities
         public string ErrorMessage { get; set; } = string.Empty;
 
         public string StackTrace { get; set; } = string.Empty;
+
+        public string RequestHeader { get; set; } = string.Empty;
     }
 }
