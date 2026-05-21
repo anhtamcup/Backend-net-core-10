@@ -42,184 +42,216 @@
             <Setter Property="Stretch" Value="Uniform"/>
         </Style>
 
+        <Style x:Key="ButtonActionStyle"
+               TargetType="Button"
+               BasedOn="{StaticResource ButtonBase}">
+            <Setter Property="Padding" Value="8"/>
+            <Setter Property="FontSize" Value="{StaticResource FontSizeM}"/>
+        </Style>
+
     </UserControl.Resources>
-    <Grid Grid.Row="1" Background="#FFFFFF">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Column="0" Margin="18" Orientation="Vertical">
-            <TextBlock Text="Số tiền cần thu" FontSize="13" Foreground="#666" Margin="0,0,0,6"/>
-            <Border Style="{StaticResource InfoBox}" Margin="0,0,0,16">
-                <TextBlock x:Name="txtAmountDue" Text="4.412.000 VND" FontSize="14" FontFamily="Consolas"/>
-            </Border>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"  />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
 
-            <WrapPanel Margin="0,0,0,16">
-                <Button x:Name="btnTienMat" Style="{StaticResource PaymentMethodButton}"
-    Background="#27AE60" BorderBrush="#27AE60"
-    Click="PaymentMethod_Click" Tag="TienMat" Margin="0,0,6,6">
-                    <StackPanel>
-                        <TextBlock Text="💵" FontSize="18" HorizontalAlignment="Center"/>
-                        <TextBlock Text="Tiền mặt" FontSize="12" Foreground="White" HorizontalAlignment="Center"/>
-                    </StackPanel>
-                </Button>
-                <Button x:Name="btnVisa" Style="{StaticResource PaymentMethodButton}"
-    Background="#27AE60" BorderBrush="#27AE60"
-    Click="PaymentMethod_Click" Tag="Visa" Margin="0,0,6,6">
-                    <StackPanel>
-                        <TextBlock Text="💳" FontSize="18" HorizontalAlignment="Center"/>
-                        <TextBlock Text="VISA" FontSize="12" Foreground="White" HorizontalAlignment="Center"/>
-                    </StackPanel>
-                </Button>
-                <Button x:Name="btnQR" Style="{StaticResource PaymentMethodButton}"
-    Click="PaymentMethod_Click" Tag="QR" Margin="0,0,6,6">
-                    <StackPanel>
-                        <TextBlock Text="⊞" FontSize="18" HorizontalAlignment="Center"/>
-                        <TextBlock Text="QR" FontSize="12" HorizontalAlignment="Center"/>
-                    </StackPanel>
-                </Button>
-                <Button x:Name="btnViDienTu" Style="{StaticResource PaymentMethodButton}"
-    Click="PaymentMethod_Click" Tag="ViDienTu" Margin="0,0,6,6">
-                    <StackPanel>
-                        <TextBlock Text="👛" FontSize="18" HorizontalAlignment="Center"/>
-                        <TextBlock Text="Ví điện tử" FontSize="12" HorizontalAlignment="Center"/>
-                    </StackPanel>
-                </Button>
-                <Button x:Name="btnVoucher" Style="{StaticResource PaymentMethodButton}"
+        <Grid Grid.Row="0">
+
+            <Grid Background="#FFFFFF">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Margin="18" Orientation="Vertical">
+                    <TextBlock Text="Số tiền cần thu" FontSize="13" Foreground="#666" Margin="0,0,0,6"/>
+                    <Border Style="{StaticResource InfoBox}" Margin="0,0,0,16">
+                        <TextBlock x:Name="txtAmountDue" Text="4.412.000 VND" FontSize="14" FontFamily="Consolas"/>
+                    </Border>
+
+                    <WrapPanel Margin="0,0,0,16">
+                        <Button x:Name="btnTienMat" Style="{StaticResource PaymentMethodButton}"
+                            Background="#27AE60" BorderBrush="#27AE60"
+                            Click="PaymentMethod_Click" Tag="TienMat" Margin="0,0,6,6">
+                            <StackPanel>
+                                <TextBlock Text="💵" FontSize="18" HorizontalAlignment="Center"/>
+                                <TextBlock Text="Tiền mặt" FontSize="12" Foreground="White" HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="btnVisa" Style="{StaticResource PaymentMethodButton}"
+                            Background="#27AE60" BorderBrush="#27AE60"
+                            Click="PaymentMethod_Click" Tag="Visa" Margin="0,0,6,6">
+                            <StackPanel>
+                                <TextBlock Text="💳" FontSize="18" HorizontalAlignment="Center"/>
+                                <TextBlock Text="VISA" FontSize="12" Foreground="White" HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="btnQR" Style="{StaticResource PaymentMethodButton}"
+                            Click="PaymentMethod_Click" Tag="QR" Margin="0,0,6,6">
+                            <StackPanel>
+                                <TextBlock Text="⊞" FontSize="18" HorizontalAlignment="Center"/>
+                                <TextBlock Text="QR" FontSize="12" HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="btnViDienTu" Style="{StaticResource PaymentMethodButton}"
+                            Click="PaymentMethod_Click" Tag="ViDienTu" Margin="0,0,6,6">
+                            <StackPanel>
+                                <TextBlock Text="👛" FontSize="18" HorizontalAlignment="Center"/>
+                                <TextBlock Text="Ví điện tử" FontSize="12" HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="btnVoucher" Style="{StaticResource PaymentMethodButton}"
     Click="PaymentMethod_Click" Tag="Voucher" Margin="0,0,6,6">
-                    <StackPanel>
-                        <TextBlock Text="🏷️" FontSize="18" HorizontalAlignment="Center"/>
-                        <TextBlock Text="Voucher" FontSize="12" HorizontalAlignment="Center"/>
-                    </StackPanel>
-                </Button>
-                <Button x:Name="btnTachDon" Style="{StaticResource PaymentMethodButton}"
+                            <StackPanel>
+                                <TextBlock Text="🏷️" FontSize="18" HorizontalAlignment="Center"/>
+                                <TextBlock Text="Voucher" FontSize="12" HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="btnTachDon" Style="{StaticResource PaymentMethodButton}"
     Click="PaymentMethod_Click" Tag="TachDon" Margin="0,0,6,6">
-                    <StackPanel>
-                        <TextBlock Text="📋" FontSize="18" HorizontalAlignment="Center"/>
-                        <TextBlock Text="Tách đơn" FontSize="12" HorizontalAlignment="Center"/>
-                    </StackPanel>
-                </Button>
-            </WrapPanel>
+                            <StackPanel>
+                                <TextBlock Text="📋" FontSize="18" HorizontalAlignment="Center"/>
+                                <TextBlock Text="Tách đơn" FontSize="12" HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                    </WrapPanel>
 
-            <TextBlock Text="Số tiền khách đưa" FontSize="13" Foreground="#666" Margin="0,0,0,6"/>
-            <Border Style="{StaticResource InfoBox}" Margin="0,0,0,12">
-                <TextBlock x:Name="txtCustomerAmount" Text="0" FontSize="14" FontFamily="Consolas"/>
-            </Border>
+                    <TextBlock Text="Số tiền khách đưa" FontSize="13" Foreground="#666" Margin="0,0,0,6"/>
+                    <Border Style="{StaticResource InfoBox}" Margin="0,0,0,12">
+                        <TextBlock x:Name="txtCustomerAmount" Text="0" FontSize="14" FontFamily="Consolas"/>
+                    </Border>
 
-            <TextBlock Text="Số tiền chuyển khoản" FontSize="13" Foreground="#666" Margin="0,0,0,6"/>
-            <Border Style="{StaticResource InfoBox}" Margin="0,0,0,12">
-                <TextBlock x:Name="txtTransferAmount" Text="0" FontSize="14" FontFamily="Consolas"/>
-            </Border>
+                    <TextBlock Text="Số tiền chuyển khoản" FontSize="13" Foreground="#666" Margin="0,0,0,6"/>
+                    <Border Style="{StaticResource InfoBox}" Margin="0,0,0,12">
+                        <TextBlock x:Name="txtTransferAmount" Text="0" FontSize="14" FontFamily="Consolas"/>
+                    </Border>
 
-            <TextBlock Text="Tiền trả lại" FontSize="13" Foreground="#666" Margin="0,0,0,6"/>
-            <Border Style="{StaticResource InfoBox}">
-                <TextBlock x:Name="txtChange" Text="0 VND – Đủ tiền" FontSize="14" FontFamily="Consolas" Foreground="#27AE60"/>
-            </Border>
-        </StackPanel>
+                    <TextBlock Text="Tiền trả lại" FontSize="13" Foreground="#666" Margin="0,0,0,6"/>
+                    <Border Style="{StaticResource InfoBox}">
+                        <TextBlock x:Name="txtChange" Text="0 VND – Đủ tiền" FontSize="14" FontFamily="Consolas" Foreground="#27AE60"/>
+                    </Border>
+                </StackPanel>
 
-        <Grid Grid.Column="1" Background="#DCE5EF">
-            <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-            </Grid.RowDefinitions>
+                <Grid Grid.Column="1" Background="#DCE5EF">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
 
-            <Button Style="{StaticResource ButtonNumberStyle}" Grid.Row="0" Grid.Column="0" Content="10k" />
-            <Button Style="{StaticResource ButtonNumberStyle}" Grid.Row="0" Grid.Column="1" Content="20k" />
-            <Button Style="{StaticResource ButtonNumberStyle}" Grid.Row="0" Grid.Column="2" Content="50k" />
-            <Button Style="{StaticResource ButtonNumberStyle}" Grid.Row="0" Grid.Column="3" Content="100k" />
+                    <Button Style="{StaticResource ButtonNumberStyle}" Grid.Row="0" Grid.Column="0" Content="10k" />
+                    <Button Style="{StaticResource ButtonNumberStyle}" Grid.Row="0" Grid.Column="1" Content="20k" />
+                    <Button Style="{StaticResource ButtonNumberStyle}" Grid.Row="0" Grid.Column="2" Content="50k" />
+                    <Button Style="{StaticResource ButtonNumberStyle}" Grid.Row="0" Grid.Column="3" Content="100k" />
 
-            <Button Style="{StaticResource ButtonNumberStyle}" Grid.Row="1" Grid.Column="0" Content="200k" />
-            <Button Style="{StaticResource ButtonNumberStyle}" Grid.Row="1" Grid.Column="1" Content="500k" />
-            <Button Style="{StaticResource ButtonNumberStyle}" Grid.Row="1" Grid.Column="2" Content="1000k" />
-            <Button Style="{StaticResource ButtonNumberStyle}" Grid.Row="1" Grid.Column="3" Content="2000k" />
+                    <Button Style="{StaticResource ButtonNumberStyle}" Grid.Row="1" Grid.Column="0" Content="200k" />
+                    <Button Style="{StaticResource ButtonNumberStyle}" Grid.Row="1" Grid.Column="1" Content="500k" />
+                    <Button Style="{StaticResource ButtonNumberStyle}" Grid.Row="1" Grid.Column="2" Content="1000k" />
+                    <Button Style="{StaticResource ButtonNumberStyle}" Grid.Row="1" Grid.Column="3" Content="2000k" />
 
-            <Grid Grid.Row="2" Grid.ColumnSpan="4">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
+                    <Grid Grid.Row="2" Grid.ColumnSpan="4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
 
-                <Button Style="{StaticResource ButtonNumberStyle}" Grid.Column="0" Content="7" />
-                <Button Style="{StaticResource ButtonNumberStyle}" Grid.Column="1" Content="8" />
-                <Button Style="{StaticResource ButtonNumberStyle}" Grid.Column="2" Content="9" />
+                        <Button Style="{StaticResource ButtonNumberStyle}" Grid.Column="0" Content="7" />
+                        <Button Style="{StaticResource ButtonNumberStyle}" Grid.Column="1" Content="8" />
+                        <Button Style="{StaticResource ButtonNumberStyle}" Grid.Column="2" Content="9" />
+                    </Grid>
+
+                    <Grid Grid.Row="3" Grid.ColumnSpan="4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Button Style="{StaticResource ButtonNumberStyle}" Grid.Column="0" Content="4" />
+                        <Button Style="{StaticResource ButtonNumberStyle}" Grid.Column="1" Content="5" />
+                        <Button Style="{StaticResource ButtonNumberStyle}" Grid.Column="2" Content="6" />
+                    </Grid>
+
+                    <Grid Grid.Row="4" Grid.ColumnSpan="4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Button Style="{StaticResource ButtonNumberStyle}" Grid.Column="0" Content="1" />
+                        <Button Style="{StaticResource ButtonNumberStyle}" Grid.Column="1" Content="2" />
+                        <Button Style="{StaticResource ButtonNumberStyle}" Grid.Column="2" Content="3" />
+                    </Grid>
+
+                    <Grid Grid.Row="5" Grid.ColumnSpan="4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Button Style="{StaticResource ButtonNumberStyle}" Grid.Column="0" Content="0" />
+                        <Button Style="{StaticResource ButtonNumberStyle}" Grid.Column="1" Content="00" />
+                        <Button Style="{StaticResource ButtonNumberStyle}" Grid.Column="2" Background="#B3D8EE">
+                            <svgc:SvgViewbox Source="/Assets/Icons/ico-remove.svg" Style="{StaticResource KeypadIconStyle}" />
+                        </Button>
+                    </Grid>
+
+                    <Grid Grid.Row="6" Grid.ColumnSpan="4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Button Style="{StaticResource ButtonNumberStyle}"
+                    Grid.Column="0"
+                    Content="CLEAR"
+                    Background="#B3D8EE"
+                    Foreground="#2E384E"
+                    FontWeight="Medium" />
+                        <Button Style="{StaticResource ButtonNumberStyle}"
+                    Grid.Column="1"
+                    Foreground="#FFFFFF"
+                    FontWeight="Medium"
+                    Background="#C0392B">
+                            <svgc:SvgViewbox Source="/Assets/Icons/ico-close.svg" Style="{StaticResource KeypadIconStyle}" />
+                        </Button>
+                    </Grid>
+
+                </Grid>
+
             </Grid>
 
-            <Grid Grid.Row="3" Grid.ColumnSpan="4">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-
-                <Button Style="{StaticResource ButtonNumberStyle}" Grid.Column="0" Content="4" />
-                <Button Style="{StaticResource ButtonNumberStyle}" Grid.Column="1" Content="5" />
-                <Button Style="{StaticResource ButtonNumberStyle}" Grid.Column="2" Content="6" />
-            </Grid>
-
-            <Grid Grid.Row="4" Grid.ColumnSpan="4">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-
-                <Button Style="{StaticResource ButtonNumberStyle}" Grid.Column="0" Content="1" />
-                <Button Style="{StaticResource ButtonNumberStyle}" Grid.Column="1" Content="2" />
-                <Button Style="{StaticResource ButtonNumberStyle}" Grid.Column="2" Content="3" />
-            </Grid>
-
-            <Grid Grid.Row="5" Grid.ColumnSpan="4">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-
-                <Button Style="{StaticResource ButtonNumberStyle}" Grid.Column="0" Content="0" />
-                <Button Style="{StaticResource ButtonNumberStyle}" Grid.Column="1" Content="00" />
-                <Button Style="{StaticResource ButtonNumberStyle}" Grid.Column="2" Background="#B3D8EE">
-                    <svgc:SvgViewbox Source="/Assets/Icons/ico-remove.svg" Style="{StaticResource KeypadIconStyle}" />
-                </Button>
-            </Grid>
-
-            <Grid Grid.Row="6" Grid.ColumnSpan="4">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-
-                <Button Style="{StaticResource ButtonNumberStyle}"
-    Grid.Column="0"
-    Content="CLEAR"
-    Background="#B3D8EE"
-    Foreground="#2E384E"
-    FontWeight="Medium"
-    />
-                <Button Style="{StaticResource ButtonNumberStyle}"
-    Grid.Column="1"
-    Foreground="#FFFFFF"
-    FontWeight="Medium"
-    Background="#C0392B">
-                    <svgc:SvgViewbox Source="/Assets/Icons/ico-close.svg" Style="{StaticResource KeypadIconStyle}" />
-                </Button>
-            </Grid>
 
         </Grid>
+        <WrapPanel Grid.Row="1" HorizontalAlignment="Right" Margin="0,10,0,0">
+            <Button Content="Hủy (ESC)"
+                                Background="#B8C4E0"
+                                Foreground="#2E384E"
+                                Margin="0,0,10,0"
+                                Style="{StaticResource ButtonActionStyle}"/>
 
+            <Button Content="Xác nhận thanh toán (F12)"
+                                Name="btnConfirmPayment"
+                                Click="btnConfirmPayment_Click"
+                                Background="{StaticResource bg-button-green}"
+                                Foreground="White"
+                                Style="{StaticResource ButtonActionStyle}"/>
+        </WrapPanel>
     </Grid>
-    
 </UserControl>

@@ -43,15 +43,13 @@
     <Grid Background="#66000000">
 
         <Border Width="{Binding ModalWidth, RelativeSource={RelativeSource AncestorType=Window}}"
-                Height="{Binding ModalHeight, RelativeSource={RelativeSource AncestorType=Window}}"
+            Height="{Binding ModalHeight, RelativeSource={RelativeSource AncestorType=Window}}"
+            CornerRadius="12"
 
-                CornerRadius="12"
-                VerticalAlignment="Center"
-                HorizontalAlignment="Center"
-                Background="{StaticResource BackgroundColorHeader}"
-                >
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center">
 
-        <Grid>
+            <Grid>
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -60,8 +58,8 @@
 
                 <!-- HEADER -->
                 <Border Grid.Row="0"
-                         Background="{StaticResource BackgroundColorHeader}"
-                         CornerRadius="12,12,0,0">
+                     Background="{StaticResource BackgroundColorHeader}"
+                     CornerRadius="12,12,0,0">
 
                     <Grid>
 
@@ -71,24 +69,23 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
-                        <svgc:SvgViewbox
-                            Grid.Column="0"
-                            Source="/Assets/Icons/ico-payment.svg"
-                            Height="16"/>
+                        <svgc:SvgViewbox Grid.Column="0"
+                                     Source="/Assets/Icons/ico-payment.svg"
+                                     Height="16"/>
 
                         <TextBlock Grid.Column="1"
-                                   VerticalAlignment="Center"
-                                   Style="{StaticResource HeaderLabel}"
-                                   Text="{Binding ModalTitle,
-                                          RelativeSource={RelativeSource AncestorType=Window}}"/>
+                               VerticalAlignment="Center"
+                               Style="{StaticResource HeaderLabel}"
+                               Text="{Binding ModalTitle,
+                               RelativeSource={RelativeSource AncestorType=Window}}"/>
 
                         <Button Grid.Column="2"
-                                Click="btnCloseModal_Click"
-                                Style="{StaticResource ButtonCloseHeaderStyle}">
+                            Click="btnCloseModal_Click"
+                            Style="{StaticResource ButtonCloseHeaderStyle}">
 
                             <svgc:SvgViewbox
-                                Source="/Assets/Icons/ico-close.svg"
-                                Height="15"/>
+                            Source="/Assets/Icons/ico-close.svg"
+                            Height="15"/>
 
                         </Button>
 
@@ -97,17 +94,23 @@
                 </Border>
 
                 <!-- BODY -->
-                <ContentPresenter
-                    Grid.Row="1"
-                    Margin="15"
+                <Border Grid.Row="1"
+                     Background="White"
+                     CornerRadius="0,0,12,12"
+                     BorderBrush="#CCD2E3"
+                     BorderThickness="1">
+
+                    <ContentPresenter
+                    Margin="10"
                     Content="{Binding ModalContent,
                     RelativeSource={RelativeSource AncestorType=Window}}"/>
+
+                </Border>
 
             </Grid>
 
         </Border>
 
     </Grid>
-
 
 </Window>
