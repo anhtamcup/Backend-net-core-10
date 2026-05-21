@@ -13,9 +13,6 @@ namespace POS_App.Views
         public OrderView()
         {
             InitializeComponent();
-
-            var paymentDiaglog = new PaymentDialog();
-            paymentDiaglog.Show();
         }
 
         private void btnPlus_Click(
@@ -115,6 +112,26 @@ namespace POS_App.Views
                 Phone = "0338162614",
                 Point = 1000
             });
+        }
+
+        private void btnPayment_Click(object sender, RoutedEventArgs e)
+        {
+            var owner = Window.GetWindow(this);
+
+            var paymentDialog = new PaymentDialog();
+
+            if (owner != null)
+            {
+                paymentDialog.Owner = owner;
+
+                paymentDialog.Width = owner.ActualWidth;
+                paymentDialog.Height = owner.ActualHeight;
+
+                paymentDialog.Left = owner.Left;
+                paymentDialog.Top = owner.Top;
+            }
+
+            paymentDialog.ShowDialog();
         }
     }
 }

@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <None Remove="Assets\Icons\ico-cancel.svg" />
+    <None Remove="Assets\Icons\ico-close.svg" />
     <None Remove="Assets\Icons\ico-customer.svg" />
     <None Remove="Assets\Icons\ico-decrease-quantity.svg" />
     <None Remove="Assets\Icons\ico-delivery.svg" />
@@ -25,6 +26,7 @@
     <None Remove="Assets\Icons\ico-log-out.svg" />
     <None Remove="Assets\Icons\ico-note.svg" />
     <None Remove="Assets\Icons\ico-open-cash.svg" />
+    <None Remove="Assets\Icons\ico-payment.svg" />
     <None Remove="Assets\Icons\ico-preorder.svg" />
     <None Remove="Assets\Icons\ico-print.svg" />
     <None Remove="Assets\Icons\ico-promotion.svg" />
@@ -46,6 +48,9 @@
 
   <ItemGroup>
     <Content Include="Assets\Icons\ico-cancel.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Icons\ico-close.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Icons\ico-customer.svg">
@@ -88,6 +93,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Icons\ico-open-cash.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Icons\ico-payment.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Icons\ico-preorder.svg">

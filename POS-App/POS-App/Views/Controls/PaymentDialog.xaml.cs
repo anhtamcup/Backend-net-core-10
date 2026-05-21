@@ -21,5 +21,34 @@ namespace POS_App.Views.Controls
         {
             InitializeComponent();
         }
+
+        private void btnConfirmPayment_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void PaymentMethod_Click(object sender, RoutedEventArgs e)
+        {
+            var allMethods = new[] { btnTienMat, btnVisa, btnQR, btnViDienTu, btnVoucher, btnTachDon };
+            foreach (var btn in allMethods)
+            {
+                btn.Background = Brushes.White;
+                btn.BorderBrush = new SolidColorBrush(Color.FromRgb(204, 210, 227));
+                // Reset text color in children
+                foreach (var child in ((StackPanel)btn.Content).Children)
+                    if (child is TextBlock tb) tb.Foreground = Brushes.Black;
+            }
+
+            var clicked = sender as Button;
+            clicked.Background = new SolidColorBrush(Color.FromRgb(39, 174, 96));
+            clicked.BorderBrush = new SolidColorBrush(Color.FromRgb(39, 174, 96));
+            foreach (var child in ((StackPanel)clicked.Content).Children)
+                if (child is TextBlock tb) tb.Foreground = Brushes.White;
+        }
+
+        private void btnCloseModal_Click(object sender, RoutedEventArgs e)
+        {
+            Window.GetWindow(this)?.Close();
+        }
     }
 }

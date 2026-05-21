@@ -503,6 +503,8 @@
                     </WrapPanel>
 
                     <Button
+                        x:Name="btnPayment"
+                        Click="btnPayment_Click"
                     Grid.Row="0"
                     Style="{StaticResource ButonPaymentStyle}"
                     Content="THANH TOÁN - F12"/>
