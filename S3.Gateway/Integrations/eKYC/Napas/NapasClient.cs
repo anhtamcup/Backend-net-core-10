@@ -27,7 +27,6 @@ namespace S3.Gateway.Integrations.Ekyc.Napas
             var signaturePayload = RSASignatureService.SignMessage(payload, privateKeyPath);
             var headers = new Dictionary<string, string>
             {
-                //{ "Application", _eConfig.Napas.Application },
                 { "signature", signaturePayload }
             };
 

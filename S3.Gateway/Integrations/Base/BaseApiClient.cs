@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Http.Headers;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Text.Json;
 
 namespace S3.Gateway.Integrations.Base
 {
@@ -180,6 +181,7 @@ namespace S3.Gateway.Integrations.Base
 
                 if (headers != null)
                 {
+                    log.RequestHeader = JsonConvert.SerializeObject(headers);
                     foreach (var item in headers)
                     {
                         client.DefaultRequestHeaders.Add(item.Key, item.Value);
