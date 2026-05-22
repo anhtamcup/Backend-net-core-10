@@ -3,6 +3,7 @@ using POS_App.ViewModels;
 using POS_App.Views.Controls;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace POS_App.Views
 {
@@ -110,6 +111,53 @@ namespace POS_App.Views
             };
 
             modal.ShowDialog();
+        }
+
+
+        private void Number_Click(object sender, RoutedEventArgs e)
+        {
+            var textBox = Keyboard.FocusedElement as TextBox;
+
+            if (textBox == null)
+                return;
+
+            var value = (sender as Button)?.Content?.ToString();
+
+            if (string.IsNullOrEmpty(value))
+                return;
+
+            int pos = textBox.CaretIndex;
+
+            textBox.Text =
+                textBox.Text.Insert(pos, value);
+
+            textBox.CaretIndex = pos + value.Length;
+
+            textBox.Focus();
+        }
+
+        private void Backspace_Click(object sender, RoutedEventArgs e)
+        {
+            var textBox = Keyboard.FocusedElement as TextBox;
+
+            if (textBox == null)
+                return;
+
+            int pos = textBox.CaretIndex;
+
+            if (pos <= 0)
+                return;
+
+            textBox.Text = textBox.Text.Remove(pos - 1, 1);
+
+            textBox.CaretIndex = pos - 1;
+
+            textBox.Focus();
+        }
+
+        private void Clear_Click(object sender, RoutedEventArgs e)
+        {
+            (Keyboard.FocusedElement as TextBox)?.Clear();
         }
     }
 }

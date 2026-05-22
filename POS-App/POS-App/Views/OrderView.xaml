@@ -105,6 +105,7 @@
 
         <Style x:Key="KeypadNumberBaseStyle" TargetType="Button" BasedOn="{StaticResource ButtonBase}">
             <Setter Property="Margin" Value="1"/>
+            <Setter Property="Focusable" Value="False"/>
         </Style>
 
         <Style x:Key="ButtonDeleteItemStyle" TargetType="Button" BasedOn="{StaticResource ButtonBase}">
@@ -513,33 +514,33 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
 
-                <Button Style="{StaticResource KeypadButtonNumberStyle}" Content="7" Grid.Row="0" Grid.Column="0"/>
-                <Button Style="{StaticResource KeypadButtonNumberStyle}" Content="8" Grid.Row="0" Grid.Column="1"/>
-                <Button Style="{StaticResource KeypadButtonNumberStyle}" Content="9" Grid.Row="0" Grid.Column="2"/>
-                <Button Style="{StaticResource KeypadButtonIconStyle}" Grid.Row="0" Grid.Column="3">
+                <Button Click="Number_Click" Style="{StaticResource KeypadButtonNumberStyle}" Content="7" Grid.Row="0" Grid.Column="0"/>
+                <Button Click="Number_Click" Style="{StaticResource KeypadButtonNumberStyle}" Content="8" Grid.Row="0" Grid.Column="1"/>
+                <Button Click="Number_Click" Style="{StaticResource KeypadButtonNumberStyle}" Content="9" Grid.Row="0" Grid.Column="2"/>
+                <Button Click="Backspace_Click" Style="{StaticResource KeypadButtonIconStyle}" Grid.Row="0" Grid.Column="3">
                     <svgc:SvgViewbox Source="/Assets/Icons/ico-remove.svg" Style="{StaticResource KeypadIconStyle}"/>
                 </Button>
 
-                <Button Style="{StaticResource KeypadButtonNumberStyle}" Content="4" Grid.Row="1" Grid.Column="0"/>
-                <Button Style="{StaticResource KeypadButtonNumberStyle}" Content="5" Grid.Row="1" Grid.Column="1"/>
-                <Button Style="{StaticResource KeypadButtonNumberStyle}" Content="6" Grid.Row="1" Grid.Column="2"/>
+                <Button Click="Number_Click" Style="{StaticResource KeypadButtonNumberStyle}" Content="4" Grid.Row="1" Grid.Column="0"/>
+                <Button Click="Number_Click" Style="{StaticResource KeypadButtonNumberStyle}" Content="5" Grid.Row="1" Grid.Column="1"/>
+                <Button Click="Number_Click" Style="{StaticResource KeypadButtonNumberStyle}" Content="6" Grid.Row="1" Grid.Column="2"/>
                 <Button Style="{StaticResource KeypadButtonIconStyle}" Grid.Row="1" Grid.Column="3">
                     <svgc:SvgViewbox Source="/Assets/Icons/ico-up.svg" Style="{StaticResource KeypadIconStyle}"/>
                 </Button>
 
-                <Button Style="{StaticResource KeypadButtonNumberStyle}" Content="1" Grid.Row="2" Grid.Column="0"/>
-                <Button Style="{StaticResource KeypadButtonNumberStyle}" Content="2" Grid.Row="2" Grid.Column="1"/>
-                <Button Style="{StaticResource KeypadButtonNumberStyle}" Content="3" Grid.Row="2" Grid.Column="2"/>
+                <Button Click="Number_Click" Style="{StaticResource KeypadButtonNumberStyle}" Content="1" Grid.Row="2" Grid.Column="0"/>
+                <Button Click="Number_Click" Style="{StaticResource KeypadButtonNumberStyle}" Content="2" Grid.Row="2" Grid.Column="1"/>
+                <Button Click="Number_Click" Style="{StaticResource KeypadButtonNumberStyle}" Content="3" Grid.Row="2" Grid.Column="2"/>
                 <Button Style="{StaticResource KeypadButtonIconStyle}" Grid.Row="2" Grid.Column="3">
                     <svgc:SvgViewbox Source="/Assets/Icons/ico-down.svg" Style="{StaticResource KeypadIconStyle}"/>
                 </Button>
-                <Button Style="{StaticResource KeypadButtonNumberStyle}" Content="%" Grid.Row="3" Grid.Column="0"/>
-                <Button Style="{StaticResource KeypadButtonNumberStyle}" Content="," Grid.Row="3" Grid.Column="1"/>
-                <Button Style="{StaticResource KeypadButtonNumberStyle}" Content="0" Grid.Row="3" Grid.Column="2"/>
+                <Button Click="Number_Click" Style="{StaticResource KeypadButtonNumberStyle}" Content="%" Grid.Row="3" Grid.Column="0"/>
+                <Button Click="Number_Click" Style="{StaticResource KeypadButtonNumberStyle}" Content="," Grid.Row="3" Grid.Column="1"/>
+                <Button Click="Number_Click" Style="{StaticResource KeypadButtonNumberStyle}" Content="0" Grid.Row="3" Grid.Column="2"/>
                 <Button Style="{StaticResource KeypadButtonIconStyle}" Content="CANCEL" Grid.Row="4" Grid.Column="0"/>
                 <Button Style="{StaticResource KeypadButtonIconStyle}" Content="DEL" Grid.Row="4" Grid.Column="1"/>
-                <Button Style="{StaticResource KeypadButtonIconStyle}" Content="CLEAR" Grid.Row="4" Grid.Column="2"/>
-                <Button Style="{StaticResource KeypadButtonEnterStyle}" Content="ENTER" Grid.Row="3" Grid.Column="3" Grid.RowSpan="2"/>
+                <Button Click="Clear_Click" Style="{StaticResource KeypadButtonIconStyle}" Content="CLEAR" Grid.Row="4" Grid.Column="2"/>
+                <Button Click="btnPayment_Click" Style="{StaticResource KeypadButtonEnterStyle}" Content="ENTER" Grid.Row="3" Grid.Column="3" Grid.RowSpan="2"/>
                 
             </Grid>
         </Grid>

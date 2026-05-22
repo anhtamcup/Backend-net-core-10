@@ -45,6 +45,10 @@ namespace POS_App
                     OpenCustomerScreen(DataContext as MainViewModel);
                     e.Handled = true;
                     break;
+
+                case Key.LeftShift:
+                    tbSearch.Focus();
+                    break;
             }
         }
 
