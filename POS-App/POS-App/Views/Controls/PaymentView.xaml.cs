@@ -53,23 +53,63 @@ namespace POS_App.Views.Controls
 
         }
 
-        private void PaymentMethod_Click(object sender, RoutedEventArgs e)
+        private void Number_Click(object sender, RoutedEventArgs e)
         {
-            //var allMethods = new[] { btnTienMat, btnVisa, btnQR, btnViDienTu, btnVoucher, btnTachDon };
-            //foreach (var btn in allMethods)
-            //{
-            //    btn.Background = Brushes.White;
-            //    btn.BorderBrush = new SolidColorBrush(Color.FromRgb(204, 210, 227));
-            //    // Reset text color in children
-            //    foreach (var child in ((StackPanel)btn.Content).Children)
-            //        if (child is TextBlock tb) tb.Foreground = Brushes.Black;
-            //}
+            var textBox = Keyboard.FocusedElement as TextBox;
 
-            //var clicked = sender as Button;
-            //clicked.Background = new SolidColorBrush(Color.FromRgb(39, 174, 96));
-            //clicked.BorderBrush = new SolidColorBrush(Color.FromRgb(39, 174, 96));
-            //foreach (var child in ((StackPanel)clicked.Content).Children)
-            //    if (child is TextBlock tb) tb.Foreground = Brushes.White;
+            if (textBox == null)
+                return;
+
+            var value = (sender as Button)?.Content?.ToString();
+
+            textBox.Text += value;
+        }
+
+        private void Backspace_Click(object sender, RoutedEventArgs e)
+        {
+            var textBox = Keyboard.FocusedElement as TextBox;
+
+            if (textBox == null)
+                return;
+
+            if (!string.IsNullOrEmpty(textBox.Text))
+            {
+                textBox.Text = textBox.Text[..^1];
+            }
+        }
+
+        private void Clear_Click(object sender, RoutedEventArgs e)
+        {
+            (Keyboard.FocusedElement as TextBox)?.Clear();
+        }
+
+        private void Money_Click(object sender, RoutedEventArgs e)
+        {
+            var textBox = Keyboard.FocusedElement as TextBox;
+            if (textBox == null)
+                return;
+
+            var btn = sender as Button;
+
+            var text = btn?.Content?.ToString();
+
+            if (text == null)
+                return;
+
+            int amount = text switch
+            {
+                "10k" => 10000,
+                "20k" => 20000,
+                "50k" => 50000,
+                "100k" => 100000,
+                "200k" => 200000,
+                "500k" => 500000,
+                "1000k" => 1000000,
+                "2000k" => 2000000,
+                _ => 0
+            };
+
+            textBox.Text = amount.ToString("N0");
         }
     }
 }

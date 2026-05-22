@@ -29,8 +29,8 @@ namespace POS_App
             KeyDown += MainWindow_KeyDown;
 
 
-            //OpenCustomerScreen(mainVm);
-            //ToggleFullScreen();
+            OpenCustomerScreen(mainVm);
+            ToggleFullScreen();
         }
 
         private void MainWindow_KeyDown(object sender, KeyEventArgs e)

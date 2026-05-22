@@ -70,6 +70,7 @@
         <Style x:Key="ButtonNumberStyle"
               TargetType="Button"
               BasedOn="{StaticResource ButtonBase}">
+            <Setter Property="Focusable" Value="False"/>
             <Setter Property="Padding" Value="8"/>
             <Setter Property="FontSize" Value="{StaticResource FontSizeL}"/>
             <Setter Property="Background" Value="#FFFFFF"/>
@@ -213,15 +214,15 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Button Style="{StaticResource ButtonNumberStyle}" Grid.Row="0" Grid.Column="0" Content="10k" />
-                    <Button Style="{StaticResource ButtonNumberStyle}" Grid.Row="0" Grid.Column="1" Content="20k" />
-                    <Button Style="{StaticResource ButtonNumberStyle}" Grid.Row="0" Grid.Column="2" Content="50k" />
-                    <Button Style="{StaticResource ButtonNumberStyle}" Grid.Row="0" Grid.Column="3" Content="100k" />
+                    <Button Style="{StaticResource ButtonNumberStyle}" Click="Money_Click" Grid.Row="0" Grid.Column="0" Content="10k" />
+                    <Button Style="{StaticResource ButtonNumberStyle}" Click="Money_Click" Grid.Row="0" Grid.Column="1" Content="20k" />
+                    <Button Style="{StaticResource ButtonNumberStyle}" Click="Money_Click" Grid.Row="0" Grid.Column="2" Content="50k" />
+                    <Button Style="{StaticResource ButtonNumberStyle}" Click="Money_Click" Grid.Row="0" Grid.Column="3" Content="100k" />
 
-                    <Button Style="{StaticResource ButtonNumberStyle}" Grid.Row="1" Grid.Column="0" Content="200k" />
-                    <Button Style="{StaticResource ButtonNumberStyle}" Grid.Row="1" Grid.Column="1" Content="500k" />
-                    <Button Style="{StaticResource ButtonNumberStyle}" Grid.Row="1" Grid.Column="2" Content="1000k" />
-                    <Button Style="{StaticResource ButtonNumberStyle}" Grid.Row="1" Grid.Column="3" Content="2000k" />
+                    <Button Style="{StaticResource ButtonNumberStyle}" Click="Money_Click" Grid.Row="1" Grid.Column="0" Content="200k" />
+                    <Button Style="{StaticResource ButtonNumberStyle}" Click="Money_Click" Grid.Row="1" Grid.Column="1" Content="500k" />
+                    <Button Style="{StaticResource ButtonNumberStyle}" Click="Money_Click" Grid.Row="1" Grid.Column="2" Content="1000k" />
+                    <Button Style="{StaticResource ButtonNumberStyle}" Click="Money_Click" Grid.Row="1" Grid.Column="3" Content="2000k" />
 
                     <Grid Grid.Row="2" Grid.ColumnSpan="4">
                         <Grid.ColumnDefinitions>
@@ -230,9 +231,9 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Button Style="{StaticResource ButtonNumberStyle}" Grid.Column="0" Content="7" />
-                        <Button Style="{StaticResource ButtonNumberStyle}" Grid.Column="1" Content="8" />
-                        <Button Style="{StaticResource ButtonNumberStyle}" Grid.Column="2" Content="9" />
+                        <Button Style="{StaticResource ButtonNumberStyle}" Click="Number_Click" Grid.Column="0" Content="7" />
+                        <Button Style="{StaticResource ButtonNumberStyle}" Click="Number_Click" Grid.Column="1" Content="8" />
+                        <Button Style="{StaticResource ButtonNumberStyle}" Click="Number_Click" Grid.Column="2" Content="9" />
                     </Grid>
 
                     <Grid Grid.Row="3" Grid.ColumnSpan="4">
@@ -242,9 +243,9 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Button Style="{StaticResource ButtonNumberStyle}" Grid.Column="0" Content="4" />
-                        <Button Style="{StaticResource ButtonNumberStyle}" Grid.Column="1" Content="5" />
-                        <Button Style="{StaticResource ButtonNumberStyle}" Grid.Column="2" Content="6" />
+                        <Button Style="{StaticResource ButtonNumberStyle}" Click="Number_Click" Grid.Column="0" Content="4" />
+                        <Button Style="{StaticResource ButtonNumberStyle}" Click="Number_Click" Grid.Column="1" Content="5" />
+                        <Button Style="{StaticResource ButtonNumberStyle}" Click="Number_Click" Grid.Column="2" Content="6" />
                     </Grid>
 
                     <Grid Grid.Row="4" Grid.ColumnSpan="4">
@@ -254,9 +255,9 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Button Style="{StaticResource ButtonNumberStyle}" Grid.Column="0" Content="1" />
-                        <Button Style="{StaticResource ButtonNumberStyle}" Grid.Column="1" Content="2" />
-                        <Button Style="{StaticResource ButtonNumberStyle}" Grid.Column="2" Content="3" />
+                        <Button Style="{StaticResource ButtonNumberStyle}" Click="Number_Click" Grid.Column="0" Content="1" />
+                        <Button Style="{StaticResource ButtonNumberStyle}" Click="Number_Click" Grid.Column="1" Content="2" />
+                        <Button Style="{StaticResource ButtonNumberStyle}" Click="Number_Click" Grid.Column="2" Content="3" />
                     </Grid>
 
                     <Grid Grid.Row="5" Grid.ColumnSpan="4">
@@ -266,9 +267,9 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Button Style="{StaticResource ButtonNumberStyle}" Grid.Column="0" Content="0" />
-                        <Button Style="{StaticResource ButtonNumberStyle}" Grid.Column="1" Content="00" />
-                        <Button Style="{StaticResource ButtonNumberStyle}" Grid.Column="2" Background="#B3D8EE">
+                        <Button Style="{StaticResource ButtonNumberStyle}" Click="Number_Click" Grid.Column="0" Content="0" />
+                        <Button Style="{StaticResource ButtonNumberStyle}" Click="Number_Click" Grid.Column="1" Content="00" />
+                        <Button Style="{StaticResource ButtonNumberStyle}" Click="Backspace_Click" Grid.Column="2" Background="#B3D8EE">
                             <svgc:SvgViewbox Source="/Assets/Icons/ico-remove.svg" Style="{StaticResource KeypadIconStyle}" />
                         </Button>
                     </Grid>
@@ -280,6 +281,7 @@
                         </Grid.ColumnDefinitions>
 
                         <Button Style="{StaticResource ButtonNumberStyle}"
+                                Click="Clear_Click"
                     Grid.Column="0"
                     Content="CLEAR"
                     Background="#B3D8EE"
