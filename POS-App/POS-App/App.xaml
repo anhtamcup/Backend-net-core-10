@@ -20,9 +20,9 @@
             <GradientStop Color="#00824A" Offset="1"/>
         </LinearGradientBrush>
         
-        <GridLength x:Key="RightPanelWidth">250</GridLength>
-        <sys:Double x:Key="ActionButtonWidth">78</sys:Double>
-        <sys:Double x:Key="KeyboardButtonWidth">60</sys:Double>
+        <GridLength x:Key="RightPanelWidth">280</GridLength>
+        <sys:Double x:Key="ActionButtonWidth">83</sys:Double>
+        <sys:Double x:Key="KeyboardButtonWidth">62</sys:Double>
         <sys:Double x:Key="FontSizeS">10</sys:Double>
         <sys:Double x:Key="FontSizeM">12</sys:Double>
         <sys:Double x:Key="FontSizeL">14</sys:Double>

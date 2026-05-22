@@ -70,9 +70,6 @@
             <GradientStop Color="#FFBAB1" Offset="1"/>
         </LinearGradientBrush>
 
-
-
-
         <Style x:Key="ActionButtonIconStyle" TargetType="svgc:SvgViewbox">
             <Setter Property="Width" Value="18"/>
             <Setter Property="Height" Value="18"/>
@@ -89,7 +86,7 @@
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="Margin" Value="2"/>
-            <Setter Property="Padding" Value="5, 10"/>
+            <Setter Property="Padding" Value="5, 12"/>
         </Style>
 
         <Style x:Key="ButonPaymentStyle" TargetType="Button" BasedOn="{StaticResource ButtonBase}" >
@@ -399,105 +396,105 @@
                         <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-refund}">
                             <StackPanel>
                                 <svgc:SvgViewbox Source="/Assets/Icons/ico-refund.svg" Style="{StaticResource ActionButtonIconStyle}"/>
-                                <TextBlock Text="Trả hàng" Foreground="#7F1D1D" />
+                                <TextBlock Text="TRẢ HÀNG" Foreground="#7F1D1D" />
                             </StackPanel>
                         </Button>
 
                         <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-restore}">
                             <StackPanel>
                                 <svgc:SvgViewbox Source="/Assets/Icons/ico-restore.svg" Style="{StaticResource ActionButtonIconStyle}"/>
-                                <TextBlock Text="Khôi phục" Foreground="#0C4A6E"/>
+                                <TextBlock Text="KHÔI PHỤC" Foreground="#0C4A6E"/>
                             </StackPanel>
                         </Button>
 
                         <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-promotion}">
                             <StackPanel>
                                 <svgc:SvgViewbox Source="/Assets/Icons/ico-promotion.svg" Style="{StaticResource ActionButtonIconStyle}"/>
-                                <TextBlock Text="Khuyến mãi" Foreground="#064E30" />
+                                <TextBlock Text="KHUYẾN MÃI" Foreground="#064E30" />
                             </StackPanel>
                         </Button>
 
                         <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-customer}" Name="btnCustomerFunction" Click="btnCustomerFunction_Click">
                             <StackPanel>
                                 <svgc:SvgViewbox Source="/Assets/Icons/ico-customer.svg" Style="{StaticResource ActionButtonIconStyle}"/>
-                                <TextBlock Text="Khách hàng" Foreground="#064E30" />
+                                <TextBlock Text="KHÁCH HÀNG" Foreground="#064E30" />
                             </StackPanel>
                         </Button>
 
                         <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-discount}">
                             <StackPanel>
                                 <svgc:SvgViewbox Source="/Assets/Icons/ico-discount.svg" Style="{StaticResource ActionButtonIconStyle}"/>
-                                <TextBlock Text="Giảm giá" Foreground="#78350F" />
+                                <TextBlock Text="GIẢM GIÁ" Foreground="#78350F" />
                             </StackPanel>
                         </Button>
 
                         <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-note}">
                             <StackPanel>
                                 <svgc:SvgViewbox Source="/Assets/Icons/ico-note.svg" Style="{StaticResource ActionButtonIconStyle}"/>
-                                <TextBlock Text="Ghi chú" Foreground="#2E384E" />
+                                <TextBlock Text="GHI CHÚ" Foreground="#2E384E" />
                             </StackPanel>
                         </Button>
 
                         <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-invoice}">
                             <StackPanel>
                                 <svgc:SvgViewbox Source="/Assets/Icons/ico-invoice.svg" Style="{StaticResource ActionButtonIconStyle}"/>
-                                <TextBlock Text="Bán trước" Foreground="#0C4A6E" />
+                                <TextBlock Text="BÁN HÀNG" Foreground="#0C4A6E" />
                             </StackPanel>
                         </Button>
 
                         <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-preorder}">
                             <StackPanel>
                                 <svgc:SvgViewbox Source="/Assets/Icons/ico-preorder.svg" Style="{StaticResource ActionButtonIconStyle}"/>
-                                <TextBlock Text="Đặt trước" Foreground="#0C4A6E" />
+                                <TextBlock Text="ĐẶT HÀNG" Foreground="#0C4A6E" />
                             </StackPanel>
                         </Button>
 
                         <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-help}">
                             <StackPanel>
                                 <svgc:SvgViewbox Source="/Assets/Icons/ico-help.svg" Style="{StaticResource ActionButtonIconStyle}"/>
-                                <TextBlock Text="Trợ giúp" Foreground="#2E384E" />
+                                <TextBlock Text="TRỢ GIÚP" Foreground="#2E384E" />
                             </StackPanel>
                         </Button>
 
                         <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-print}">
                             <StackPanel>
                                 <svgc:SvgViewbox Source="/Assets/Icons/ico-print.svg" Style="{StaticResource ActionButtonIconStyle}"/>
-                                <TextBlock Text="In hóa đơn" Foreground="#2E384E" />
+                                <TextBlock Text="IN HÓA ĐƠN" Foreground="#2E384E" />
                             </StackPanel>
                         </Button>
 
                         <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-open-cash}">
                             <StackPanel>
                                 <svgc:SvgViewbox Source="/Assets/Icons/ico-open-cash.svg" Style="{StaticResource ActionButtonIconStyle}"/>
-                                <TextBlock Text="Mở két tiền" Foreground="#2E384E" />
+                                <TextBlock Text="MỞ KÉT TIỀN" Foreground="#2E384E" />
                             </StackPanel>
                         </Button>
 
                         <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-save}">
                             <StackPanel>
                                 <svgc:SvgViewbox Source="/Assets/Icons/ico-save.svg" Style="{StaticResource ActionButtonIconStyle}"/>
-                                <TextBlock Text="Lưu đơn" Foreground="#2E384E" />
+                                <TextBlock Text="LƯU ĐƠN" Foreground="#2E384E" />
                             </StackPanel>
                         </Button>
 
                         <Button x:Name="btnSearchProduct" Click="btnSearchProduct_Click" Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-search-product}">
                             <StackPanel>
                                 <svgc:SvgViewbox Source="/Assets/Icons/ico-search-product.svg" Style="{StaticResource ActionButtonIconStyle}"/>
-                                <TextBlock Text="Tìm SP" Foreground="#78350F" />
+                                <TextBlock Text="TÌM SP" Foreground="#78350F" />
                             </StackPanel>
                         </Button>
 
                         <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-delivery}">
                             <StackPanel>
                                 <svgc:SvgViewbox Source="/Assets/Icons/ico-delivery.svg" Style="{StaticResource ActionButtonIconStyle}"/>
-                                <TextBlock Text="Giao hàng" Foreground="#0C4A6E" />
+                                <TextBlock Text="GIAO HÀNG" Foreground="#0C4A6E" />
                             </StackPanel>
                         </Button>
 
                         <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-cancel}">
                             <StackPanel>
                                 <svgc:SvgViewbox Source="/Assets/Icons/ico-cancel.svg" Style="{StaticResource ActionButtonIconStyle}"/>
-                                <TextBlock Text="Hủy" Foreground="#7F1D1D" />
+                                <TextBlock Text="HỦY" Foreground="#7F1D1D" />
                             </StackPanel>
                         </Button>
                     </WrapPanel>

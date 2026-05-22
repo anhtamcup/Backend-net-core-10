@@ -46,6 +46,16 @@ namespace POS_App.Views.Controls
             };
 
             PaymentList.ItemsSource = paymentList;
+            Loaded += UserControl_Loaded;
+            Unloaded += PaymentView_Unloaded;
+        }
+
+        private void PaymentView_Unloaded(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is OrderViewModel vm)
+            {
+                vm.Summary.CustomerPaid = 0;
+            }
         }
 
         private void btnConfirmPayment_Click(object sender, RoutedEventArgs e)
@@ -62,7 +72,17 @@ namespace POS_App.Views.Controls
 
             var value = (sender as Button)?.Content?.ToString();
 
-            textBox.Text += value;
+            if (string.IsNullOrEmpty(value))
+                return;
+
+            int pos = textBox.CaretIndex;
+
+            textBox.Text =
+                textBox.Text.Insert(pos, value);
+
+            textBox.CaretIndex = pos + value.Length;
+
+            textBox.Focus();
         }
 
         private void Backspace_Click(object sender, RoutedEventArgs e)
@@ -72,10 +92,16 @@ namespace POS_App.Views.Controls
             if (textBox == null)
                 return;
 
-            if (!string.IsNullOrEmpty(textBox.Text))
-            {
-                textBox.Text = textBox.Text[..^1];
-            }
+            int pos = textBox.CaretIndex;
+
+            if (pos <= 0)
+                return;
+
+            textBox.Text = textBox.Text.Remove(pos - 1, 1);
+
+            textBox.CaretIndex = pos - 1;
+
+            textBox.Focus();
         }
 
         private void Clear_Click(object sender, RoutedEventArgs e)
@@ -86,14 +112,13 @@ namespace POS_App.Views.Controls
         private void Money_Click(object sender, RoutedEventArgs e)
         {
             var textBox = Keyboard.FocusedElement as TextBox;
+
             if (textBox == null)
                 return;
 
-            var btn = sender as Button;
+            var text = (sender as Button)?.Content?.ToString();
 
-            var text = btn?.Content?.ToString();
-
-            if (text == null)
+            if (string.IsNullOrEmpty(text))
                 return;
 
             int amount = text switch
@@ -110,6 +135,21 @@ namespace POS_App.Views.Controls
             };
 
             textBox.Text = amount.ToString("N0");
+
+            textBox.CaretIndex = textBox.Text.Length;
+
+            textBox.Focus();
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                txtCustomerAmount.Focus();
+                txtCustomerAmount.CaretIndex =
+                    txtCustomerAmount.Text.Length;
+            }),
+            System.Windows.Threading.DispatcherPriority.Input);
         }
     }
 }

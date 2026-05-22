@@ -100,7 +100,7 @@
 
         <Grid Grid.Row="0">
 
-            <Grid Background="#FFFFFF">
+            <Grid Background="#FFFFFF" DataContext="{Binding Summary}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto" />
                     <ColumnDefinition Width="*" />
@@ -108,7 +108,7 @@
 
                 <StackPanel Grid.Column="0" Margin="5" Orientation="Vertical">
                     <TextBlock Text="Số tiền cần thu" Style="{StaticResource InfoTextLabel}" />
-                    <TextBox  Style="{StaticResource InfoTextBox}" x:Name="txtAmountDue" Text="{Binding Summary.TotalAmount,StringFormat='{}{0:N0} đ'}" />
+                    <TextBox  Style="{StaticResource InfoTextBox}" x:Name="txtAmountDue" IsReadOnly="True" Text="{Binding TotalAmount,StringFormat='{}{0:N0} đ'}" />
 
                     <WrapPanel Margin="0,5">
 
@@ -186,13 +186,19 @@
                     </WrapPanel>
 
                     <TextBlock Text="Số tiền khách đưa" Style="{StaticResource InfoTextLabel}" />
-                    <TextBox  Style="{StaticResource InfoTextBox}" x:Name="txtCustomerAmount" Text="0" />
+                    <!--<TextBox  Style="{StaticResource InfoTextBox}" x:Name="txtCustomerAmount" Text="0" />-->
+                    <TextBox
+                        x:Name="txtCustomerAmount"
+                        Style="{StaticResource InfoTextBox}"
+                        Text="{Binding CustomerPaid,
+                        Mode=TwoWay,
+                        UpdateSourceTrigger=PropertyChanged}" />
 
                     <TextBlock Text="Số tiền chuyển khoản" Style="{StaticResource InfoTextLabel}" />
                     <TextBox  Style="{StaticResource InfoTextBox}" x:Name="txtTransferAmount" Text="0" />
 
                     <TextBlock Text="Tiền trả lại" Style="{StaticResource InfoTextLabel}" />
-                    <TextBox  Style="{StaticResource InfoTextBox}" x:Name="txtChange" Text="0" />
+                    <TextBox Text="{Binding ChangeAmount,StringFormat='{}{0:N0} đ', Mode=OneWay}" IsReadOnly="True" Style="{StaticResource InfoTextBox}" x:Name="txtChange" />
                     
                 </StackPanel>
 

@@ -28,17 +28,23 @@ namespace POS_App
             DataContext = mainVm;
             KeyDown += MainWindow_KeyDown;
 
-
-            OpenCustomerScreen(mainVm);
-            ToggleFullScreen();
+            //OpenCustomerScreen(mainVm);
+            //ToggleFullScreen();
         }
 
         private void MainWindow_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.F11)
+            switch (e.Key)
             {
-                ToggleFullScreen();
-                e.Handled = true;
+                case Key.F11:
+                    ToggleFullScreen();
+                    e.Handled = true;
+                    break;
+
+                case Key.F2:
+                    OpenCustomerScreen(DataContext as MainViewModel);
+                    e.Handled = true;
+                    break;
             }
         }
 
@@ -69,27 +75,47 @@ namespace POS_App
         }
 
         // Ở MainWindow hoặc nơi bạn mở CustomerWindow
-        private CustomerWindow _customerWindow;
+        private CustomerWindow? _customerWindow;
+
         private void OpenCustomerScreen(MainViewModel mainVm)
         {
-            var secondScreen = Screen.AllScreens.FirstOrDefault(s => !s.Primary);
-            if (secondScreen == null) return;
+            // Nếu đang mở -> đóng
+            if (_customerWindow != null && _customerWindow.IsVisible)
+            {
+                _customerWindow.Close();
+                _customerWindow = null;
+                return;
+            }
+
+            var secondScreen = Screen.AllScreens
+                                     .FirstOrDefault(s => !s.Primary);
+
+            if (secondScreen == null)
+                return;
 
             _customerWindow = new CustomerWindow(mainVm);
+
+            _customerWindow.Closed += (_, __) =>
+            {
+                _customerWindow = null;
+            };
+
             _customerWindow.WindowStyle = WindowStyle.None;
             _customerWindow.ResizeMode = ResizeMode.NoResize;
             _customerWindow.WindowStartupLocation = WindowStartupLocation.Manual;
+
             _customerWindow.Left = secondScreen.WpfBounds.Left;
             _customerWindow.Top = secondScreen.WpfBounds.Top;
             _customerWindow.Width = secondScreen.WpfBounds.Width;
             _customerWindow.Height = secondScreen.WpfBounds.Height;
+
             _customerWindow.Show();
 
-            // Delay để WPF render xong vị trí rồi mới Maximize
             _customerWindow.Dispatcher.InvokeAsync(() =>
             {
                 _customerWindow.WindowState = WindowState.Maximized;
-            }, System.Windows.Threading.DispatcherPriority.Loaded);
+            },
+            System.Windows.Threading.DispatcherPriority.Loaded);
         }
 
         private void tbSearch_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)

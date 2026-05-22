@@ -87,7 +87,38 @@ namespace POS_App.ViewModels
             {
                 _totalAmount = value;
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(ChangeAmount));
             }
+        }
+
+        private decimal _customerPaid;
+        public decimal CustomerPaid
+        {
+            get => _customerPaid;
+            set
+            {
+                if (_customerPaid == value)
+                    return;
+
+                _customerPaid = value;
+
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(ChangeAmount));
+            }
+        }
+
+        public decimal ChangeAmount
+        {
+            get
+            {
+                return Math.Max(0, CustomerPaid - TotalAmount);
+            }
+        }
+
+        public void SetCustomerPaid(decimal _amount)
+        {
+            CustomerPaid = _amount;
+
         }
 
         public void Recalculate(ObservableCollection<CartItemRow> cartItems)
@@ -117,7 +148,6 @@ namespace POS_App.ViewModels
             TotalAmount = totalAmount;
         }
     }
-
 
     public class OrderViewModel : BaseViewModel
     {
