@@ -10,7 +10,8 @@
         AllowsTransparency="True"
         Background="Transparent"
         ResizeMode="NoResize"
-        ShowInTaskbar="False">
+        ShowInTaskbar="False"
+        WindowStartupLocation="CenterOwner">
 
     <Window.Resources>
 

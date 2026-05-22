@@ -19,10 +19,33 @@ namespace POS_App.Views.Controls
     /// </summary>
     public partial class PaymentView : UserControl
     {
+        public class Item
+        {
+            public string Text { get; set; }
+
+            public string Icon { get; set; }
+            private string Path = "/Assets/Icons/Payment";
+
+            public string IconPath { get { return string.Format("{0}/{1}.svg", Path, Icon); } }
+            public string IconPathSelected { get { return string.Format("{0}/{1}-2.svg", Path, Icon); } }
+        }
+
         public PaymentView(OrderViewModel orderVM)
         {
             InitializeComponent();
             DataContext = orderVM;
+
+            var paymentList = new List<Item>()
+            {
+                new Item { Text = "Tiền mặt", Icon="ico-cash" },
+                new Item { Text = "VISA",  Icon="ico-visa" },
+                new Item { Text = "QR",  Icon="ico-qrcode" },
+                new Item { Text = "Ví điện tử",  Icon="ico-wallet" },
+                new Item { Text = "Voucher", Icon="ico-voucher" },
+                new Item { Text = "Tách đơn",  Icon="ico-desk" },
+            };
+
+            PaymentList.ItemsSource = paymentList;
         }
 
         private void btnConfirmPayment_Click(object sender, RoutedEventArgs e)

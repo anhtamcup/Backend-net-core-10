@@ -5,8 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:POS_App.Views.Controls"
              mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800"
              xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
-             d:DesignHeight="450" d:DesignWidth="800">
+             >
 
     <UserControl.Resources>
 
@@ -25,6 +26,45 @@
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="CornerRadius" Value="6"/>
             <Setter Property="Padding" Value="10,8"/>
+        </Style>
+
+        <Style x:Key="InfoTextLabel" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="{StaticResource FontSizeL}"/>
+            <Setter Property="Foreground" Value="#474747"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="Margin" Value="0,5,0,0"/>
+        </Style>
+
+        <Style x:Key="InfoTextBox" TargetType="TextBox">
+            <Setter Property="Background" Value="#F4F6FA"/>
+            <Setter Property="BorderBrush" Value="#CCD2E3"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Margin" Value="0,5,0,0"/>
+            <Setter Property="FontSize" Value="{StaticResource FontSizeL}"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+
+                    <ControlTemplate TargetType="TextBox">
+
+                        <Border
+                    Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    CornerRadius="6">
+
+                            <ScrollViewer
+                        x:Name="PART_ContentHost"
+                        Margin="{TemplateBinding Padding}"/>
+
+                        </Border>
+
+                    </ControlTemplate>
+
+                </Setter.Value>
+            </Setter>
+
         </Style>
 
         <Style x:Key="ButtonNumberStyle"
@@ -65,73 +105,94 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <StackPanel Grid.Column="0" Margin="18" Orientation="Vertical">
-                    <TextBlock Text="Số tiền cần thu" FontSize="13" Foreground="#666" Margin="0,0,0,6"/>
-                    <Border Style="{StaticResource InfoBox}" Margin="0,0,0,16">
-                        <TextBlock x:Name="txtAmountDue" Text="{Binding Summary.TotalAmount,StringFormat='{}{0:N0} đ'}" FontSize="14" FontFamily="Consolas"/>
-                    </Border>
+                <StackPanel Grid.Column="0" Margin="5" Orientation="Vertical">
+                    <TextBlock Text="Số tiền cần thu" Style="{StaticResource InfoTextLabel}" />
+                    <TextBox  Style="{StaticResource InfoTextBox}" x:Name="txtAmountDue" Text="{Binding Summary.TotalAmount,StringFormat='{}{0:N0} đ'}" />
 
-                    <WrapPanel Margin="0,0,0,16">
-                        <Button x:Name="btnTienMat" Style="{StaticResource PaymentMethodButton}"
-                            Background="#27AE60" BorderBrush="#27AE60"
-                            Click="PaymentMethod_Click" Tag="TienMat" Margin="0,0,6,6">
-                            <StackPanel>
-                                <TextBlock Text="💵" FontSize="18" HorizontalAlignment="Center"/>
-                                <TextBlock Text="Tiền mặt" FontSize="12" Foreground="White" HorizontalAlignment="Center"/>
-                            </StackPanel>
-                        </Button>
-                        <Button x:Name="btnVisa" Style="{StaticResource PaymentMethodButton}"
-                            Background="#27AE60" BorderBrush="#27AE60"
-                            Click="PaymentMethod_Click" Tag="Visa" Margin="0,0,6,6">
-                            <StackPanel>
-                                <TextBlock Text="💳" FontSize="18" HorizontalAlignment="Center"/>
-                                <TextBlock Text="VISA" FontSize="12" Foreground="White" HorizontalAlignment="Center"/>
-                            </StackPanel>
-                        </Button>
-                        <Button x:Name="btnQR" Style="{StaticResource PaymentMethodButton}"
-                            Click="PaymentMethod_Click" Tag="QR" Margin="0,0,6,6">
-                            <StackPanel>
-                                <TextBlock Text="⊞" FontSize="18" HorizontalAlignment="Center"/>
-                                <TextBlock Text="QR" FontSize="12" HorizontalAlignment="Center"/>
-                            </StackPanel>
-                        </Button>
-                        <Button x:Name="btnViDienTu" Style="{StaticResource PaymentMethodButton}"
-                            Click="PaymentMethod_Click" Tag="ViDienTu" Margin="0,0,6,6">
-                            <StackPanel>
-                                <TextBlock Text="👛" FontSize="18" HorizontalAlignment="Center"/>
-                                <TextBlock Text="Ví điện tử" FontSize="12" HorizontalAlignment="Center"/>
-                            </StackPanel>
-                        </Button>
-                        <Button x:Name="btnVoucher" Style="{StaticResource PaymentMethodButton}"
-    Click="PaymentMethod_Click" Tag="Voucher" Margin="0,0,6,6">
-                            <StackPanel>
-                                <TextBlock Text="🏷️" FontSize="18" HorizontalAlignment="Center"/>
-                                <TextBlock Text="Voucher" FontSize="12" HorizontalAlignment="Center"/>
-                            </StackPanel>
-                        </Button>
-                        <Button x:Name="btnTachDon" Style="{StaticResource PaymentMethodButton}"
-    Click="PaymentMethod_Click" Tag="TachDon" Margin="0,0,6,6">
-                            <StackPanel>
-                                <TextBlock Text="📋" FontSize="18" HorizontalAlignment="Center"/>
-                                <TextBlock Text="Tách đơn" FontSize="12" HorizontalAlignment="Center"/>
-                            </StackPanel>
-                        </Button>
+                    <WrapPanel Margin="0,5">
+
+                        <ListBox x:Name="PaymentList"
+                            SelectedIndex="0"
+                            BorderThickness="0"
+                            Background="Transparent">
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal"/>
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+
+                            <ListBox.ItemContainerStyle>
+                                <Style TargetType="ListBoxItem">
+                                    <Setter Property="Margin" Value="5"/>
+                                    <Setter Property="Cursor" Value="Hand"/>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="ListBoxItem">
+                                                <ContentPresenter />
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </ListBox.ItemContainerStyle>
+
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+
+                                    <Border x:Name="iconBorder"
+                                        Width="70" Height="70"
+                                        CornerRadius="6"
+                                        Background="#F0F2F7"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center">
+
+                                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <svgc:SvgViewbox
+                                                Height="15" x:Name="iconNormal" Source="{Binding IconPath}" />
+
+                                            <svgc:SvgViewbox
+                                                Height="15" x:Name="iconSelected" Source="{Binding IconPathSelected}" Visibility="Collapsed" />
+
+
+                                            <TextBlock x:Name="lblPaymentName"
+                                                Text="{Binding Text}"
+                                                Foreground="#6F7A94"
+                                                FontSize="{StaticResource FontSizeM}"
+                                                FontWeight="Medium"
+                                                Margin="0,5,0,0"
+                                                HorizontalAlignment="Center"/>
+
+                                        </StackPanel>
+                                    </Border>
+
+
+                                    <DataTemplate.Triggers>
+                                        <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem}}" Value="True">
+
+                                            <Setter TargetName="lblPaymentName"
+                                                Property="TextBlock.Foreground"
+                                                Value="White"/>
+
+                                            <Setter TargetName="iconBorder" Property="Border.Background" Value="#0B8822"/>
+                                            <Setter TargetName="iconNormal" Property="UIElement.Visibility" Value="Collapsed"/>
+                                            <Setter TargetName="iconSelected" Property="UIElement.Visibility" Value="Visible"/>
+
+                                        </DataTrigger>
+                                    </DataTemplate.Triggers>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+
                     </WrapPanel>
 
-                    <TextBlock Text="Số tiền khách đưa" FontSize="13" Foreground="#666" Margin="0,0,0,6"/>
-                    <Border Style="{StaticResource InfoBox}" Margin="0,0,0,12">
-                        <TextBlock x:Name="txtCustomerAmount" Text="0" FontSize="14" FontFamily="Consolas"/>
-                    </Border>
+                    <TextBlock Text="Số tiền khách đưa" Style="{StaticResource InfoTextLabel}" />
+                    <TextBox  Style="{StaticResource InfoTextBox}" x:Name="txtCustomerAmount" Text="0" />
 
-                    <TextBlock Text="Số tiền chuyển khoản" FontSize="13" Foreground="#666" Margin="0,0,0,6"/>
-                    <Border Style="{StaticResource InfoBox}" Margin="0,0,0,12">
-                        <TextBlock x:Name="txtTransferAmount" Text="0" FontSize="14" FontFamily="Consolas"/>
-                    </Border>
+                    <TextBlock Text="Số tiền chuyển khoản" Style="{StaticResource InfoTextLabel}" />
+                    <TextBox  Style="{StaticResource InfoTextBox}" x:Name="txtTransferAmount" Text="0" />
 
-                    <TextBlock Text="Tiền trả lại" FontSize="13" Foreground="#666" Margin="0,0,0,6"/>
-                    <Border Style="{StaticResource InfoBox}">
-                        <TextBlock x:Name="txtChange" Text="0 VND – Đủ tiền" FontSize="14" FontFamily="Consolas" Foreground="#27AE60"/>
-                    </Border>
+                    <TextBlock Text="Tiền trả lại" Style="{StaticResource InfoTextLabel}" />
+                    <TextBox  Style="{StaticResource InfoTextBox}" x:Name="txtChange" Text="0" />
+                    
                 </StackPanel>
 
                 <Grid Grid.Column="1" Background="#DCE5EF">

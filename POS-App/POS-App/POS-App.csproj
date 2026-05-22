@@ -11,10 +11,13 @@
 
   <ItemGroup>
     <None Remove="Assets\Icons\ico-cancel.svg" />
+    <None Remove="Assets\Icons\ico-cash-1.svg" />
     <None Remove="Assets\Icons\ico-close.svg" />
+    <None Remove="Assets\Icons\ico-credit-card-1.svg" />
     <None Remove="Assets\Icons\ico-customer.svg" />
     <None Remove="Assets\Icons\ico-decrease-quantity.svg" />
     <None Remove="Assets\Icons\ico-delivery.svg" />
+    <None Remove="Assets\Icons\ico-desk-alt-1.svg" />
     <None Remove="Assets\Icons\ico-destop.svg" />
     <None Remove="Assets\Icons\ico-discount.svg" />
     <None Remove="Assets\Icons\ico-down.svg" />
@@ -40,6 +43,19 @@
     <None Remove="Assets\Icons\ico-setting.svg" />
     <None Remove="Assets\Icons\ico-trash.svg" />
     <None Remove="Assets\Icons\ico-up.svg" />
+    <None Remove="Assets\Icons\ico-voucher-1.svg" />
+    <None Remove="Assets\Icons\ico-wallet-1.svg" />
+    <None Remove="Assets\Icons\Payment\ico-cash-2.svg" />
+    <None Remove="Assets\Icons\Payment\ico-cash.svg" />
+    <None Remove="Assets\Icons\Payment\ico-desk-2.svg" />
+    <None Remove="Assets\Icons\Payment\ico-desk.svg" />
+    <None Remove="Assets\Icons\Payment\ico-qrcode-2.svg" />
+    <None Remove="Assets\Icons\Payment\ico-qrcode.svg" />
+    <None Remove="Assets\Icons\Payment\ico-visa-2.svg" />
+    <None Remove="Assets\Icons\Payment\ico-visa.svg" />
+    <None Remove="Assets\Icons\Payment\ico-voucher-2.svg" />
+    <None Remove="Assets\Icons\Payment\ico-voucher.svg" />
+    <None Remove="Assets\Icons\Payment\ico-wallet.svg" />
     <None Remove="Assets\Images\Logo\header-logo.png" />
     <None Remove="Fonts\Inter-Bold.ttf" />
     <None Remove="Fonts\Inter-Medium.ttf" />
@@ -50,7 +66,13 @@
     <Content Include="Assets\Icons\ico-cancel.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\Icons\ico-cash-1.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\Icons\ico-close.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Icons\ico-credit-card-1.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Icons\ico-customer.svg">
@@ -60,6 +82,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Icons\ico-delivery.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Icons\ico-desk-alt-1.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Icons\ico-destop.svg">
@@ -135,6 +160,48 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Icons\ico-up.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Icons\ico-voucher-1.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Icons\ico-wallet-1.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Icons\Payment\ico-cash-2.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Icons\Payment\ico-cash.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Icons\Payment\ico-desk-2.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Icons\Payment\ico-desk.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Icons\Payment\ico-qrcode-2.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Icons\Payment\ico-qrcode.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Icons\Payment\ico-visa-2.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Icons\Payment\ico-visa.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Icons\Payment\ico-voucher-2.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Icons\Payment\ico-voucher.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Icons\Payment\ico-wallet.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Icons\Payment\ico-wallet-2.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Images\Logo\header-logo.png">

@@ -88,13 +88,21 @@ namespace POS_App.Views
         private void btnPayment_Click(object sender, RoutedEventArgs e)
         {
             var owner = Window.GetWindow(this);
+
+            if (owner == null)
+                return;
+
             var modal = new AppModal
             {
                 Owner = owner,
+                WindowStartupLocation = WindowStartupLocation.Manual,
+
                 Width = owner.ActualWidth,
                 Height = owner.ActualHeight,
+
                 Left = owner.Left,
                 Top = owner.Top,
+
                 ModalTitle = "Thanh toán hóa đơn",
                 ModalWidth = 800,
                 ModalHeight = 500,
