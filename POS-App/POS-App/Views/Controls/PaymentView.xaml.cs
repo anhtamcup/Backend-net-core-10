@@ -1,4 +1,5 @@
-﻿using POS_App.ViewModels;
+﻿using POS_App.Helpers;
+using POS_App.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -65,48 +66,18 @@ namespace POS_App.Views.Controls
 
         private void Number_Click(object sender, RoutedEventArgs e)
         {
-            var textBox = Keyboard.FocusedElement as TextBox;
-
-            if (textBox == null)
-                return;
-
-            var value = (sender as Button)?.Content?.ToString();
-
-            if (string.IsNullOrEmpty(value))
-                return;
-
-            int pos = textBox.CaretIndex;
-
-            textBox.Text =
-                textBox.Text.Insert(pos, value);
-
-            textBox.CaretIndex = pos + value.Length;
-
-            textBox.Focus();
+            KeypadHelper.Insert(
+                (sender as Button)?.Content?.ToString());
         }
 
         private void Backspace_Click(object sender, RoutedEventArgs e)
         {
-            var textBox = Keyboard.FocusedElement as TextBox;
-
-            if (textBox == null)
-                return;
-
-            int pos = textBox.CaretIndex;
-
-            if (pos <= 0)
-                return;
-
-            textBox.Text = textBox.Text.Remove(pos - 1, 1);
-
-            textBox.CaretIndex = pos - 1;
-
-            textBox.Focus();
+            KeypadHelper.Backspace();
         }
 
         private void Clear_Click(object sender, RoutedEventArgs e)
         {
-            (Keyboard.FocusedElement as TextBox)?.Clear();
+            KeypadHelper.Clear();
         }
 
         private void Money_Click(object sender, RoutedEventArgs e)

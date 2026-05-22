@@ -129,6 +129,14 @@ namespace POS_App.ViewModels
             var vatAmount = 0m;
             var totalAmount = 0m;
 
+            for (int i = cartItems.Count - 1; i >= 0; i--)
+            {
+                if (cartItems[i].Quantity <= 0)
+                {
+                    cartItems.RemoveAt(i);
+                }
+            }
+
             var index = 1;
             foreach (var item in cartItems)
             {
