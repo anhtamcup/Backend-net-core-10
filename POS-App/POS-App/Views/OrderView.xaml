@@ -78,13 +78,13 @@
         </Style>
 
         <Style x:Key="ActionButtonStyle" TargetType="Button" BasedOn="{StaticResource ButtonBase}" >
-            <Setter Property="Width" Value="{StaticResource ActionButtonWidth}"/>
+            <!--<Setter Property="Width" Value="{StaticResource ActionButtonWidth}"/>-->
             <Setter Property="FontWeight" Value="Normal"/>
             <Setter Property="FontStyle" Value="Normal"/>
             <Setter Property="FontSize" Value="{StaticResource FontSizeM}"/>
             <Setter Property="Foreground" Value="#374151"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
+            <!--<Setter Property="HorizontalAlignment" Value="Center"/>-->
+            <!--<Setter Property="VerticalAlignment" Value="Center"/>-->
             <Setter Property="Margin" Value="2"/>
             <Setter Property="Padding" Value="5, 12"/>
         </Style>
@@ -104,14 +104,11 @@
         </Style>
 
         <Style x:Key="KeypadNumberBaseStyle" TargetType="Button" BasedOn="{StaticResource ButtonBase}">
-            <Setter Property="Width" Value="{StaticResource KeyboardButtonWidth}"/>
             <Setter Property="Margin" Value="1"/>
         </Style>
 
         <Style x:Key="ButtonDeleteItemStyle" TargetType="Button" BasedOn="{StaticResource ButtonBase}">
             <Setter Property="Background" Value="Transparent"/>
-            <!--<Setter Property="Width" Value="30"/>
-            <Setter Property="Height" Value="30"/>-->
         </Style>
 
         <Style x:Key="KeypadButtonNumberStyle" TargetType="Button" BasedOn="{StaticResource KeypadNumberBaseStyle}">
@@ -195,20 +192,20 @@
 
     </UserControl.Resources>
     <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="{StaticResource RightPanelWidth}"/>
-            </Grid.ColumnDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="310"/>
+        </Grid.ColumnDefinitions>
 
-            <Grid Grid.Column="0"
+        <Grid Grid.Column="0"
                 Name="panelLeft"
                 Background="#FFFFFF">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="auto"/>
-                </Grid.RowDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
 
-                <DataGrid
+            <DataGrid
                     ItemsSource="{Binding CartItemsView}"
                     Name="grCartItems"
                     AutoGenerateColumns="False"
@@ -223,34 +220,34 @@
                     BorderThickness="0"
                     FontSize="{StaticResource FontSizeM}"
                     >
-                    <DataGrid.ColumnHeaderStyle>
-                        <Style TargetType="DataGridColumnHeader">
-                            <Setter Property="Background" Value="#E9EBF3"/>
-                            <Setter Property="Foreground" Value="#5A6B82"/>
-                            <Setter Property="FontWeight" Value="Bold"/>
-                            <Setter Property="BorderBrush" Value="#CCD2E3"/>
-                            <Setter Property="BorderThickness" Value="0,0,1,1"/>
-                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                        </Style>
-                    </DataGrid.ColumnHeaderStyle>
-                    <DataGrid.CellStyle>
-                        <Style TargetType="DataGridCell">
-                            <Setter Property="Focusable" Value="False"/>
-                            <Setter Property="BorderThickness" Value="0"/>
-                            <Setter Property="Background" Value="White"/>
-                            <Setter Property="Foreground" Value="Black"/>
-                            <Style.Triggers>
-                                <Trigger Property="IsSelected" Value="True">
-                                    <Setter Property="Background" Value="White"/>
-                                    <Setter Property="Foreground" Value="Black"/>
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </DataGrid.CellStyle>
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="#" Width="25" Binding="{Binding Index, StringFormat={}{0:00}}" ElementStyle="{StaticResource GridViewTextStyleCenter}"/>
-                        <DataGridTextColumn Header="MÃ SP" Width="110" Binding="{Binding Code}" ElementStyle="{StaticResource GridViewTextStyleLeft}"/>
-                        <DataGridTextColumn Header="SẢN PHẨM" Width="*" Binding="{Binding Name}" ElementStyle="{StaticResource GridViewTextStyleLeft}"/>
+                <DataGrid.ColumnHeaderStyle>
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="Background" Value="#E9EBF3"/>
+                        <Setter Property="Foreground" Value="#5A6B82"/>
+                        <Setter Property="FontWeight" Value="Bold"/>
+                        <Setter Property="BorderBrush" Value="#CCD2E3"/>
+                        <Setter Property="BorderThickness" Value="0,0,1,1"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    </Style>
+                </DataGrid.ColumnHeaderStyle>
+                <DataGrid.CellStyle>
+                    <Style TargetType="DataGridCell">
+                        <Setter Property="Focusable" Value="False"/>
+                        <Setter Property="BorderThickness" Value="0"/>
+                        <Setter Property="Background" Value="White"/>
+                        <Setter Property="Foreground" Value="Black"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="White"/>
+                                <Setter Property="Foreground" Value="Black"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.CellStyle>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="#" Width="25" Binding="{Binding Index, StringFormat={}{0:00}}" ElementStyle="{StaticResource GridViewTextStyleCenter}"/>
+                    <DataGridTextColumn Header="MÃ SP" Width="110" Binding="{Binding Code}" ElementStyle="{StaticResource GridViewTextStyleLeft}"/>
+                    <DataGridTextColumn Header="SẢN PHẨM" Width="*" Binding="{Binding Name}" ElementStyle="{StaticResource GridViewTextStyleLeft}"/>
                     <DataGridTextColumn Header="ĐƠN VỊ" Width="60" Binding="{Binding Unit}" ElementStyle="{StaticResource GridViewTextStyleLeft}"/>
                     <DataGridTextColumn Header="GIÁ" Width="70" Binding="{Binding OriginalPrice,StringFormat={}{0:N0}}" ElementStyle="{StaticResource GridViewTextStyleRight}"/>
                     <DataGridTemplateColumn Header="SỐ LƯỢNG" Width="90">
@@ -291,49 +288,49 @@
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTextColumn Header="GIẢM GIÁ" Width="80" Binding="{Binding DiscountPrice,StringFormat={}{0:N0}}" ElementStyle="{StaticResource GridViewTextStyleRight}"/>
-                        <DataGridTextColumn Header="SỐ TIỀN" Width="80" Binding="{Binding TotalPrice,StringFormat={}{0:N0}}" ElementStyle="{StaticResource GridViewTextStyleRight}"/>
-                        <DataGridTextColumn Header="GHI CHÚ" Width="60" Binding="{Binding Note}" ElementStyle="{StaticResource GridViewTextStyleLeft}" />
-                        <DataGridTemplateColumn Header="" Width="40">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Button Style="{StaticResource ButtonDeleteItemStyle}" Name="btnRemoveItem" Click="btnRemoveItem_Click">
-                                        <svgc:SvgViewbox Source="/Assets/Icons/ico-trash.svg" Style="{StaticResource KeypadIconStyle}"/>
-                                    </Button>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                    </DataGrid.Columns>
-                </DataGrid>
+                    <DataGridTextColumn Header="SỐ TIỀN" Width="80" Binding="{Binding TotalPrice,StringFormat={}{0:N0}}" ElementStyle="{StaticResource GridViewTextStyleRight}"/>
+                    <DataGridTextColumn Header="GHI CHÚ" Width="60" Binding="{Binding Note}" ElementStyle="{StaticResource GridViewTextStyleLeft}" />
+                    <DataGridTemplateColumn Header="" Width="40">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Style="{StaticResource ButtonDeleteItemStyle}" Name="btnRemoveItem" Click="btnRemoveItem_Click">
+                                    <svgc:SvgViewbox Source="/Assets/Icons/ico-trash.svg" Style="{StaticResource KeypadIconStyle}"/>
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
 
-                <Border Grid.Row="1"
+            <Border Grid.Row="1"
                     BorderBrush="#CCD2E3"
                     BorderThickness="0,1,0,0"
                     Background="#F6F8FC"
                     Padding="10">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <Grid Grid.Column="0">
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
 
-                            <TextBlock Grid.Row="0" Text="{Binding Summary.ItemCount, StringFormat='Tổng: {0} sản phẩm'}" Style="{StaticResource SummarySubtotalPriceLabel}" />
-                            <TextBlock Grid.Row="0" Text="{Binding Summary.SubTotalAmount,StringFormat='{}{0:N0} đ'}" Style="{StaticResource SummarySubtotalPriceValue}" />
+                        <TextBlock Grid.Row="0" Text="{Binding Summary.ItemCount, StringFormat='Tổng: {0} sản phẩm'}" Style="{StaticResource SummarySubtotalPriceLabel}" />
+                        <TextBlock Grid.Row="0" Text="{Binding Summary.SubTotalAmount,StringFormat='{}{0:N0} đ'}" Style="{StaticResource SummarySubtotalPriceValue}" />
 
-                            <TextBlock Grid.Row="1" Text="Khuyến mãi / Giảm giá" Style="{StaticResource SummarySubtotalPriceLabel}" />
-                            <TextBlock Grid.Row="1" Text="{Binding Summary.PromotionAmount,StringFormat='{}{0:N0} đ'}" Style="{StaticResource SummarySubtotalPriceValue}" Foreground="#C0392B" />
+                        <TextBlock Grid.Row="1" Text="Khuyến mãi / Giảm giá" Style="{StaticResource SummarySubtotalPriceLabel}" />
+                        <TextBlock Grid.Row="1" Text="{Binding Summary.PromotionAmount,StringFormat='{}{0:N0} đ'}" Style="{StaticResource SummarySubtotalPriceValue}" Foreground="#C0392B" />
 
-                            <TextBlock Grid.Row="2" Text="VAT (đã bao gồm)" Style="{StaticResource SummarySubtotalPriceLabel}" />
-                            <TextBlock Grid.Row="2" Text="{Binding Summary.VATAmount,StringFormat='{}{0:N0} đ'}" Style="{StaticResource SummarySubtotalPriceValue}" Foreground="#5A6B82" />
+                        <TextBlock Grid.Row="2" Text="VAT (đã bao gồm)" Style="{StaticResource SummarySubtotalPriceLabel}" />
+                        <TextBlock Grid.Row="2" Text="{Binding Summary.VATAmount,StringFormat='{}{0:N0} đ'}" Style="{StaticResource SummarySubtotalPriceValue}" Foreground="#5A6B82" />
 
-                            <Grid Grid.Row="3">
-                                <Rectangle Height="0.8"
+                        <Grid Grid.Row="3">
+                            <Rectangle Height="0.8"
                                     VerticalAlignment="Top"
                                     Stroke="#8A96B3"
                                     StrokeThickness="1"
@@ -341,18 +338,18 @@
                                     Fill="#2E384E"
                                     IsHitTestVisible="False"/>
 
-                                <!-- CONTENT -->
-                                <Grid Margin="0,8,0,0">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock Text="TỔNG CỘNG" Style="{StaticResource SummaryTotalPriceLabel}" />
-                                    <TextBlock Text="{Binding Summary.TotalAmount,StringFormat='{}{0:N0} đ'}" Grid.Column="1" Style="{StaticResource SummaryTotalPriceValue}" />
-                                </Grid>
+                            <!-- CONTENT -->
+                            <Grid Margin="0,8,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="TỔNG CỘNG" Style="{StaticResource SummaryTotalPriceLabel}" />
+                                <TextBlock Text="{Binding Summary.TotalAmount,StringFormat='{}{0:N0} đ'}" Grid.Column="1" Style="{StaticResource SummaryTotalPriceValue}" />
                             </Grid>
                         </Grid>
-                        <Border
+                    </Grid>
+                    <Border
                             Grid.Column="1"
                             Width="200"
                             BorderBrush="#CCD2E3"
@@ -361,196 +358,192 @@
                             Margin="10,0,0,0"
                             Padding="10,0,0,0" >
 
-                            <Grid DataContext="{Binding Customer}" >
-                                <Grid.RowDefinitions>
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                </Grid.RowDefinitions>
+                        <Grid DataContext="{Binding Customer}" >
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
 
-                                <TextBlock Grid.Row="0" Text="Thành viên:" Style="{StaticResource CustomerSelectedNameLabel}" />
-                                <TextBlock Grid.Row="1" x:Name="customerSelectedName" Text="{Binding Name}" Style="{StaticResource CustomerSelectedNameValue}"/>
-                                <WrapPanel Grid.Row="2">
-                                    <TextBlock Text="Điểm hiện tại: " HorizontalAlignment="Left" Style="{StaticResource CustomerSelectedNameLabel}" />
-                                    <TextBlock Text="{Binding Point, StringFormat='{}{0:N0}'}" HorizontalAlignment="Right" Style="{StaticResource CustomerSelectedNameValue}"/>
-                                </WrapPanel>
-                            </Grid>
-                        </Border>
-                    </Grid>
-                </Border>
-            </Grid>
+                            <TextBlock Grid.Row="0" Text="Thành viên:" Style="{StaticResource CustomerSelectedNameLabel}" />
+                            <TextBlock Grid.Row="1" x:Name="customerSelectedName" Text="{Binding Name}" Style="{StaticResource CustomerSelectedNameValue}"/>
+                            <WrapPanel Grid.Row="2">
+                                <TextBlock Text="Điểm hiện tại: " HorizontalAlignment="Left" Style="{StaticResource CustomerSelectedNameLabel}" />
+                                <TextBlock Text="{Binding Point, StringFormat='{}{0:N0}'}" HorizontalAlignment="Right" Style="{StaticResource CustomerSelectedNameValue}"/>
+                            </WrapPanel>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </Border>
+        </Grid>
 
+        <Grid Grid.Column="1"
+            Name="panelRight"
+            Background="#DCE5EF"
+            Margin="1">
 
-            <Grid Grid.Column="1"
-                Name="panelRight"
-                Background="#DCE5EF"
-                Margin="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
+            <UniformGrid Grid.Row="0" Rows="5" Columns="3">
+                <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-refund}">
+                    <StackPanel>
+                        <svgc:SvgViewbox Source="/Assets/Icons/ico-refund.svg" Style="{StaticResource ActionButtonIconStyle}"/>
+                        <TextBlock Text="TRẢ HÀNG" Foreground="#7F1D1D" />
+                    </StackPanel>
+                </Button>
+
+                <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-restore}">
+                    <StackPanel>
+                        <svgc:SvgViewbox Source="/Assets/Icons/ico-restore.svg" Style="{StaticResource ActionButtonIconStyle}"/>
+                        <TextBlock Text="KHÔI PHỤC" Foreground="#0C4A6E"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-promotion}">
+                    <StackPanel>
+                        <svgc:SvgViewbox Source="/Assets/Icons/ico-promotion.svg" Style="{StaticResource ActionButtonIconStyle}"/>
+                        <TextBlock Text="KHUYẾN MÃI" Foreground="#064E30" />
+                    </StackPanel>
+                </Button>
+
+                <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-customer}" Name="btnCustomerFunction" Click="btnCustomerFunction_Click">
+                    <StackPanel>
+                        <svgc:SvgViewbox Source="/Assets/Icons/ico-customer.svg" Style="{StaticResource ActionButtonIconStyle}"/>
+                        <TextBlock Text="KHÁCH HÀNG" Foreground="#064E30" />
+                    </StackPanel>
+                </Button>
+
+                <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-discount}">
+                    <StackPanel>
+                        <svgc:SvgViewbox Source="/Assets/Icons/ico-discount.svg" Style="{StaticResource ActionButtonIconStyle}"/>
+                        <TextBlock Text="GIẢM GIÁ" Foreground="#78350F" />
+                    </StackPanel>
+                </Button>
+
+                <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-note}">
+                    <StackPanel>
+                        <svgc:SvgViewbox Source="/Assets/Icons/ico-note.svg" Style="{StaticResource ActionButtonIconStyle}"/>
+                        <TextBlock Text="GHI CHÚ" Foreground="#2E384E" />
+                    </StackPanel>
+                </Button>
+
+                <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-invoice}">
+                    <StackPanel>
+                        <svgc:SvgViewbox Source="/Assets/Icons/ico-invoice.svg" Style="{StaticResource ActionButtonIconStyle}"/>
+                        <TextBlock Text="BÁN HÀNG" Foreground="#0C4A6E" />
+                    </StackPanel>
+                </Button>
+
+                <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-preorder}">
+                    <StackPanel>
+                        <svgc:SvgViewbox Source="/Assets/Icons/ico-preorder.svg" Style="{StaticResource ActionButtonIconStyle}"/>
+                        <TextBlock Text="ĐẶT HÀNG" Foreground="#0C4A6E" />
+                    </StackPanel>
+                </Button>
+
+                <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-help}">
+                    <StackPanel>
+                        <svgc:SvgViewbox Source="/Assets/Icons/ico-help.svg" Style="{StaticResource ActionButtonIconStyle}"/>
+                        <TextBlock Text="TRỢ GIÚP" Foreground="#2E384E" />
+                    </StackPanel>
+                </Button>
+
+                <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-print}">
+                    <StackPanel>
+                        <svgc:SvgViewbox Source="/Assets/Icons/ico-print.svg" Style="{StaticResource ActionButtonIconStyle}"/>
+                        <TextBlock Text="IN HÓA ĐƠN" Foreground="#2E384E" />
+                    </StackPanel>
+                </Button>
+
+                <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-open-cash}">
+                    <StackPanel>
+                        <svgc:SvgViewbox Source="/Assets/Icons/ico-open-cash.svg" Style="{StaticResource ActionButtonIconStyle}"/>
+                        <TextBlock Text="MỞ KÉT TIỀN" Foreground="#2E384E" />
+                    </StackPanel>
+                </Button>
+
+                <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-save}">
+                    <StackPanel>
+                        <svgc:SvgViewbox Source="/Assets/Icons/ico-save.svg" Style="{StaticResource ActionButtonIconStyle}"/>
+                        <TextBlock Text="LƯU ĐƠN" Foreground="#2E384E" />
+                    </StackPanel>
+                </Button>
+
+                <Button x:Name="btnSearchProduct" Click="btnSearchProduct_Click" Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-search-product}">
+                    <StackPanel>
+                        <svgc:SvgViewbox Source="/Assets/Icons/ico-search-product.svg" Style="{StaticResource ActionButtonIconStyle}"/>
+                        <TextBlock Text="TÌM SP" Foreground="#78350F" />
+                    </StackPanel>
+                </Button>
+
+                <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-delivery}">
+                    <StackPanel>
+                        <svgc:SvgViewbox Source="/Assets/Icons/ico-delivery.svg" Style="{StaticResource ActionButtonIconStyle}"/>
+                        <TextBlock Text="GIAO HÀNG" Foreground="#0C4A6E" />
+                    </StackPanel>
+                </Button>
+
+                <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-cancel}">
+                    <StackPanel>
+                        <svgc:SvgViewbox Source="/Assets/Icons/ico-cancel.svg" Style="{StaticResource ActionButtonIconStyle}"/>
+                        <TextBlock Text="HỦY" Foreground="#7F1D1D" />
+                    </StackPanel>
+                </Button>
+
+            </UniformGrid>
+
+            <Button Grid.Row="1" x:Name="btnPayment" Click="btnPayment_Click" Style="{StaticResource ButonPaymentStyle}" Content="THANH TOÁN - F12" Margin="0,5"/>
+            <Grid Grid.Row="2">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition />
-                    <RowDefinition MaxHeight="250" />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
                 </Grid.RowDefinitions>
 
-                <StackPanel Grid.Row="0">
-                    <WrapPanel Name="UniformGridFunctions">
-                        <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-refund}">
-                            <StackPanel>
-                                <svgc:SvgViewbox Source="/Assets/Icons/ico-refund.svg" Style="{StaticResource ActionButtonIconStyle}"/>
-                                <TextBlock Text="TRẢ HÀNG" Foreground="#7F1D1D" />
-                            </StackPanel>
-                        </Button>
+                <Button Style="{StaticResource KeypadButtonNumberStyle}" Content="7" Grid.Row="0" Grid.Column="0"/>
+                <Button Style="{StaticResource KeypadButtonNumberStyle}" Content="8" Grid.Row="0" Grid.Column="1"/>
+                <Button Style="{StaticResource KeypadButtonNumberStyle}" Content="9" Grid.Row="0" Grid.Column="2"/>
+                <Button Style="{StaticResource KeypadButtonIconStyle}" Grid.Row="0" Grid.Column="3">
+                    <svgc:SvgViewbox Source="/Assets/Icons/ico-remove.svg" Style="{StaticResource KeypadIconStyle}"/>
+                </Button>
 
-                        <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-restore}">
-                            <StackPanel>
-                                <svgc:SvgViewbox Source="/Assets/Icons/ico-restore.svg" Style="{StaticResource ActionButtonIconStyle}"/>
-                                <TextBlock Text="KHÔI PHỤC" Foreground="#0C4A6E"/>
-                            </StackPanel>
-                        </Button>
+                <Button Style="{StaticResource KeypadButtonNumberStyle}" Content="4" Grid.Row="1" Grid.Column="0"/>
+                <Button Style="{StaticResource KeypadButtonNumberStyle}" Content="5" Grid.Row="1" Grid.Column="1"/>
+                <Button Style="{StaticResource KeypadButtonNumberStyle}" Content="6" Grid.Row="1" Grid.Column="2"/>
+                <Button Style="{StaticResource KeypadButtonIconStyle}" Grid.Row="1" Grid.Column="3">
+                    <svgc:SvgViewbox Source="/Assets/Icons/ico-up.svg" Style="{StaticResource KeypadIconStyle}"/>
+                </Button>
 
-                        <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-promotion}">
-                            <StackPanel>
-                                <svgc:SvgViewbox Source="/Assets/Icons/ico-promotion.svg" Style="{StaticResource ActionButtonIconStyle}"/>
-                                <TextBlock Text="KHUYẾN MÃI" Foreground="#064E30" />
-                            </StackPanel>
-                        </Button>
-
-                        <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-customer}" Name="btnCustomerFunction" Click="btnCustomerFunction_Click">
-                            <StackPanel>
-                                <svgc:SvgViewbox Source="/Assets/Icons/ico-customer.svg" Style="{StaticResource ActionButtonIconStyle}"/>
-                                <TextBlock Text="KHÁCH HÀNG" Foreground="#064E30" />
-                            </StackPanel>
-                        </Button>
-
-                        <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-discount}">
-                            <StackPanel>
-                                <svgc:SvgViewbox Source="/Assets/Icons/ico-discount.svg" Style="{StaticResource ActionButtonIconStyle}"/>
-                                <TextBlock Text="GIẢM GIÁ" Foreground="#78350F" />
-                            </StackPanel>
-                        </Button>
-
-                        <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-note}">
-                            <StackPanel>
-                                <svgc:SvgViewbox Source="/Assets/Icons/ico-note.svg" Style="{StaticResource ActionButtonIconStyle}"/>
-                                <TextBlock Text="GHI CHÚ" Foreground="#2E384E" />
-                            </StackPanel>
-                        </Button>
-
-                        <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-invoice}">
-                            <StackPanel>
-                                <svgc:SvgViewbox Source="/Assets/Icons/ico-invoice.svg" Style="{StaticResource ActionButtonIconStyle}"/>
-                                <TextBlock Text="BÁN HÀNG" Foreground="#0C4A6E" />
-                            </StackPanel>
-                        </Button>
-
-                        <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-preorder}">
-                            <StackPanel>
-                                <svgc:SvgViewbox Source="/Assets/Icons/ico-preorder.svg" Style="{StaticResource ActionButtonIconStyle}"/>
-                                <TextBlock Text="ĐẶT HÀNG" Foreground="#0C4A6E" />
-                            </StackPanel>
-                        </Button>
-
-                        <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-help}">
-                            <StackPanel>
-                                <svgc:SvgViewbox Source="/Assets/Icons/ico-help.svg" Style="{StaticResource ActionButtonIconStyle}"/>
-                                <TextBlock Text="TRỢ GIÚP" Foreground="#2E384E" />
-                            </StackPanel>
-                        </Button>
-
-                        <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-print}">
-                            <StackPanel>
-                                <svgc:SvgViewbox Source="/Assets/Icons/ico-print.svg" Style="{StaticResource ActionButtonIconStyle}"/>
-                                <TextBlock Text="IN HÓA ĐƠN" Foreground="#2E384E" />
-                            </StackPanel>
-                        </Button>
-
-                        <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-open-cash}">
-                            <StackPanel>
-                                <svgc:SvgViewbox Source="/Assets/Icons/ico-open-cash.svg" Style="{StaticResource ActionButtonIconStyle}"/>
-                                <TextBlock Text="MỞ KÉT TIỀN" Foreground="#2E384E" />
-                            </StackPanel>
-                        </Button>
-
-                        <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-save}">
-                            <StackPanel>
-                                <svgc:SvgViewbox Source="/Assets/Icons/ico-save.svg" Style="{StaticResource ActionButtonIconStyle}"/>
-                                <TextBlock Text="LƯU ĐƠN" Foreground="#2E384E" />
-                            </StackPanel>
-                        </Button>
-
-                        <Button x:Name="btnSearchProduct" Click="btnSearchProduct_Click" Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-search-product}">
-                            <StackPanel>
-                                <svgc:SvgViewbox Source="/Assets/Icons/ico-search-product.svg" Style="{StaticResource ActionButtonIconStyle}"/>
-                                <TextBlock Text="TÌM SP" Foreground="#78350F" />
-                            </StackPanel>
-                        </Button>
-
-                        <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-delivery}">
-                            <StackPanel>
-                                <svgc:SvgViewbox Source="/Assets/Icons/ico-delivery.svg" Style="{StaticResource ActionButtonIconStyle}"/>
-                                <TextBlock Text="GIAO HÀNG" Foreground="#0C4A6E" />
-                            </StackPanel>
-                        </Button>
-
-                        <Button Style="{StaticResource ActionButtonStyle}" Background="{StaticResource bg-btn-action-cancel}">
-                            <StackPanel>
-                                <svgc:SvgViewbox Source="/Assets/Icons/ico-cancel.svg" Style="{StaticResource ActionButtonIconStyle}"/>
-                                <TextBlock Text="HỦY" Foreground="#7F1D1D" />
-                            </StackPanel>
-                        </Button>
-                    </WrapPanel>
-
-                    <Button
-                        x:Name="btnPayment"
-                        Click="btnPayment_Click"
-                    Grid.Row="0"
-                    Style="{StaticResource ButonPaymentStyle}"
-                    Content="THANH TOÁN - F12"/>
-                </StackPanel>
-                <Grid Grid.Row="1">
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-
-                    <Button Style="{StaticResource KeypadButtonNumberStyle}" Content="7" Grid.Row="0" Grid.Column="0"/>
-                    <Button Style="{StaticResource KeypadButtonNumberStyle}" Content="8" Grid.Row="0" Grid.Column="1"/>
-                    <Button Style="{StaticResource KeypadButtonNumberStyle}" Content="9" Grid.Row="0" Grid.Column="2"/>
-                    <Button Style="{StaticResource KeypadButtonIconStyle}" Grid.Row="0" Grid.Column="3">
-                        <svgc:SvgViewbox Source="/Assets/Icons/ico-remove.svg" Style="{StaticResource KeypadIconStyle}"/>
-                    </Button>
-
-                    <Button Style="{StaticResource KeypadButtonNumberStyle}" Content="4" Grid.Row="1" Grid.Column="0"/>
-                    <Button Style="{StaticResource KeypadButtonNumberStyle}" Content="5" Grid.Row="1" Grid.Column="1"/>
-                    <Button Style="{StaticResource KeypadButtonNumberStyle}" Content="6" Grid.Row="1" Grid.Column="2"/>
-                    <Button Style="{StaticResource KeypadButtonIconStyle}" Grid.Row="1" Grid.Column="3">
-                        <svgc:SvgViewbox Source="/Assets/Icons/ico-up.svg" Style="{StaticResource KeypadIconStyle}"/>
-                    </Button>
-
-                    <Button Style="{StaticResource KeypadButtonNumberStyle}" Content="1" Grid.Row="2" Grid.Column="0"/>
-                    <Button Style="{StaticResource KeypadButtonNumberStyle}" Content="2" Grid.Row="2" Grid.Column="1"/>
-                    <Button Style="{StaticResource KeypadButtonNumberStyle}" Content="3" Grid.Row="2" Grid.Column="2"/>
-                    <Button Style="{StaticResource KeypadButtonIconStyle}" Grid.Row="2" Grid.Column="3">
-                        <svgc:SvgViewbox Source="/Assets/Icons/ico-down.svg" Style="{StaticResource KeypadIconStyle}"/>
-                    </Button>
-                    <Button Style="{StaticResource KeypadButtonNumberStyle}" Content="%" Grid.Row="3" Grid.Column="0"/>
-                    <Button Style="{StaticResource KeypadButtonNumberStyle}" Content="," Grid.Row="3" Grid.Column="1"/>
-                    <Button Style="{StaticResource KeypadButtonNumberStyle}" Content="0" Grid.Row="3" Grid.Column="2"/>
-                    <Button Style="{StaticResource KeypadButtonIconStyle}" Content="CANCEL" Grid.Row="4" Grid.Column="0"/>
-                    <Button Style="{StaticResource KeypadButtonIconStyle}" Content="DEL" Grid.Row="4" Grid.Column="1"/>
-                    <Button Style="{StaticResource KeypadButtonIconStyle}" Content="CLEAR" Grid.Row="4" Grid.Column="2"/>
-                    <Button Style="{StaticResource KeypadButtonEnterStyle}" Content="ENTER" Grid.Row="3" Grid.Column="3" Grid.RowSpan="2"/>
-                </Grid>
+                <Button Style="{StaticResource KeypadButtonNumberStyle}" Content="1" Grid.Row="2" Grid.Column="0"/>
+                <Button Style="{StaticResource KeypadButtonNumberStyle}" Content="2" Grid.Row="2" Grid.Column="1"/>
+                <Button Style="{StaticResource KeypadButtonNumberStyle}" Content="3" Grid.Row="2" Grid.Column="2"/>
+                <Button Style="{StaticResource KeypadButtonIconStyle}" Grid.Row="2" Grid.Column="3">
+                    <svgc:SvgViewbox Source="/Assets/Icons/ico-down.svg" Style="{StaticResource KeypadIconStyle}"/>
+                </Button>
+                <Button Style="{StaticResource KeypadButtonNumberStyle}" Content="%" Grid.Row="3" Grid.Column="0"/>
+                <Button Style="{StaticResource KeypadButtonNumberStyle}" Content="," Grid.Row="3" Grid.Column="1"/>
+                <Button Style="{StaticResource KeypadButtonNumberStyle}" Content="0" Grid.Row="3" Grid.Column="2"/>
+                <Button Style="{StaticResource KeypadButtonIconStyle}" Content="CANCEL" Grid.Row="4" Grid.Column="0"/>
+                <Button Style="{StaticResource KeypadButtonIconStyle}" Content="DEL" Grid.Row="4" Grid.Column="1"/>
+                <Button Style="{StaticResource KeypadButtonIconStyle}" Content="CLEAR" Grid.Row="4" Grid.Column="2"/>
+                <Button Style="{StaticResource KeypadButtonEnterStyle}" Content="ENTER" Grid.Row="3" Grid.Column="3" Grid.RowSpan="2"/>
+                
             </Grid>
         </Grid>
-  
+
+    </Grid>
+
 </UserControl>
