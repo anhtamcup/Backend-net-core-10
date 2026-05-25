@@ -1,8 +1,14 @@
 ﻿using POS_App.Dto;
 using POS_App.Models;
+using POS_App.Models.Request.Auth;
+using POS_App.Models.Response.Auth;
+using POS_App.Models.Response.Product;
 using POS_App.Services;
+using POS_App.Services.Api;
 using POS_App.ViewModels;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Net;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -116,37 +122,86 @@ namespace POS_App.Views
             PasswordInput.Focus();
         }
 
-        private void Enter_Click(
+        private async void Enter_Click(
             object sender,
             RoutedEventArgs e)
         {
-            PasswordInput.Focus();
-            if (PasswordInput.Password == "000000")
+            await LoginAsync();
+        }
+
+        private async Task LoginAsync()
+        {
+            var apiClient = new ApiClient();
+
+            var requestData = new LoginRequest
             {
-                var user = new UserDto
-                {
-                    ID = 0001,
-                    Name = "Lê Văn Tâm",
-                    POSCode = "P0001",
-                    Code = "NV001",
-                    StoreName = "Tiệm Mì Đau Khổ",
-                    YS_AccountID = 7457
-                };
+                UserName = "tamla@cfox.vn"
+            };
 
-                var auth = new AuthSession
-                {
-                    AccessToken = "",
-                    ExpiresAt = DateTime.Now.AddDays(1000),
-                    RefreshToken = "",
-                    SessionId = "ss01"
-                };
+            var response =
+                await apiClient.PostAsync<LoginResponse>(
+                    "https://localhost:44375/api/login",
+                    requestData);
 
-                SessionService.Instance.Login(user, auth);
-                VM.Login();
+            if (response.IsSuccess == false)
+            {
+                MessageBox.Show(response.Message);
+                return;
             }
-            else
+
+            var user = new UserDto
             {
-                MessageBox.Show("Sai thông tin tài khoản hoặc mật khẩu");
+                ID = response.YS_UserID,
+                Name = response.LastName + " " + response.FirstName,
+                POSCode = "P0001",
+                Code = response.YS_UserID.ToString(),
+                StoreName = response.StoreName,
+                YS_AccountID = response.YS_AccountID
+            };
+
+            var auth = new AuthSession
+            {
+                AccessToken = response.Token,
+                ExpiresAt = DateTime.Now.AddDays(1000),
+                RefreshToken = "",
+                SessionId = ""
+            };
+
+            SessionService.Instance.Login(
+                user,
+                auth);
+
+            // vào app luôn
+            VM.Login();
+
+            // sync nền
+            _ = SyncProductAsync();
+        }
+
+        private async Task SyncProductAsync()
+        {
+            try
+            {
+                var apiClient =
+                    new ApiClient();
+
+                var product =
+                    await apiClient
+                        .GetAsync<SyncProductResponse>(
+                            "https://localhost:44375/api/product");
+
+                if (!product.IsSuccess)
+                {
+                    return;
+                }
+
+                var items = product.Data.ToList();
+                new ProductService().BulkInsert(items);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(
+                    ex.ToString());
             }
         }
 

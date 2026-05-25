@@ -1,9 +1,5 @@
 ﻿using CredentialManagement;
 using POS_App.Models;
-using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Text;
 
 namespace POS_App.Services
 {
@@ -69,6 +65,11 @@ namespace POS_App.Services
         {
             var c = new Credential { Target = target };
             return c.Load() ? c.Password : null;
+        }
+
+        public static string GetAccessToken()
+        {
+            return Get(KeyAccess);
         }
 
         private static void Delete(string target)

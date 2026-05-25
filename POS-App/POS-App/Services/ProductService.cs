@@ -1,9 +1,6 @@
 ﻿using Dapper;
 using Microsoft.Data.Sqlite;
 using POS_App.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace POS_App.Services
 {
@@ -90,6 +87,72 @@ namespace POS_App.Services
             conn.Execute(
                 "DELETE FROM YS_Product WHERE YS_ProductID = @Id",
                 new { Id = id });
+        }
+
+        public void BulkInsert(List<YS_Product> products)
+        {
+            using var conn = CreateConnection();
+
+            conn.Open();
+
+            using var tran = conn.BeginTransaction();
+
+            try
+            {
+                conn.Execute(@"
+        INSERT INTO YS_Product
+        (
+            YS_ProductID,
+            YS_AccountID,
+            ProductCode,
+            ProductName,
+            ProductDescription,
+            Barcodes,
+            RetailPrice,
+            CreatedDate,
+            CreatedBy,
+            ModifiedDate,
+            ModifiedBy,
+            ProductVAT
+        )
+        VALUES
+        (
+            @YS_ProductID,
+            @YS_AccountID,
+            @ProductCode,
+            @ProductName,
+            @ProductDescription,
+            @Barcodes,
+            @RetailPrice,
+            @CreatedDate,
+            @CreatedBy,
+            @ModifiedDate,
+            @ModifiedBy,
+            @ProductVAT
+        )
+
+        ON CONFLICT(YS_ProductID)
+        DO UPDATE SET
+            YS_AccountID = excluded.YS_AccountID,
+            ProductCode = excluded.ProductCode,
+            ProductName = excluded.ProductName,
+            ProductDescription = excluded.ProductDescription,
+            Barcodes = excluded.Barcodes,
+            RetailPrice = excluded.RetailPrice,
+            ModifiedDate = excluded.ModifiedDate,
+            ModifiedBy = excluded.ModifiedBy,
+            ProductVAT = excluded.ProductVAT;
+        ",
+                products,
+                tran);
+
+                tran.Commit();
+            }
+            catch
+            {
+                tran.Rollback();
+                throw;
+            }
         }
     }
 }
