@@ -1,25 +1,31 @@
-﻿using POS_App.Services;
+﻿using Microsoft.Extensions.Configuration;
+using POS_App.Config;
+using POS_App.Services;
+using System;
 using System.Windows;
 
 namespace POS_App
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
     public partial class App : Application
     {
-        // App.xaml.cs
-        public static DatabaseService Database { get; } = new DatabaseService();
+        public static DatabaseService Database { get; }
+            = new DatabaseService();
+
+        public static AppConfig Config { get; private set; }
 
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
 
-            //if (SessionService.Instance.TryRestore())
-            //    new MainWindow().Show();
-            //else
-            //    new LoginWindow().Show();
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+                .AddJsonFile(
+                    "appsettings.json",
+                    optional: false,
+                    reloadOnChange: true)
+                .Build();
+
+            Config = configuration.Get<AppConfig>();
         }
     }
-
 }

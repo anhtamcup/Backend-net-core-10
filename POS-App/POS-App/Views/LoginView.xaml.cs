@@ -140,7 +140,7 @@ namespace POS_App.Views
 
             var response =
                 await apiClient.PostAsync<LoginResponse>(
-                    "https://localhost:44375/api/login",
+                    "login",
                     requestData);
 
             if (response.IsSuccess == false)
@@ -188,7 +188,7 @@ namespace POS_App.Views
                 var product =
                     await apiClient
                         .GetAsync<SyncProductResponse>(
-                            "https://localhost:44375/api/product");
+                            "product");
 
                 if (!product.IsSuccess)
                 {

@@ -1,4 +1,5 @@
-﻿using POS_App.Models.Response;
+﻿using POS_App.Config;
+using POS_App.Models.Response;
 using POS_App.Services.Interfaces;
 using System.Net;
 using System.Net.Http;
@@ -10,10 +11,18 @@ namespace POS_App.Services.Api
     public class ApiClient : IApiClient
     {
         private readonly HttpClient _client;
+        private readonly AppConfig _config;
 
         public ApiClient()
         {
-            _client = new HttpClient();
+            _config = App.Config;
+            _config = App.Config;
+
+            _client = new HttpClient
+            {
+                BaseAddress = new Uri(_config.ApiSettings.BaseUrl),
+                Timeout = TimeSpan.FromSeconds(_config.ApiSettings.Timeout)
+            };
         }
 
         public async Task<T?> PostAsync<T>(
