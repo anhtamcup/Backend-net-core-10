@@ -76,6 +76,12 @@ namespace POS_App.Views.Controls
                     TotalAmountReality = item.TotalPrice
                 });
 
+                if (productSaleRequest.Count() <= 0)
+                {
+                    ToastService.Error("Không có sản phâm để thanh toán");
+                    return;
+                }    
+
                 var payments = new List<NewInvoicePaymentRequest>();
                 payments.Add(new NewInvoicePaymentRequest
                 {
