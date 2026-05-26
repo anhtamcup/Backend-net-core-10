@@ -1,17 +1,12 @@
 ﻿using POS_App.Helpers;
+using POS_App.Models.Request.Invoice;
+using POS_App.Models.Response.Invoice;
+using POS_App.Services;
+using POS_App.Services.Api;
 using POS_App.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace POS_App.Views.Controls
 {
@@ -31,10 +26,12 @@ namespace POS_App.Views.Controls
             public string IconPathSelected { get { return string.Format("{0}/{1}-2.svg", Path, Icon); } }
         }
 
+        private OrderViewModel _orderVM;
         public PaymentView(OrderViewModel orderVM)
         {
             InitializeComponent();
             DataContext = orderVM;
+            _orderVM = orderVM;
 
             var paymentList = new List<Item>()
             {
@@ -59,9 +56,70 @@ namespace POS_App.Views.Controls
             }
         }
 
+        private async Task SyncInvoiceAsync()
+        {
+            try
+            {
+                var currentUser = SessionService.Instance.CurrentUser;
+                var branchID = 8299;
+                var summary = _orderVM.Summary;
+                var now = DateTime.UtcNow;
+                var apiClient = new ApiClient();
+
+                var productSaleRequest = _orderVM.CartItems.Select(item => new NewInvoiceProductSaleRequest
+                {
+                    YS_ProductID = item.ID,
+                    QuantitySold = item.Quantity,
+                    PriceSold = item.OriginalPrice,
+                    TotalAmountReality = item.TotalPrice
+                });
+
+                var payments = new List<NewInvoicePaymentRequest>();
+                payments.Add(new NewInvoicePaymentRequest
+                {
+                    PaymentAmount = summary.TotalAmount,
+                    PaymentOption = 43034
+                });
+
+                var requestData = new CreateNewInvoiceRequest
+                {
+                    YS_AccountID = currentUser.YS_AccountID,
+                    YS_BranchID = branchID,
+                    Cashier = currentUser.ID,
+                    TotalAmount = summary.SubTotalAmount,
+                    InvoiceAmount = summary.TotalAmount,
+                    CustomerReceived = summary.CustomerPaid,
+                    Notes = string.Empty,
+                    VAT="",
+                    VATTaxAmount = summary.VATAmount,
+                    PromotionAmount = summary.PromotionAmount,
+                    ShippingFee = summary.ShippingFee,
+                    CreatedDate = now,
+                    ProductSales = productSaleRequest,
+                    Payments = payments
+                };
+
+                var response = await apiClient.PostAsync<CreateNewInvoiceResponse>("Invoice", requestData);
+
+                if (response.IsSuccess == false)
+                {
+                    MessageBox.Show(response.Message);
+                    return;
+                }
+
+                _orderVM.Clear();
+                ToastService.Show("Lưu hóa đơn thành công: #" + response.InvoiceNumber);
+                Window.GetWindow(this)?.Close();
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
         private void btnConfirmPayment_Click(object sender, RoutedEventArgs e)
         {
-
+            _ = SyncInvoiceAsync();
         }
 
         private void Number_Click(object sender, RoutedEventArgs e)

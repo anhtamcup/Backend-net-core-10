@@ -121,6 +121,17 @@ namespace POS_App.ViewModels
 
         }
 
+        private decimal _shippingFee;
+        public decimal ShippingFee
+        {
+            get => _shippingFee;
+            set
+            {
+                _shippingFee = value;
+                OnPropertyChanged();
+            }
+        }
+
         public void Recalculate(ObservableCollection<CartItemRow> cartItems)
         {
             var itemCount = 0;
@@ -153,7 +164,9 @@ namespace POS_App.ViewModels
             SubTotalAmount = subTotalAmount;
             PromotionAmount = promotionAmount;
             VATAmount = vatAmount;
-            TotalAmount = totalAmount;
+            ShippingFee = 0m;
+
+            TotalAmount = totalAmount + vatAmount - promotionAmount + ShippingFee;
         }
     }
 
@@ -182,16 +195,32 @@ namespace POS_App.ViewModels
                     ListSortDirection.Descending));
         }
 
+        public void Clear()
+        {
+            CartItems.Clear();
+            SetCustomer(null);
+            Summary.Recalculate(CartItems);
+        }
+
         public void Recalculate()
         {
             Summary.Recalculate(CartItems);
         }
 
-        public void SetCustomer(CustomerInfoViewModel customer)
+        public void SetCustomer(CustomerInfoViewModel customer = null)
         {
-            Customer.Name = customer.Name;
-            Customer.Point = customer.Point;
-            Customer.Phone = customer.Phone;
+            if (customer == null)
+            {
+                Customer.Name = string.Empty;
+                Customer.Point = 0;
+                Customer.Phone = string.Empty;
+            }
+            else
+            {
+                Customer.Name = customer.Name;
+                Customer.Point = customer.Point;
+                Customer.Phone = customer.Phone;
+            }
         }
 
         public void AddCart(CartItemRow cart)
