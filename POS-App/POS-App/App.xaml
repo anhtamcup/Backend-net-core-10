@@ -5,21 +5,22 @@
              StartupUri="MainWindow.xaml"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:converter="clr-namespace:POS_App.Converters"
-            >
+             xmlns:notif="clr-namespace:Notification.Wpf;assembly=Notification.Wpf">
+
     <Application.Resources>
         <converter:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
 
-        <!--Màu linear-->
+        <!-- Màu linear -->
         <LinearGradientBrush x:Key="BackgroundColorHeader" StartPoint="0,0" EndPoint="0,1">
             <GradientStop Color="#0A3D62" Offset="0"/>
             <GradientStop Color="#134D75" Offset="1"/>
         </LinearGradientBrush>
-        
+
         <LinearGradientBrush x:Key="bg-button-green" StartPoint="0,0" EndPoint="0,1">
             <GradientStop Color="#00A35D" Offset="0"/>
             <GradientStop Color="#00824A" Offset="1"/>
         </LinearGradientBrush>
-        
+
         <GridLength x:Key="RightPanelWidth">280</GridLength>
         <sys:Double x:Key="ActionButtonWidth">83</sys:Double>
         <sys:Double x:Key="KeyboardButtonWidth">62</sys:Double>
@@ -40,18 +41,128 @@
                                 Margin="{TemplateBinding Padding}"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"/>
-
                         </Border>
-
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsPressed" Value="True">
                                 <Setter TargetName="Bd" Property="Opacity" Value="0.7"/>
                             </Trigger>
-
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <!-- ✅ Toast DataTemplate — đặt ở App.xaml để override được default template của thư viện -->
+        <DataTemplate DataType="{x:Type notif:NotificationContent}">
+            <Border CornerRadius="12"
+                    Background="#0D1B2A"
+                    BorderThickness="1"
+                    BorderBrush="#1E3A52"
+                    Padding="16,14"
+                    Margin="0,0,0,10">
+                <Border.Effect>
+                    <DropShadowEffect Color="#000000"
+                                      Opacity="0.5"
+                                      BlurRadius="20"
+                                      ShadowDepth="6"/>
+                </Border.Effect>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Thanh màu bên trái -->
+                    <Border Grid.Column="0"
+                            Width="4"
+                            CornerRadius="4"
+                            Margin="0,0,14,0"
+                            VerticalAlignment="Stretch">
+                        <Border.Style>
+                            <Style TargetType="Border">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Type}" Value="Success">
+                                        <Setter Property="Background" Value="#4CAF82"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Type}" Value="Error">
+                                        <Setter Property="Background" Value="#F25C5C"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Type}" Value="Warning">
+                                        <Setter Property="Background" Value="#F2A64A"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Type}" Value="Information">
+                                        <Setter Property="Background" Value="#4A90F2"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+                    </Border>
+
+                    <!-- Title + Message -->
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+
+                        <!-- Title với icon emoji -->
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                            <TextBlock VerticalAlignment="Center"
+                                       FontSize="13"
+                                       Margin="0,0,6,0">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Type}" Value="Success">
+                                                <Setter Property="Text" Value="✅"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Type}" Value="Error">
+                                                <Setter Property="Text" Value="❌"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Type}" Value="Warning">
+                                                <Setter Property="Text" Value="⚠️"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Type}" Value="Information">
+                                                <Setter Property="Text" Value="ℹ️"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+
+                            <TextBlock Text="{Binding Title}"
+                                       FontSize="13"
+                                       FontWeight="SemiBold"
+                                       VerticalAlignment="Center">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Type}" Value="Success">
+                                                <Setter Property="Foreground" Value="#4CAF82"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Type}" Value="Error">
+                                                <Setter Property="Foreground" Value="#F25C5C"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Type}" Value="Warning">
+                                                <Setter Property="Foreground" Value="#F2A64A"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Type}" Value="Information">
+                                                <Setter Property="Foreground" Value="#4A90F2"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </StackPanel>
+
+                        <!-- Message -->
+                        <TextBlock Text="{Binding Message}"
+                                   Foreground="#7A8FA6"
+                                   FontSize="11.5"
+                                   TextWrapping="Wrap"
+                                   LineHeight="17"/>
+
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </DataTemplate>
+
     </Application.Resources>
 </Application>

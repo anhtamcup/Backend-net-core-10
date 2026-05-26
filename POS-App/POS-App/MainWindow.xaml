@@ -7,13 +7,15 @@
         WindowStartupLocation="CenterScreen"
         FontFamily="/Fonts/#Inter"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
-        xmlns:local="clr-namespace:POS_App.Views" xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
+        xmlns:local="clr-namespace:POS_App.Views"
+        xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
         xmlns:views="clr-namespace:POS_App.Views"
         xmlns:vm="clr-namespace:POS_App.ViewModels"
         xmlns:services="clr-namespace:POS_App.Services"
-        >
+        xmlns:notifications="clr-namespace:Notification.Wpf.Controls;assembly=Notification.Wpf">
 
     <Window.Resources>
+
         <DataTemplate DataType="{x:Type vm:OrderViewModel}">
             <views:OrderView/>
         </DataTemplate>
@@ -23,28 +25,27 @@
 
         <Style x:Key="LoginRequiredStyle" TargetType="FrameworkElement">
             <Setter Property="Visibility"
-            Value="{Binding
-            Source={x:Static services:SessionService.Instance},
-            Path=CurrentUser,
-            Converter={StaticResource NullToVisibilityConverter}}"/>
+                    Value="{Binding Source={x:Static services:SessionService.Instance},
+                                   Path=CurrentUser,
+                                   Converter={StaticResource NullToVisibilityConverter}}"/>
         </Style>
-        
+
         <Style x:Key="HeaderBoxStyle" TargetType="StackPanel" BasedOn="{StaticResource LoginRequiredStyle}">
-            <Setter Property="Margin" Value="0,0,20,0" />
-            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Margin" Value="0,0,20,0"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
 
         <Style x:Key="HeaderLabelStyle" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="{StaticResource FontSizeS}" />
-            <Setter Property="FontWeight" Value="SemiBold" />
-            <Setter Property="Foreground" Value="#AFC7DD" />
+            <Setter Property="FontSize" Value="{StaticResource FontSizeS}"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="#AFC7DD"/>
         </Style>
 
         <Style x:Key="HeaderValueStyle" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="{StaticResource FontSizeM}" />
-            <Setter Property="FontWeight" Value="Medium" />
-            <Setter Property="Foreground" Value="White" />
-            <Setter Property="Margin" Value="0,3,0,0" />
+            <Setter Property="FontSize" Value="{StaticResource FontSizeM}"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Margin" Value="0,3,0,0"/>
         </Style>
 
         <Style x:Key="ButtonHeaderStyle" TargetType="Button" BasedOn="{StaticResource ButtonBase}">
@@ -52,7 +53,7 @@
             <Setter Property="Height" Value="28"/>
             <Setter Property="Width" Value="28"/>
             <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Margin" Value="0, 0, 10, 0"/>
+            <Setter Property="Margin" Value="0,0,10,0"/>
         </Style>
 
         <Style x:Key="IconButtonHeaderStyle" TargetType="svgc:SvgViewbox">
@@ -61,45 +62,30 @@
         </Style>
 
         <Style x:Key="SearchPlaceholderStyle" TargetType="TextBox">
-
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
-
             <Style.Resources>
-
                 <VisualBrush x:Key="PlaceholderBrush"
-                     Stretch="None"
-                     AlignmentX="Left"
-                     AlignmentY="Center">
-
+                             Stretch="None"
+                             AlignmentX="Left"
+                             AlignmentY="Center">
                     <VisualBrush.Visual>
-                        <TextBlock
-                            Text="Quét mã / nhập mã sản phẩm"
-                            Foreground="#CCD2E3"
-                            Opacity="0.7"
-                            FontSize="12"
-                            Margin="0,0,0,1"/>
+                        <TextBlock Text="Quét mã / nhập mã sản phẩm"
+                                   Foreground="#CCD2E3"
+                                   Opacity="0.7"
+                                   FontSize="12"
+                                   Margin="0,0,0,1"/>
                     </VisualBrush.Visual>
-
                 </VisualBrush>
-
             </Style.Resources>
-
             <Style.Triggers>
-
                 <Trigger Property="Text" Value="">
-                    <Setter Property="Background"
-                    Value="{StaticResource PlaceholderBrush}"/>
+                    <Setter Property="Background" Value="{StaticResource PlaceholderBrush}"/>
                 </Trigger>
-
-                <Trigger Property="IsKeyboardFocused"
-                 Value="True">
-                    <Setter Property="Background"
-                    Value="Transparent"/>
+                <Trigger Property="IsKeyboardFocused" Value="True">
+                    <Setter Property="Background" Value="Transparent"/>
                 </Trigger>
-
             </Style.Triggers>
-
         </Style>
 
     </Window.Resources>
@@ -107,41 +93,37 @@
     <Grid Background="#CCD2E3">
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
-            <RowDefinition />
+            <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Grid
-            Grid.Row="0"
-            Name="panelHeader"
-            Background="{StaticResource BackgroundColorHeader}">
+        <!-- HEADER -->
+        <Grid Grid.Row="0"
+              Name="panelHeader"
+              Background="{StaticResource BackgroundColorHeader}">
 
             <Grid DataContext="{Binding Header}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
                 <!-- Logo -->
                 <StackPanel Grid.Column="0"
-                    Orientation="Horizontal"
-                    VerticalAlignment="Center"
-                    Margin="10,0,0,0">
-                    <TextBlock
-                        Text="S3POS"
-                        FontSize="25"
-                        FontWeight="Bold"
-                        Foreground="White"
-                        VerticalAlignment="Center"/>
-                    <Border
-                        Width="1"
-                        Background="#FFFFFF"
-                        Margin="10,0"/>
+                            Orientation="Horizontal"
+                            VerticalAlignment="Center"
+                            Margin="10,0,0,0">
+                    <TextBlock Text="S3POS"
+                               FontSize="25"
+                               FontWeight="Bold"
+                               Foreground="White"
+                               VerticalAlignment="Center"/>
+                    <Border Width="1" Background="#FFFFFF" Margin="10,0"/>
                 </StackPanel>
 
                 <StackPanel Grid.Column="1" Style="{StaticResource HeaderBoxStyle}">
@@ -170,67 +152,68 @@
                 </StackPanel>
 
                 <StackPanel Grid.Column="6" Style="{StaticResource HeaderBoxStyle}">
-
                     <Border Background="#1AFFFFFF"
-                        CornerRadius="5"
-                        Padding="10,5"
-                        VerticalAlignment="Center"
-                        HorizontalAlignment="Center">
-
+                            CornerRadius="5"
+                            Padding="10,5"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center">
                         <WrapPanel>
-
-                            <svgc:SvgViewbox
-                                Style="{StaticResource IconButtonHeaderStyle}"
-                                Source="/Assets/Icons/ico-scan-barcode.svg"/>
-
+                            <svgc:SvgViewbox Style="{StaticResource IconButtonHeaderStyle}"
+                                             Source="/Assets/Icons/ico-scan-barcode.svg"/>
                             <TextBox x:Name="tbSearch"
-                                    Style="{StaticResource SearchPlaceholderStyle}"
-                                    Width="180"
-                                    Margin="5,0,0,0"
-                                    Foreground="#CCD2E3"
-                                    CaretBrush="#CCD2E3"
-                                    FontSize="{StaticResource FontSizeM}"
-                                    VerticalContentAlignment="Center"
-                                     KeyDown="tbSearch_KeyDown"
-                                     />
-
+                                     Style="{StaticResource SearchPlaceholderStyle}"
+                                     Width="180"
+                                     Margin="5,0,0,0"
+                                     Foreground="#CCD2E3"
+                                     CaretBrush="#CCD2E3"
+                                     FontSize="{StaticResource FontSizeM}"
+                                     VerticalContentAlignment="Center"
+                                     KeyDown="tbSearch_KeyDown"/>
                         </WrapPanel>
-
                     </Border>
-
                 </StackPanel>
 
-                <WrapPanel Grid.Column="7" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource LoginRequiredStyle}">
-                    <Button Style="{StaticResource ButtonHeaderStyle}" >
+                <WrapPanel Grid.Column="7"
+                           HorizontalAlignment="Right"
+                           VerticalAlignment="Center"
+                           Style="{StaticResource LoginRequiredStyle}">
+                    <Button Style="{StaticResource ButtonHeaderStyle}">
                         <svgc:SvgViewbox Style="{StaticResource IconButtonHeaderStyle}" Source="/Assets/Icons/ico-setting.svg"/>
                     </Button>
-
-                    <Button Style="{StaticResource ButtonHeaderStyle}" >
+                    <Button Style="{StaticResource ButtonHeaderStyle}">
                         <svgc:SvgViewbox Style="{StaticResource IconButtonHeaderStyle}" Source="/Assets/Icons/ico-report.svg"/>
                     </Button>
-
-                    <Button Style="{StaticResource ButtonHeaderStyle}" >
+                    <Button Style="{StaticResource ButtonHeaderStyle}">
                         <svgc:SvgViewbox Style="{StaticResource IconButtonHeaderStyle}" Source="/Assets/Icons/ico-history.svg"/>
                     </Button>
-
-                    <Button Style="{StaticResource ButtonHeaderStyle}" >
+                    <Button Style="{StaticResource ButtonHeaderStyle}">
                         <svgc:SvgViewbox Style="{StaticResource IconButtonHeaderStyle}" Source="/Assets/Icons/ico-destop.svg"/>
                     </Button>
-
-                    <Button Style="{StaticResource ButtonHeaderStyle}" Name="btnLog" Click="btnLog_Click" >
+                    <Button Style="{StaticResource ButtonHeaderStyle}" Name="btnLog" Click="btnLog_Click">
                         <svgc:SvgViewbox Style="{StaticResource IconButtonHeaderStyle}" Source="/Assets/Icons/ico-lock.svg"/>
                     </Button>
-
-                    <Button Style="{StaticResource ButtonHeaderStyle}" >
+                    <Button Style="{StaticResource ButtonHeaderStyle}">
                         <svgc:SvgViewbox Style="{StaticResource IconButtonHeaderStyle}" Source="/Assets/Icons/ico-log-out.svg"/>
                     </Button>
                 </WrapPanel>
 
             </Grid>
-
         </Grid>
 
+        <!-- CONTENT -->
         <ContentControl Grid.Row="1" x:Name="MainContent" Content="{Binding CurrentView}"/>
+
+        <!-- ✅ TOAST AREA — cuối cùng để nằm trên mọi thứ -->
+        <notifications:NotificationArea
+            x:Name="GlobalToastArea"
+            Grid.Row="0"
+            Grid.RowSpan="2"
+            Position="TopRight"
+            MaxItems="5"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            Margin="0,50,15,0"
+            Width="360"/>
 
     </Grid>
 
