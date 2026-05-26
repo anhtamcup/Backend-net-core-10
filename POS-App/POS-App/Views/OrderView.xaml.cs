@@ -97,7 +97,7 @@ namespace POS_App.Views
             var modal = new AppModal
             {
                 Owner = owner,
-                WindowStartupLocation = WindowStartupLocation.Manual,
+                // ❌ Bỏ dòng này: WindowStartupLocation = WindowStartupLocation.Manual,
 
                 Width = owner.ActualWidth,
                 Height = owner.ActualHeight,

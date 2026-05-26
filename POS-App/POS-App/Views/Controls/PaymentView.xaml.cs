@@ -7,6 +7,8 @@ using POS_App.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Notification.Wpf;
+using Notification.Core;
 
 namespace POS_App.Views.Controls
 {
@@ -60,6 +62,16 @@ namespace POS_App.Views.Controls
         {
             try
             {
+                App.NotificationManager.Show(
+        title: "Tạo đơn hàng thành công",
+        message: "Đơn hàng #ORD-2024-001 đã được tạo.",
+        type: NotificationType.Success,
+        areaName: string.Empty,        // string.Empty = toàn màn hình
+        expirationTime: TimeSpan.FromSeconds(4)
+    );
+
+                return;
+
                 var currentUser = SessionService.Instance.CurrentUser;
                 var branchID = 8299;
                 var summary = _orderVM.Summary;
@@ -108,7 +120,7 @@ namespace POS_App.Views.Controls
                 }
 
                 _orderVM.Clear();
-                ToastService.Show("Lưu hóa đơn thành công: #" + response.InvoiceNumber);
+
                 Window.GetWindow(this)?.Close();
             }
             catch (Exception ex)

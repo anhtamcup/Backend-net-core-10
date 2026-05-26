@@ -11,7 +11,7 @@
         Background="Transparent"
         ResizeMode="NoResize"
         ShowInTaskbar="False"
-        WindowStartupLocation="CenterOwner">
+        WindowStartupLocation="Manual">
 
     <Window.Resources>
 

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Notification.Wpf;
 using POS_App.Config;
 using POS_App.Services;
 using System;
@@ -8,6 +9,7 @@ namespace POS_App
 {
     public partial class App : Application
     {
+        public static NotificationManager NotificationManager { get; } = new NotificationManager();
         public static DatabaseService Database { get; }
             = new DatabaseService();
 

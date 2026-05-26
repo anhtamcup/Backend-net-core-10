@@ -12,6 +12,29 @@ namespace POS_App.Views.Controls
             InitializeComponent();
         }
 
+        protected override void OnSourceInitialized(EventArgs e)
+        {
+            base.OnSourceInitialized(e);
+
+            if (Owner != null)
+            {
+                // Lấy bounds thực tế của owner (kể cả khi maximize)
+                var ownerLeft = Owner.WindowState == WindowState.Maximized ? 0 : Owner.Left;
+                var ownerTop = Owner.WindowState == WindowState.Maximized ? 0 : Owner.Top;
+                var ownerWidth = Owner.WindowState == WindowState.Maximized
+                                    ? SystemParameters.WorkArea.Width
+                                    : Owner.ActualWidth;
+                var ownerHeight = Owner.WindowState == WindowState.Maximized
+                                    ? SystemParameters.WorkArea.Height
+                                    : Owner.ActualHeight;
+
+                Width = ownerWidth;
+                Height = ownerHeight;
+                Left = ownerLeft;
+                Top = ownerTop;
+            }
+        }
+
         public object ModalContent
         {
             get => GetValue(ModalContentProperty);

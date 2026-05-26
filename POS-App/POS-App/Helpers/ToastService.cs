@@ -10,11 +10,11 @@ namespace POS_App.Helpers
     {
         public static void Show(string message)
         {
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                var toast = new ToastWindow(message);
-                toast.Show();
-            });
+            //Application.Current.Dispatcher.Invoke(() =>
+            //{
+            //    var toast = new ToastWindow(message);
+            //    toast.Show();
+            //});
         }
     }
 }
