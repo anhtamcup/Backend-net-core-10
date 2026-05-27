@@ -10,6 +10,7 @@ using POS_App.ViewModels;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
+using static POS_App.Models.Response.Auth.LoginResponse;
 
 namespace POS_App.Views
 {
@@ -51,6 +52,43 @@ namespace POS_App.Views
             await LoginAsync();
         }
 
+        private void BtnConfirmBranch_Click(
+            object sender,
+            RoutedEventArgs e)
+        {
+            if (lbBranches.SelectedItem == null)
+            {
+                MessageBox.Show("Vui lòng chọn chi nhánh");
+                return;
+            }
+
+            var branch = (BranchAccess)lbBranches.SelectedItem;
+            var user = new UserDto
+            {
+                ID = _loginResponse.YS_UserID,
+                Name = _loginResponse.LastName + " " + _loginResponse.FirstName,
+                POSCode = branch.YS_BranchID.ToString(),
+                Code = _loginResponse.YS_UserID.ToString(),
+                StoreName = _loginResponse.StoreName,
+                YS_AccountID = _loginResponse.YS_AccountID,
+                BranchID = branch.YS_BranchID
+            };
+
+            var auth = new AuthSession
+            {
+                AccessToken = _loginResponse.Token,
+                ExpiresAt = DateTime.Now.AddDays(1000),
+                RefreshToken = "",
+                SessionId = ""
+            };
+
+            SessionService.Instance.Login(user, auth);
+
+            // vào app luôn
+            VM.Login();
+        }
+
+        private LoginResponse _loginResponse;
         private async Task LoginAsync()
         {
             try
@@ -86,28 +124,9 @@ namespace POS_App.Views
                     return;
                 }
 
-                var user = new UserDto
-                {
-                    ID = response.YS_UserID,
-                    Name = response.LastName + " " + response.FirstName,
-                    POSCode = "P0001",
-                    Code = response.YS_UserID.ToString(),
-                    StoreName = response.StoreName,
-                    YS_AccountID = response.YS_AccountID
-                };
-
-                var auth = new AuthSession
-                {
-                    AccessToken = response.Token,
-                    ExpiresAt = DateTime.Now.AddDays(1000),
-                    RefreshToken = "",
-                    SessionId = ""
-                };
-
-                SessionService.Instance.Login(user, auth);
-
-                // vào app luôn
-                VM.Login();
+                _loginResponse = response;
+                lbBranches.ItemsSource = response.Branchs;
+                BranchOverlay.Visibility = Visibility.Visible;
 
                 // sync nền
                 _ = SyncProductAsync();

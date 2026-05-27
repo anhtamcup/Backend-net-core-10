@@ -63,7 +63,6 @@ namespace POS_App.Views.Controls
             try
             {
                 var currentUser = SessionService.Instance.CurrentUser;
-                var branchID = 8299;
                 var summary = _orderVM.Summary;
                 var now = DateTime.UtcNow;
                 var apiClient = new ApiClient();
@@ -92,7 +91,7 @@ namespace POS_App.Views.Controls
                 var requestData = new CreateNewInvoiceRequest
                 {
                     YS_AccountID = currentUser.YS_AccountID,
-                    YS_BranchID = branchID,
+                    YS_BranchID = currentUser.BranchID,
                     Cashier = currentUser.ID,
                     TotalAmount = summary.SubTotalAmount,
                     InvoiceAmount = summary.TotalAmount,

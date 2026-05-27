@@ -130,7 +130,7 @@
                                    Style="{StaticResource InputLabelStyle}"/>
 
                         <Border Style="{StaticResource InputBorderStyle}">
-                            <TextBox x:Name="tbStaffCode" Style="{StaticResource InputBoxStyle}"/>
+                            <TextBox x:Name="tbStaffCode" Style="{StaticResource InputBoxStyle}" Text="tamla@cfox.vn"/>
                         </Border>
 
                         <TextBlock Text="Mật khẩu:"
@@ -138,7 +138,7 @@
                                    Style="{StaticResource InputLabelStyle}"/>
 
                         <Border Style="{StaticResource InputBorderStyle}">
-                            <PasswordBox x:Name="tbPassword" Style="{StaticResource PasswordInputBoxStyle}"/>
+                            <PasswordBox x:Name="tbPassword" Style="{StaticResource PasswordInputBoxStyle}" Password="123456"/>
                         </Border>
 
                     </StackPanel>
@@ -241,6 +241,55 @@
 
         </UniformGrid>
 
+        <!-- Select Branch -->
+
+        <Grid x:Name="BranchOverlay"
+      Visibility="Collapsed"
+      Background="#80000000"
+      Panel.ZIndex="998">
+
+            <Border Width="450"
+            Background="White"
+            CornerRadius="12"
+            Padding="20"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center">
+
+                <StackPanel>
+
+                    <TextBlock Text="Chọn chi nhánh đăng nhập"
+                       FontSize="22"
+                       FontWeight="Bold"
+                       Margin="0,0,0,15"
+                       HorizontalAlignment="Center"/>
+
+                    <ListBox x:Name="lbBranches"
+                     Height="250"
+                     DisplayMemberPath="BranchName">
+
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="Padding" Value="10"/>
+                                <Setter Property="Margin" Value="0,4"/>
+                                <Setter Property="FontSize" Value="18"/>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+
+                    </ListBox>
+
+                    <Button Content="Xác nhận"
+                    Height="50"
+                    Margin="0,15,0,0"
+                    Background="#15B84E"
+                    Foreground="White"
+                    Click="BtnConfirmBranch_Click"/>
+
+                </StackPanel>
+
+            </Border>
+
+        </Grid>
+        
         <!-- Loading -->
 
         <Grid x:Name="LoadingOverlay"

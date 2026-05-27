@@ -39,7 +39,6 @@ namespace POS_App.Services
         {
             CurrentUser = user;
             Session = session;
-
             UserStorageService.Save(user);
             TokenStorageService.Save(session);
         }
