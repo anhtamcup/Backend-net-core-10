@@ -7,64 +7,96 @@ namespace POS_App.Helpers
     {
         public static void Insert(string? value)
         {
-            var textBox = Keyboard.FocusedElement as TextBox;
-
-            if (textBox == null || string.IsNullOrEmpty(value))
+            if (string.IsNullOrEmpty(value))
                 return;
 
-            int start = textBox.SelectionStart;
-            int length = textBox.SelectionLength;
+            var focused = Keyboard.FocusedElement;
 
-            textBox.Text =
-                textBox.Text
-                       .Remove(start, length)
-                       .Insert(start, value);
+            // TextBox
+            if (focused is TextBox textBox)
+            {
+                int start = textBox.SelectionStart;
+                int length = textBox.SelectionLength;
 
-            textBox.CaretIndex = start + value.Length;
+                textBox.Text =
+                    textBox.Text
+                           .Remove(start, length)
+                           .Insert(start, value);
 
-            textBox.Focus();
+                textBox.CaretIndex = start + value.Length;
+
+                textBox.Focus();
+                return;
+            }
+
+            // PasswordBox
+            if (focused is PasswordBox passwordBox)
+            {
+                passwordBox.Password += value;
+                passwordBox.Focus();
+            }
         }
 
         public static void Backspace()
         {
-            var textBox = Keyboard.FocusedElement as TextBox;
+            var focused = Keyboard.FocusedElement;
 
-            if (textBox == null)
+            // TextBox
+            if (focused is TextBox textBox)
+            {
+                int start = textBox.SelectionStart;
+                int length = textBox.SelectionLength;
+
+                if (length > 0)
+                {
+                    textBox.Text =
+                        textBox.Text.Remove(start, length);
+
+                    textBox.CaretIndex = start;
+                }
+                else if (start > 0)
+                {
+                    textBox.Text =
+                        textBox.Text.Remove(start - 1, 1);
+
+                    textBox.CaretIndex = start - 1;
+                }
+
+                textBox.Focus();
                 return;
-
-            int start = textBox.SelectionStart;
-            int length = textBox.SelectionLength;
-
-            // Xóa vùng đang chọn
-            if (length > 0)
-            {
-                textBox.Text =
-                    textBox.Text.Remove(start, length);
-
-                textBox.CaretIndex = start;
-            }
-            // Xóa ký tự trước con trỏ
-            else if (start > 0)
-            {
-                textBox.Text =
-                    textBox.Text.Remove(start - 1, 1);
-
-                textBox.CaretIndex = start - 1;
             }
 
-            textBox.Focus();
+            // PasswordBox
+            if (focused is PasswordBox passwordBox)
+            {
+                string pwd = passwordBox.Password;
+
+                if (!string.IsNullOrEmpty(pwd))
+                {
+                    passwordBox.Password =
+                        pwd.Substring(0, pwd.Length - 1);
+                }
+
+                passwordBox.Focus();
+            }
         }
 
         public static void Clear()
         {
-            var textBox = Keyboard.FocusedElement as TextBox;
+            var focused = Keyboard.FocusedElement;
 
-            if (textBox == null)
+            if (focused is TextBox textBox)
+            {
+                textBox.Clear();
+                textBox.Focus();
                 return;
+            }
 
-            textBox.Clear();
-
-            textBox.Focus();
+            if (focused is PasswordBox passwordBox)
+            {
+                passwordBox.Clear();
+                passwordBox.Focus();
+            }
         }
     }
 }

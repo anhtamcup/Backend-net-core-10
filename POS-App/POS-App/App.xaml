@@ -30,6 +30,7 @@
         <sys:Double x:Key="FontSizeXL">16</sys:Double>
 
         <Style x:Key="ButtonBase" TargetType="Button">
+            <Setter Property="Focusable" Value="False"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
