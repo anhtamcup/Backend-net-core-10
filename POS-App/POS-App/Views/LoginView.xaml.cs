@@ -131,6 +131,13 @@ namespace POS_App.Views
 
         private async Task LoginAsync()
         {
+            LoadingOverlay.Visibility = Visibility.Visible;
+
+            // Disable keypad tránh bấm liên tục
+            this.IsEnabled = false;
+            LoadingOverlay.IsEnabled = true;
+
+
             var apiClient = new ApiClient();
 
             var requestData = new LoginRequest
@@ -142,6 +149,9 @@ namespace POS_App.Views
                 await apiClient.PostAsync<LoginResponse>(
                     "login",
                     requestData);
+
+            this.IsEnabled = true;
+            LoadingOverlay.Visibility = Visibility.Collapsed;
 
             if (response.IsSuccess == false)
             {

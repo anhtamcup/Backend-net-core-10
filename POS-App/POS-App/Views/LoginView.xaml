@@ -324,6 +324,37 @@
 
         </UniformGrid>
 
+        <!-- Loading Overlay -->
+        <Grid x:Name="LoadingOverlay"
+      Visibility="Collapsed"
+      Background="#80000000"
+      Panel.ZIndex="999">
+
+            <Border Width="220"
+            Height="120"
+            Background="White"
+            CornerRadius="12"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center">
+
+                <StackPanel VerticalAlignment="Center"
+                    HorizontalAlignment="Center">
+
+                    <ProgressBar Width="150"
+                         Height="8"
+                         IsIndeterminate="True"/>
+
+                    <TextBlock Text="Đang đăng nhập..."
+                       Margin="0,15,0,0"
+                       FontSize="16"
+                       HorizontalAlignment="Center"/>
+
+                </StackPanel>
+
+            </Border>
+
+        </Grid>
+        
     </Grid>
 
 </UserControl>
