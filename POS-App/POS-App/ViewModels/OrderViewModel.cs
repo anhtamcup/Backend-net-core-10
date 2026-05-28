@@ -11,11 +11,25 @@ namespace POS_App.ViewModels
         {
         }
 
+        private int? _id;
+        public int? ID
+        {
+            get => _id;
+            set => SetProperty(ref _id, value);
+        }
+
         private string _name = "";
         public string Name
         {
             get => _name;
             set => SetProperty(ref _name, value);
+        }
+
+        private string _memberRank = "";
+        public string MemberRank
+        {
+            get => _memberRank;
+            set => SetProperty(ref _memberRank, value);
         }
 
         private string _phone = "";
@@ -214,12 +228,16 @@ namespace POS_App.ViewModels
                 Customer.Name = string.Empty;
                 Customer.Point = 0;
                 Customer.Phone = string.Empty;
+                Customer.ID = null;
+                Customer.MemberRank = string.Empty;
             }
             else
             {
                 Customer.Name = customer.Name;
                 Customer.Point = customer.Point;
                 Customer.Phone = customer.Phone;
+                Customer.ID = customer.ID;
+                Customer.MemberRank = customer.MemberRank;
             }
         }
 

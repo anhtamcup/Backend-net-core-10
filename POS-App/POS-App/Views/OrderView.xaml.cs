@@ -96,7 +96,7 @@ namespace POS_App.Views
                 Top = owner.Top,
 
                 ModalTitle = "Khách hàng thân thiết",
-                ModalWidth = 500,
+                ModalWidth = 400,
                 ModalHeight = 500,
                 ModalContent = new CustomerView(VM)
             };

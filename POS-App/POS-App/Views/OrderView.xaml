@@ -366,8 +366,35 @@
                                 <RowDefinition />
                             </Grid.RowDefinitions>
 
-                            <TextBlock Grid.Row="0" Text="Thành viên:" Style="{StaticResource CustomerSelectedNameLabel}" />
+
+                            <Grid Grid.Row="0" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock
+                                        Grid.Column="0"
+                                        Text="Thành viên:"
+                                        Style="{StaticResource CustomerSelectedNameLabel}" />
+                                </StackPanel>
+                                <StackPanel Grid.Column="1" HorizontalAlignment="Right">
+                                    <Border                                
+                                        CornerRadius="10"
+                                        BorderBrush="#E0A000"
+                                        BorderThickness="1"
+                                        Background="#FFF4E6"
+                                        Padding="15,3" >
+                                        <TextBlock Foreground="#E0A000" Text="{Binding MemberRank}" FontSize="{StaticResource FontSizeS}" FontWeight="Bold" />
+                                    </Border>
+                                </StackPanel>
+                            </Grid>
+
+
                             <TextBlock Grid.Row="1" x:Name="customerSelectedName" Text="{Binding Name}" Style="{StaticResource CustomerSelectedNameValue}"/>
+
+
                             <WrapPanel Grid.Row="2">
                                 <TextBlock Text="Điểm hiện tại: " HorizontalAlignment="Left" Style="{StaticResource CustomerSelectedNameLabel}" />
                                 <TextBlock Text="{Binding Point, StringFormat='{}{0:N0}'}" HorizontalAlignment="Right" Style="{StaticResource CustomerSelectedNameValue}"/>
@@ -541,7 +568,7 @@
                 <Button Style="{StaticResource KeypadButtonIconStyle}" Content="DEL" Grid.Row="4" Grid.Column="1"/>
                 <Button Click="Clear_Click" Style="{StaticResource KeypadButtonIconStyle}" Content="CLEAR" Grid.Row="4" Grid.Column="2"/>
                 <Button Click="btnPayment_Click" Style="{StaticResource KeypadButtonEnterStyle}" Content="ENTER" Grid.Row="3" Grid.Column="3" Grid.RowSpan="2"/>
-                
+
             </Grid>
         </Grid>
 

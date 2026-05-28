@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <None Remove="appsettings.json" />
+    <None Remove="Assets\Icons\ico-add-customer.svg" />
     <None Remove="Assets\Icons\ico-cancel.svg" />
     <None Remove="Assets\Icons\ico-cash-1.svg" />
     <None Remove="Assets\Icons\ico-close.svg" />
@@ -65,6 +66,9 @@
 
   <ItemGroup>
     <Content Include="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Icons\ico-add-customer.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Icons\ico-cancel.svg">

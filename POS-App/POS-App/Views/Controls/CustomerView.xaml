@@ -5,8 +5,142 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:POS_App.Views.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             xmlns:svgc="http://sharpvectors.codeplex.com/svgc/">
+    <UserControl.Resources>
+        <Style x:Key="InputBorderStyle"
+               TargetType="Border">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="#D9D9D9"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="3"/>
+            <Setter Property="CornerRadius" Value="2"/>
+            <Setter Property="Margin" Value="0,3"/>
+        </Style>
+        <Style x:Key="InputBoxStyle"
+               TargetType="TextBox">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize" Value="{StaticResource FontSizeM}"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+
+        <Style x:Key="btnAddStyle" TargetType="Button" BasedOn="{StaticResource ButtonBase}">
+            <Setter Property="Background" Value="#FFFFFF" />
+            <Setter Property="Padding" Value="5" />
+        </Style>
+        
+    </UserControl.Resources>
     <Grid>
-            
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+
+
+        <StackPanel Grid.Row="0">
+            <TextBlock Text="TÌM THEO SDT, MÃ THẺ, HOẶC TÊN KHÁCH" Foreground="#4A5870" FontSize="{StaticResource FontSizeM}" />
+            <Border Style="{StaticResource InputBorderStyle}">
+                <TextBox x:Name="tbSearch" Style="{StaticResource InputBoxStyle}" KeyDown="tbSearch_KeyDown" />
+            </Border>
+        </StackPanel>
+
+
+        <ListBox
+            x:Name="listboxCustomers"
+            Margin="0,5"
+            Grid.Row="1"
+            HorizontalContentAlignment="Stretch"
+            BorderThickness="0"
+            ItemsSource="{Binding Customers}"
+            SelectedItem="{Binding SelectedCustomer}"
+            SelectionChanged="listboxCustomers_SelectionChanged">
+
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+
+                        <Border
+                    Width="35"
+                    Height="35"
+                    Margin="0,0,10,0"
+                    Background="#D97706"
+                    CornerRadius="20"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Grid.RowSpan="3">
+
+                            <TextBlock Text="TH"
+                        Foreground="White"
+                        FontWeight="Bold"
+                        FontSize="14"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        TextAlignment="Center"/>
+                        </Border>
+
+                        <TextBlock Grid.Row="0" Grid.Column="1"
+                           Text="{Binding CustomerName}"
+                           Foreground="#2E384E"
+                           FontWeight="Bold"
+                           FontSize="{StaticResource FontSizeM}" />
+                        <TextBlock Grid.Row="0" Grid.Column="2"
+                           Text="{Binding LoyaltyPoint}"
+                           HorizontalAlignment="Right"
+                           Foreground="#D97706"
+                           FontWeight="Bold"
+                           FontSize="{StaticResource FontSizeM}" />
+
+                        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Phone}"
+                            Foreground="#4A5870"
+                            FontWeight="Medium"
+                            FontSize="{StaticResource FontSizeS}"/>
+                        <TextBlock Grid.Row="1" Grid.Column="2"
+                           Text="ĐIỂM TÍCH LŨY"
+                           HorizontalAlignment="Right"
+                           Foreground="#4A5870"
+                            FontWeight="Regular"
+                            FontSize="{StaticResource FontSizeS}"/>
+
+                        <TextBlock Grid.Row="2" Grid.Column="1"
+                           HorizontalAlignment="Left"
+                           TextAlignment="Center"
+                           Text="{Binding MemberRank}"
+                           Foreground="#475569"
+                           Background="#E2E8F0"
+                           FontWeight="Regular"
+                           FontSize="{StaticResource FontSizeS}"
+                           Padding="5,2"
+                           />
+                    </Grid>
+
+
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <StackPanel Grid.Row="2"  Background="#F7F9FC">
+            <Button HorizontalAlignment="Right" Style="{StaticResource btnAddStyle}" Margin="5">
+                <WrapPanel>
+                    <svgc:SvgViewbox Source="/Assets/Icons/ico-add-customer.svg" Height="10" Margin="0,0,3,0" />
+                    <TextBlock Text="Khách mới" Foreground="#5D6679" />
+                </WrapPanel>
+            </Button>
+        </StackPanel>
     </Grid>
 </UserControl>

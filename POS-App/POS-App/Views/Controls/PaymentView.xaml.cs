@@ -106,8 +106,12 @@ namespace POS_App.Views.Controls
                     Payments = payments
                 };
 
-                var response = await apiClient.PostAsync<CreateNewInvoiceResponse>("Invoice", requestData);
+                if (_orderVM.Customer != null && _orderVM.Customer.ID != null)
+                {
+                    requestData.CustomerID = _orderVM.Customer.ID;
+                }    
 
+                var response = await apiClient.PostAsync<CreateNewInvoiceResponse>("Invoice", requestData);
                 if (response.IsSuccess == false)
                 {
                     MessageBox.Show(response.Message);
