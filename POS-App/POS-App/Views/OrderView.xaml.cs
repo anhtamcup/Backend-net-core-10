@@ -79,12 +79,29 @@ namespace POS_App.Views
 
         private void btnCustomerFunction_Click(object sender, RoutedEventArgs e)
         {
-            VM.SetCustomer(new CustomerInfoViewModel
+            var owner = Window.GetWindow(this);
+
+            if (owner == null)
+                return;
+
+            var modal = new AppModal
             {
-                Name = "Cao Hùng",
-                Phone = "0338162614",
-                Point = 1000
-            });
+                Owner = owner,
+                // ❌ Bỏ dòng này: WindowStartupLocation = WindowStartupLocation.Manual,
+
+                Width = owner.ActualWidth,
+                Height = owner.ActualHeight,
+
+                Left = owner.Left,
+                Top = owner.Top,
+
+                ModalTitle = "Khách hàng thân thiết",
+                ModalWidth = 500,
+                ModalHeight = 500,
+                ModalContent = new CustomerView(VM)
+            };
+
+            modal.ShowDialog();
         }
 
         private void btnPayment_Click(object sender, RoutedEventArgs e)
