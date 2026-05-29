@@ -97,13 +97,23 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Column="0" Orientation="Vertical" Margin="0,0,5,0">
-      
+        <Grid Grid.Column="0" Margin="0,0,5,0">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0">
             <TextBlock Text="Số tiền cần thu" Style="{StaticResource InfoTextLabel}" Margin="0" />
             <TextBox  Style="{StaticResource InfoTextBox}" x:Name="txtAmountDue" IsReadOnly="True" Text="{Binding TotalAmount,StringFormat='{}{0:N0} đ'}" />
+            </StackPanel>
+            
 
-            <WrapPanel>
-                <ListBox x:Name="PaymentList"
+                <ListBox
+                    Grid.Row="1"
+                    x:Name="PaymentList"
                             SelectedIndex="0"
                             BorderThickness="0"
                             Background="Transparent"
@@ -174,10 +184,10 @@
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
-            </WrapPanel>
 
-            <ContentControl x:Name="PaymentContent" Background="Red" />
-        </StackPanel>
+
+            <ContentControl Grid.Row="2" x:Name="PaymentContent" Background="Red" />
+        </Grid>
 
         <Border CornerRadius="4" Grid.Column="1" Background="#DCE5EF">
             <Grid >

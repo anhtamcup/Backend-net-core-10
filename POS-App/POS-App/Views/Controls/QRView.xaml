@@ -7,27 +7,61 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+    <StackPanel Margin="0,10,0,0">
+    <Border
+        Width="250"
+        Background="White"
+        CornerRadius="10"
+        BorderBrush="#E5E7EB"
+        BorderThickness="1"
+        Padding="5">
+
+        <StackPanel
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center">
+
+            <!-- TITLE -->
+            <TextBlock Text="S3POS"
+                   Foreground="#1677FF"
+                   FontWeight="Bold"
+                   FontSize="20"
+                   HorizontalAlignment="Center"/>
+
+            <!-- QR -->
+            <Image x:Name="imgQrCode" Width="200" Height="200"/>
+        </StackPanel>
+
+    </Border>
+    <StackPanel Margin="5">
+        <TextBlock Text="Khách quét mã trên app ngân hàng/ví điện tử" HorizontalAlignment="Center" Foreground="#4A5870" FontSize="{StaticResource FontSizeL}" />
+        <WrapPanel HorizontalAlignment="Center">
+            <TextBlock Text="Số tiền: " FontSize="{StaticResource FontSizeL}"  Foreground="#4A5870"  />
+            <TextBlock  x:Name="txtAmountDue" FontSize="{StaticResource FontSizeL}" Foreground="#0B8822" Text="{Binding TotalAmount,StringFormat='{}{0:N0} đ'}" />
+        </WrapPanel>
+    </StackPanel>
+    </StackPanel>
+    <!--<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
 
         <Border x:Name="iconBorder"
             Background="#FFFFFF"
             CornerRadius="6"
             BorderThickness="1"
-            BorderBrush="#F0F2F7"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-                Padding="10">
-            <Image x:Name="imgQrCode"
-            Width="200"
-            Height="200"/>
+            BorderBrush="#F0F2F7">
+
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock Text="S3POS" Foreground="Blue" FontWeight="Bold" FontSize="20" />
+                <Image x:Name="imgQrCode" Width="200" Height="200"/>
+            </StackPanel>
 
         </Border>
 
-        <TextBlock Text="Khách quét mã trên app ngân hàng/ví điện tử" Foreground="#4A5870" FontSize="{StaticResource FontSizeL}" />
+        <StackPanel Margin="5">
+            <TextBlock Text="Khách quét mã trên app ngân hàng/ví điện tử" HorizontalAlignment="Center" Foreground="#4A5870" FontSize="{StaticResource FontSizeL}" />
             <WrapPanel HorizontalAlignment="Center">
-            <TextBlock Text="Số tiền: " FontSize="{StaticResource FontSizeL}"  Foreground="#4A5870"  />
+                <TextBlock Text="Số tiền: " FontSize="{StaticResource FontSizeL}"  Foreground="#4A5870"  />
                 <TextBlock  x:Name="txtAmountDue" FontSize="{StaticResource FontSizeL}" Foreground="#0B8822" Text="{Binding TotalAmount,StringFormat='{}{0:N0} đ'}" />
             </WrapPanel>
         </StackPanel>
+    </StackPanel>-->
 
 </UserControl>
