@@ -3,6 +3,7 @@ using POS_App.Helpers;
 using POS_App.Models;
 using POS_App.Models.Request.Auth;
 using POS_App.Models.Response.Auth;
+using POS_App.Models.Response.Data;
 using POS_App.Models.Response.Product;
 using POS_App.Services;
 using POS_App.Services.Api;
@@ -86,6 +87,7 @@ namespace POS_App.Views
 
             // vào app luôn
             VM.Login();
+            _ = SyncDataAsync();
         }
 
         private LoginResponse _loginResponse;
@@ -101,7 +103,7 @@ namespace POS_App.Views
                 var staffCode = tbStaffCode.Text;
                 var pass = tbPassword.Password;
 
-                if(string.IsNullOrWhiteSpace(staffCode) || string.IsNullOrWhiteSpace(pass))
+                if (string.IsNullOrWhiteSpace(staffCode) || string.IsNullOrWhiteSpace(pass))
                 {
                     ToastService.Error("Mã nhân viên hoặc mật khẩu không được bỏ trống");
                     return;
@@ -127,11 +129,8 @@ namespace POS_App.Views
                 _loginResponse = response;
                 lbBranches.ItemsSource = response.Branchs;
                 BranchOverlay.Visibility = Visibility.Visible;
-
-                // sync nền
-                _ = SyncProductAsync();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
 
             }
@@ -144,30 +143,29 @@ namespace POS_App.Views
 
         }
 
-        private async Task SyncProductAsync()
+        private async Task SyncDataAsync()
         {
             try
             {
-                var apiClient =
-                    new ApiClient();
+                var apiClient = new ApiClient();
+                var dataResponse = await apiClient.GetAsync<SyncDataResponse>("data");
 
-                var product =
-                    await apiClient
-                        .GetAsync<SyncProductResponse>(
-                            "product");
-
-                if (!product.IsSuccess)
+                if (dataResponse == null || dataResponse.IsSuccess == false)
                 {
+                    MessageBox.Show("Đồng bộ dữ liệu thất bại, vui lòng thử lại");
                     return;
                 }
 
-                var items = product.Data.ToList();
-                new ProductService().BulkInsert(items);
+                var products = dataResponse.Products.ToList();
+                var payments = dataResponse.Payments.ToList();
+                var db = new DatabaseService();
+                new ProductService(db).BulkInsert(products);
+                new PaymentService(db).BulkInsert(payments);
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(
-                    ex.ToString());
+                MessageBox.Show("Lưu dữ liệu đồng bộ thất bại, vui lòng thử lại");
+                return;
             }
         }
 

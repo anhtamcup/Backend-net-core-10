@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="POS_App.Views.Controls.QRView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:POS_App.Views.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+
+        <Border x:Name="iconBorder"
+            Background="#FFFFFF"
+            CornerRadius="6"
+            BorderThickness="1"
+            BorderBrush="#F0F2F7"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+                Padding="10">
+            <Image x:Name="imgQrCode"
+            Width="200"
+            Height="200"/>
+
+        </Border>
+
+        <TextBlock Text="Khách quét mã trên app ngân hàng/ví điện tử" Foreground="#4A5870" FontSize="{StaticResource FontSizeL}" />
+            <WrapPanel HorizontalAlignment="Center">
+            <TextBlock Text="Số tiền: " FontSize="{StaticResource FontSizeL}"  Foreground="#4A5870"  />
+                <TextBlock  x:Name="txtAmountDue" FontSize="{StaticResource FontSizeL}" Foreground="#0B8822" Text="{Binding TotalAmount,StringFormat='{}{0:N0} đ'}" />
+            </WrapPanel>
+        </StackPanel>
+
+</UserControl>

@@ -1,4 +1,8 @@
-﻿using POS_App.Helpers;
+﻿using Microsoft.Windows.Themes;
+using Notification.Core;
+using Notification.Wpf;
+using POS_App.Helpers;
+using POS_App.Models;
 using POS_App.Models.Request.Invoice;
 using POS_App.Models.Response.Invoice;
 using POS_App.Services;
@@ -7,8 +11,8 @@ using POS_App.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Notification.Wpf;
-using Notification.Core;
+using static POS_App.Views.Controls.PaymentView;
+using static POS_App.Views.Controls.PaymentView.PaymentGroup;
 
 namespace POS_App.Views.Controls
 {
@@ -28,26 +32,118 @@ namespace POS_App.Views.Controls
             public string IconPathSelected { get { return string.Format("{0}/{1}-2.svg", Path, Icon); } }
         }
 
+
+        public class PaymentGroup
+        {
+            public class PaymentMethod
+            {
+                public int PaymentID { get; set; }
+                public string PaymentName { get; set; }
+                public string PaymentValue { get; set; }
+            }
+            public string GroupMethodValue { get; set; }
+            public string GroupMethodName { get; set; }
+
+            public string Icon { get; set; }
+            private string Path = "/Assets/Icons/Payment";
+
+            public string IconPath { get { return string.Format("{0}/{1}.svg", Path, Icon); } }
+            public string IconPathSelected { get { return string.Format("{0}/{1}-2.svg", Path, Icon); } }
+
+            public List<PaymentMethod> Payments { get; set; }
+        }
+
         private OrderViewModel _orderVM;
         public PaymentView(OrderViewModel orderVM)
         {
             InitializeComponent();
             DataContext = orderVM;
             _orderVM = orderVM;
-
-            var paymentList = new List<Item>()
-            {
-                new Item { Text = "Tiền mặt", Icon="ico-cash" },
-                new Item { Text = "VISA",  Icon="ico-visa" },
-                new Item { Text = "QR",  Icon="ico-qrcode" },
-                new Item { Text = "Ví điện tử",  Icon="ico-wallet" },
-                new Item { Text = "Voucher", Icon="ico-voucher" },
-                new Item { Text = "Tách đơn",  Icon="ico-desk" },
-            };
-
-            PaymentList.ItemsSource = paymentList;
-            Loaded += UserControl_Loaded;
             Unloaded += PaymentView_Unloaded;
+            InitPaymentMethod();
+        }
+
+        private void InitPaymentMethod()
+        {
+            var payments = new PaymentService().GetAll();
+            var paymentGroups = new List<PaymentGroup>();
+            foreach (var payment in payments)
+            {
+                var paymentOfGroup = new PaymentMethod
+                {
+                    PaymentID = payment.PaymentID,
+                    PaymentName = payment.PaymentName,
+                    PaymentValue = payment.PaymentValue
+                };
+
+                if (payment.GroupMethodValue == "Cash")
+                {
+                    paymentGroups.Add(new PaymentGroup
+                    {
+                        GroupMethodName = payment.GroupMethodName,
+                        GroupMethodValue = payment.PaymentValue,
+                        Payments = new List<PaymentMethod> { paymentOfGroup },
+                        Icon = "ico-cash"
+                    });
+
+                    continue;
+                }
+
+                if (payment.GroupMethodValue == "Transfer")
+                {
+                    var groupName = "QR";
+
+                    var existGroup = paymentGroups.Where(item => item.GroupMethodValue == groupName).FirstOrDefault();
+                    if (existGroup == null)
+                    {
+                        paymentGroups.Add(new PaymentGroup
+                        {
+                            GroupMethodName = groupName,
+                            GroupMethodValue = groupName,
+                            Payments = new List<PaymentMethod> { paymentOfGroup },
+                            Icon = "ico-qrcode"
+                        });
+
+                        continue;
+                    }
+
+                    existGroup.Payments.Add(paymentOfGroup);
+                }
+            }
+
+            paymentGroups.Add(new PaymentGroup
+            {
+                GroupMethodName = "VISA",
+                GroupMethodValue = "VISA",
+                Payments = new List<PaymentMethod>(),
+                Icon = "ico-visa"
+            });
+
+            paymentGroups.Add(new PaymentGroup
+            {
+                GroupMethodName = "Ví điện tử",
+                GroupMethodValue = "Ví điện tử",
+                Payments = new List<PaymentMethod>(),
+                Icon = "ico-wallet"
+            });
+
+            paymentGroups.Add(new PaymentGroup
+            {
+                GroupMethodName = "Voucher",
+                GroupMethodValue = "Voucher",
+                Payments = new List<PaymentMethod>(),
+                Icon = "ico-voucher"
+            });
+
+            paymentGroups.Add(new PaymentGroup
+            {
+                GroupMethodName = "Tách đơn",
+                GroupMethodValue = "Tách đơn",
+                Payments = new List<PaymentMethod>(),
+                Icon = "ico-desk"
+            });
+
+            PaymentList.ItemsSource = paymentGroups;
         }
 
         private void PaymentView_Unloaded(object sender, RoutedEventArgs e)
@@ -79,7 +175,7 @@ namespace POS_App.Views.Controls
                 {
                     ToastService.Error("Không có sản phâm để thanh toán");
                     return;
-                }    
+                }
 
                 var payments = new List<NewInvoicePaymentRequest>();
                 payments.Add(new NewInvoicePaymentRequest
@@ -97,7 +193,7 @@ namespace POS_App.Views.Controls
                     InvoiceAmount = summary.TotalAmount,
                     CustomerReceived = summary.CustomerPaid,
                     Notes = string.Empty,
-                    VAT="",
+                    VAT = "",
                     VATTaxAmount = summary.VATAmount,
                     PromotionAmount = summary.PromotionAmount,
                     ShippingFee = summary.ShippingFee,
@@ -109,7 +205,7 @@ namespace POS_App.Views.Controls
                 if (_orderVM.Customer != null && _orderVM.Customer.ID != null)
                 {
                     requestData.CustomerID = _orderVM.Customer.ID;
-                }    
+                }
 
                 var response = await apiClient.PostAsync<CreateNewInvoiceResponse>("Invoice", requestData);
                 if (response.IsSuccess == false)
@@ -181,15 +277,29 @@ namespace POS_App.Views.Controls
             textBox.Focus();
         }
 
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        private void PaymentList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Dispatcher.BeginInvoke(new Action(() =>
+            var listBox = (ListBox)sender;
+            var payment = (PaymentGroup)listBox.SelectedItem;
+
+            switch(payment.GroupMethodValue.ToUpper())
             {
-                txtCustomerAmount.Focus();
-                txtCustomerAmount.CaretIndex =
-                    txtCustomerAmount.Text.Length;
-            }),
-            System.Windows.Threading.DispatcherPriority.Input);
+                case "CASH":
+                    var cashView = new CashView();
+                    cashView.DataContext = _orderVM.Summary;
+                    PaymentContent.Content = cashView;
+                    break;
+
+                case "QR":
+                    var qrView = new QRView(payment.Payments);
+                    qrView.DataContext = _orderVM.Summary;
+                    PaymentContent.Content = qrView;
+                    break;
+
+                default:
+                    PaymentContent.Content = null;
+                    break;
+            }
         }
     }
 }

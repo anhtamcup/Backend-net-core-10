@@ -1,5 +1,6 @@
 ﻿using POS_App.Dto;
 using POS_App.Helpers;
+using POS_App.Services;
 using POS_App.ViewModels;
 using POS_App.Views.Controls;
 using System.Windows;
@@ -60,7 +61,23 @@ namespace POS_App.Views
             object sender,
             RoutedEventArgs e)
         {
+            var productService = new ProductService();
+            var product = productService.GetByBarcode("P0001748160");
 
+            if (product != null)
+            {
+                var cart = new CartItemRow
+                {
+                    ID = product.YS_ProductID,
+                    Code = product.ProductCode,
+                    Name = product.ProductName,
+                    Quantity = 1,
+                    Unit = "Chai",
+                    OriginalPrice = product.RetailPrice ?? 0m
+                };
+
+                VM.AddCart(cart);
+            }
         }
 
         private void tbQuantity_PreviewTextInput(
