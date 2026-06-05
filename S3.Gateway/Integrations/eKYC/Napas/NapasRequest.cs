@@ -51,8 +51,8 @@ namespace S3.Gateway.Integrations.Ekyc.Napas
         public string? Email { get; set; } = string.Empty;
         public string? ContractId { get; set; } = string.Empty;
         public string? Mcc { get; set; } = string.Empty;
-        public decimal Fee { get; set; }
-        public decimal MasterMerchantFee { get; set; }
+        public FeeInfo Fee { get; set; } = new();
+        //public decimal MasterMerchantFee { get; set; }
         public class BranchInfo
         {
             public string? PlatformBranchId { get; set; } = string.Empty;
@@ -62,6 +62,17 @@ namespace S3.Gateway.Integrations.Ekyc.Napas
             public string? BranchBankId { get; set; } = string.Empty;
             public string? BeneficiaryName { get; set; } = string.Empty;
             public string? BranchAlias { get; set; } = string.Empty;
+        }
+
+        public class FeeInfo
+        {
+            public string? DomesticFeeType { get; set; } = string.Empty;
+            public decimal? DomesticMdrFee { get; set; }
+            public decimal? DomesticMasterMerchantFee  { get; set; }
+            public string? CrossborderFeeType { get; set; }
+            public decimal? CrossborderMdrFee { get; set; }
+            public decimal? CrossborderMasterMerchantFee { get; set; }
+            public string? FeeCalculationMode { get; set; }
         }
     }
 
