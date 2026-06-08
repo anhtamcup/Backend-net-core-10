@@ -2,7 +2,6 @@
 using S3.Gateway.Common;
 using S3.Gateway.Entities;
 using S3.Gateway.Features.Logs;
-using System.Reflection.PortableExecutable;
 
 namespace S3.Gateway.Middleware
 {
@@ -67,6 +66,11 @@ namespace S3.Gateway.Middleware
                 if (!isSwagger)
                 {
                     var duration = (int)(DateTime.Now - start).TotalMilliseconds;
+                    var requestHeader = JsonConvert.SerializeObject(context.Request.Headers, new JsonSerializerSettings
+                    {
+                        StringEscapeHandling = StringEscapeHandling.EscapeNonAscii
+                    });
+
                     await logService.SaveAsync(new RequestLog
                     {
                         Path = context.Request.Path,
@@ -78,7 +82,7 @@ namespace S3.Gateway.Middleware
                         IpAddress = context.Connection.RemoteIpAddress?.ToString() ?? string.Empty,
                         ErrorMessage = errorMessage,
                         StackTrace = stackTrace,
-                        RequestHeader = JsonConvert.SerializeObject(context.Request.Headers)
+                        RequestHeader = requestHeader
                     });
                 }
             }
