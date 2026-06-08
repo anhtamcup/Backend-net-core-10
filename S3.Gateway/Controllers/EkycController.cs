@@ -4,6 +4,7 @@ using Microsoft.Extensions.Options;
 using S3.Gateway.Common;
 using S3.Gateway.Features.Ekyc.Napas;
 using S3.Gateway.Integrations.Ekyc;
+using System.Text;
 
 namespace S3.Gateway.Controllers
 {
@@ -36,9 +37,13 @@ namespace S3.Gateway.Controllers
                     return BadRequest("Missing signature header");
                 }
 
+                Request.Body.Position = 0;
+                using var reader = new StreamReader(Request.Body, Encoding.UTF8, leaveOpen: true);
+                var rawBody = await reader.ReadToEndAsync();
+                Request.Body.Position = 0;
+
                 var publicKeyPath = Path.Combine(AppContext.BaseDirectory, _eConfig.Napas.PublicKey);
-                var payload = Utility.SerializeObjectLowerCase(request);
-                var verifySignature = RSASignatureService.VerifySignature(payload, signatureBase64.ToString(), publicKeyPath);
+                var verifySignature = RSASignatureService.VerifySignature(rawBody, signatureBase64.ToString(), publicKeyPath);
 
                 if (verifySignature == false)
                 {
