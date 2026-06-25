@@ -31,8 +31,35 @@ namespace S3.Gateway.Features.Payments.Napas
         public async Task<NpPaymentNotificationResponse> Handle(PaymentNotificationRequest request, CancellationToken cancellationToken)
         {
             var payload = Utility.SerializeObjectLowerCase(request);
-
             var billNumberEncode = request.Payload.Id[^7..];
+
+            // Forward động
+            if (billNumberEncode == "NAPGSQR")
+            {
+                var routing = _dbContext.CallbackRoutings.Where(item => item.RefID == request.Payload.Id).FirstOrDefault();
+                if (routing != null)
+                {
+                    var forwardUrl = routing.CallbackUrl;
+                    var forwardResponse = await _apiClient.PostTAsync<NpPaymentNotificationResponse>(forwardUrl, payload);
+                    var forwardSucess = (forwardResponse != null);
+                    var routingLog = new CallbackRoutingLog
+                    {
+                        Action = forwardSucess ? "FORWARD COMPLETED" : "FORWARD ERROR",
+                        RequestPayload = payload,
+                        ResponsePayload = forwardSucess
+                            ? Utility.SerializeObjectLowerCase(forwardResponse)
+                            : string.Empty,
+                        IsSuccess = forwardSucess,
+                    };
+
+                    routing.ActionHistory += "  -> " + routingLog.Action;
+                    routing.Status = routingLog.IsSuccess ? CallbackRoutingStatus.COMPLETED : CallbackRoutingStatus.ERROR;
+
+                    _dbContext.CallbackRoutingLogs.Add(routingLog);
+                    await _dbContext.SaveChangesAsync(cancellationToken);
+                    return forwardResponse;
+                }
+            }
 
             DecodeResult decodeData;
             try

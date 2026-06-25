@@ -4,6 +4,7 @@ using Microsoft.Extensions.Options;
 using S3.Gateway.Common;
 using S3.Gateway.Features.Payments.Napas;
 using S3.Gateway.Integrations.Payment;
+using System.Text;
 
 namespace S3.Gateway.Controllers
 {
@@ -23,6 +24,11 @@ namespace S3.Gateway.Controllers
         [HttpPost("napas/apg/notification")]
         public async Task<IActionResult> NapasNotification([FromBody] PaymentNotificationRequest request)
         {
+            //Request.Body.Position = 0;
+            //using var reader = new StreamReader(Request.Body, Encoding.UTF8, leaveOpen: true);
+            //var rawBody = await reader.ReadToEndAsync();
+            //Request.Body.Position = 0;
+
             var publicKeyPath = Path.Combine(AppContext.BaseDirectory, _pConfig.Napas.PublicKey);
             var payloadVerify = Utility.SerializeObjectLowerCase(request.Payload);
             var verifySignature = RSASignatureService.VerifySignature(payloadVerify, request.Header.Signature, publicKeyPath);
