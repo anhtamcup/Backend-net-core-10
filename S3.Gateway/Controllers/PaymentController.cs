@@ -24,13 +24,14 @@ namespace S3.Gateway.Controllers
         [HttpPost("napas/apg/notification")]
         public async Task<IActionResult> NapasNotification([FromBody] PaymentNotificationRequest request)
         {
-            //Request.Body.Position = 0;
-            //using var reader = new StreamReader(Request.Body, Encoding.UTF8, leaveOpen: true);
-            //var rawBody = await reader.ReadToEndAsync();
-            //Request.Body.Position = 0;
+            Request.Body.Position = 0;
+            using var reader = new StreamReader(Request.Body, Encoding.UTF8, leaveOpen: true);
+            var rawBody = await reader.ReadToEndAsync();
+            Request.Body.Position = 0;
+
+            var payloadVerify = Utility.GetJsonProperty(rawBody, "payload");
 
             var publicKeyPath = Path.Combine(AppContext.BaseDirectory, _pConfig.Napas.PublicKey);
-            var payloadVerify = Utility.SerializeObjectLowerCase(request.Payload);
             var verifySignature = RSASignatureService.VerifySignature(payloadVerify, request.Header.Signature, publicKeyPath);
             if (verifySignature == false)
             {
@@ -50,6 +51,13 @@ namespace S3.Gateway.Controllers
 
         [HttpPost("pmnp/investigation")]
         public async Task<IActionResult> NapasInvestigation([FromBody] NapasInvestigationRequest request)
+        {
+            var result = await _mediator.Send(request);
+            return Ok(result);
+        }
+
+        [HttpPost("pmnp/refund")]
+        public async Task<IActionResult> NapasRefund([FromBody] NapasRefundRequest request)
         {
             var result = await _mediator.Send(request);
             return Ok(result);

@@ -56,4 +56,27 @@
         public string CreationDateTime { get; set; } = string.Empty;
         public string TransDateTime { get; set; } = string.Empty;
     }
+
+    public class NpOriginalDataRequest
+    {
+        public string RefId { get; set; } = string.Empty;
+        public string Id { get; set; } = string.Empty;
+        public string OrigDateTime { get; set; } = string.Empty;
+        public decimal OrigAmount { get; set; }
+    }
+
+    public class NpRefundDataRequest
+    {
+        public string RefundId { get; set; } = string.Empty;
+        public decimal RefundAmount { get; set; }
+        public string RefundReason { get; set; } = string.Empty;
+    }
+
+    public class NpRefundRequest
+    {
+        public string CaseId { get; set; } = string.Empty;
+        public string CreationDateTime { get; set; } = string.Empty;
+        public NpOriginalDataRequest OriginalData { get; set; } = new NpOriginalDataRequest();
+        public NpRefundDataRequest RefundData { get; set; } = new NpRefundDataRequest();
+    }
 }

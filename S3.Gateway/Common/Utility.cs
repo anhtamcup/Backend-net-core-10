@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using System.Text.Json;
 
 namespace S3.Gateway.Common
 {
@@ -16,6 +17,13 @@ namespace S3.Gateway.Common
                 });
 
             return payload;
+        }
+
+        public static string GetJsonProperty(string rawBody, string property)
+        {
+            using var doc = JsonDocument.Parse(rawBody);
+            var payloadRaw = doc.RootElement.GetProperty(property).GetRawText();
+            return payloadRaw;
         }
     }
 }

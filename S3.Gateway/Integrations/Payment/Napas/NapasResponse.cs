@@ -59,4 +59,34 @@ namespace S3.Gateway.Integrations.Payment.Napas
         [JsonProperty("expires_in")]
         public string ExpiresIn { get; set; }
     }
+
+    public class NpOriginalDataResponse
+    {
+        public string RefId { get; set; } = string.Empty;
+        public string Id { get; set; } = string.Empty;
+        public string OrigDate { get; set; } = string.Empty;
+        public decimal OrigAmount { get; set; }
+    }
+
+    public class NpRefundDataResponse
+    {
+        public string RefundId { get; set; } = string.Empty;
+        public decimal RefundAmount { get; set; }
+    }
+
+    public class SettlementInfoResponse
+    {
+        public string SettlementDate { get; set; } = string.Empty;
+        public string ServiceType { get; set; } = string.Empty;
+        public int settlementCode { get; set; }
+    }
+
+    public class NpRefundResponse
+    {
+        public string CaseId { get; set; } = string.Empty;
+        public string CreationDateTime { get; set; } = string.Empty;
+        public NpOriginalDataResponse OriginalData { get; set; } = new NpOriginalDataResponse();
+        public NpRefundDataResponse RefundData { get; set; } = new NpRefundDataResponse();
+        public SettlementInfoResponse? SettlementInfo { get; set; }
+    }
 }

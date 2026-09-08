@@ -12,6 +12,7 @@
 
             public string OauthURL { get; set; } = string.Empty;
             public string InvestigationURL { get; set; } = string.Empty;
+            public string RefundURL { get; set; } = string.Empty;
 
             public string GrantType { get; set; } = string.Empty;
             public string ClientId { get; set; } = string.Empty;

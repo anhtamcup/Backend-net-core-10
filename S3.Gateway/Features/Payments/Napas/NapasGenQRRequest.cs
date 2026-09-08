@@ -227,7 +227,7 @@ namespace S3.Gateway.Features.Payments.Napas
                 return response;
             }
 
-            response.QRCodeBase64 = genQRResponse.QRCodeBase64;
+            //response.QRCodeBase64 = genQRResponse.QRCodeBase64;
             response.QRCodeData = genQRResponse.QRCodeData;
             response.TransDateTime = now.ToString("yyyy-MM-ddTHH:mm:ss") + "+07:00";
             response.TransactionID = callbackRouting.RefID;
