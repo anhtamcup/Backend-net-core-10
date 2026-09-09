@@ -1,9 +1,11 @@
 ﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using S3.Gateway.Common;
 using S3.Gateway.Data;
 using S3.Gateway.Entities;
 using S3.Gateway.Integrations.Payment.Napas;
+using S3.Gateway.Security;
 using System.Text.RegularExpressions;
 using static S3.Gateway.Integrations.Payment.Napas.NapasQR;
 
@@ -13,19 +15,31 @@ namespace S3.Gateway.Features.Payments.Napas
     {
         public class QRInfoObject
         {
-            public string BankID { get; set; } = string.Empty;
+            // Mã ngân hàng
+            public string BankID { get; set; } = "971133";
+
             public string AccountNumber { get; set; } = string.Empty;
-            public string ServiceType { get; set; } = string.Empty;
-            public string PayloadFormatIndicator { get; set; } = string.Empty;
-            public string PointOfInitiationMethod { get; set; } = string.Empty;
-            public string TransactionCurrency { get; set; } = string.Empty;
-            public string CountryCode { get; set; } = string.Empty;
+
+            // Mã dịch vụ
+            public string ServiceType { get; set; } = "QRIBFTTA";
+
+            // Phiên bản dữ liệu
+            public string PayloadFormatIndicator { get; set; } = "01";
+
+            // Phương thức khởi tạo 
+            public string PointOfInitiationMethod { get; set; } = "12";
+
+            // Mã tiền tệ
+            public string TransactionCurrency { get; set; } = "704";
+
+            // Mã quốc gia
+            public string CountryCode { get; set; } = "VN";
+
             public string MerchantCategoryCode { get; set; } = string.Empty;
         }
 
         public QRInfoObject QRInfo { get; set; } = new();
 
-        public string PartnerCode { get; set; } = string.Empty;
         public string RequestID { get; set; } = string.Empty;
         public decimal Amount { get; set; }
         public string BillNumber { get; set; } = string.Empty;
@@ -62,9 +76,6 @@ namespace S3.Gateway.Features.Payments.Napas
             }
 
             // ===== Root =====
-            if (string.IsNullOrWhiteSpace(request.PartnerCode))
-                errors.Add("PartnerCode là bắt buộc");
-
             if (string.IsNullOrWhiteSpace(request.RequestID))
                 errors.Add("RequestID là bắt buộc");
 
@@ -97,16 +108,6 @@ namespace S3.Gateway.Features.Payments.Napas
                     errors.Add("Description chỉ hỗ trợ ký tự ASCII");
                 }
             }
-
-            //var db = DbContextManager.GetDbContext();
-            //var napasBridgeTransaction = db.PaymentTransactions
-            //    .Where(item => item.PartnerCode == request.PartnerCode && item.RequestID == request.RequestID)
-            //    .FirstOrDefault();
-
-            //if (napasBridgeTransaction != null)
-            //{
-            //    errors.Add("RequestID là định danh duy nhất mỗi yêu cầu");
-            //}
 
             // ===== QRInfo =====
             var qrInfor = request.QRInfo;
@@ -156,10 +157,12 @@ namespace S3.Gateway.Features.Payments.Napas
     public class NapasGenQRHandler : IRequestHandler<NapasGenQRRequest, NapasGenQRResponse>
     {
         private readonly DBContext _dbContext;
+        private readonly IPartnerContext _partnerContext;
 
-        public NapasGenQRHandler(DBContext dbContext)
+        public NapasGenQRHandler(DBContext dbContext, IPartnerContext partnerContext)
         {
             _dbContext = dbContext;
+            _partnerContext = partnerContext;
         }
 
         public async Task<NapasGenQRResponse> Handle(NapasGenQRRequest request, CancellationToken cancellationToken)
@@ -174,11 +177,25 @@ namespace S3.Gateway.Features.Payments.Napas
                 return response;
             }
 
+            var requestExists = await _dbContext.CallbackRoutings.AnyAsync(
+                item => item.PartnerID == _partnerContext.PartnerID &&
+                    item.Target == Target3rd.Napas &&
+                    item.ClientRequestID == request.RequestID,
+                cancellationToken);
+            if (requestExists)
+            {
+                response.Message = "RequestID đã tồn tại";
+                return response;
+            }
+
             var callbackRouting = new CallbackRouting
             {
+                PartnerID = _partnerContext.PartnerID,
+                PartnerCredentialID = _partnerContext.CredentialID,
                 RequestID = RequestContext.RequestID,
+                ClientRequestID = request.RequestID,
                 Target = Target3rd.Napas,
-                PartnerCode = request.PartnerCode,
+                PartnerCode = _partnerContext.PartnerCode,
                 CallbackUrl = request.CallbackUrl,
                 RequestPayload = JsonConvert.SerializeObject(request),
                 ActionHistory = "GEN QR",
@@ -196,7 +213,7 @@ namespace S3.Gateway.Features.Payments.Napas
                 AccountNumber = accountNumber,
                 ServiceType = qrInfor.ServiceType,
                 BillNumber = request.BillNumber,
-                StoreLabel = request.PartnerCode,
+                StoreLabel = _partnerContext.PartnerCode,
                 PurposeOfTransaction = request.Description,
                 PayloadFormatIndicator = qrInfor.PayloadFormatIndicator,
                 PointOfInitiationMethod = qrInfor.PointOfInitiationMethod,

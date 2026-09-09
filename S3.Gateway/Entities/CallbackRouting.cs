@@ -14,7 +14,13 @@
 
     public class CallbackRouting: EntityBase
     {
+        public int? PartnerID { get; set; }
+        public Partner? Partner { get; set; }
+        public int? PartnerCredentialID { get; set; }
+        public PartnerCredential? PartnerCredential { get; set; }
+
         public string RequestID { get; set; } = string.Empty;
+        public string? ClientRequestID { get; set; }
         public string RefID { get; set; } = string.Empty;
         public Target3rd Target { get; set; }
         public string PartnerCode { get; set; } = string.Empty;

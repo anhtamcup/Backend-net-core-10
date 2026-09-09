@@ -2,6 +2,7 @@
 using S3.Gateway.Common;
 using S3.Gateway.Entities;
 using S3.Gateway.Features.Logs;
+using S3.Gateway.Security;
 
 namespace S3.Gateway.Middleware
 {
@@ -66,7 +67,7 @@ namespace S3.Gateway.Middleware
                 if (!isSwagger)
                 {
                     var duration = (int)(DateTime.Now - start).TotalMilliseconds;
-                    var requestHeader = JsonConvert.SerializeObject(context.Request.Headers, new JsonSerializerSettings
+                    var requestHeader = JsonConvert.SerializeObject(GetSafeHeaders(context.Request.Headers), new JsonSerializerSettings
                     {
                         StringEscapeHandling = StringEscapeHandling.EscapeNonAscii
                     });
@@ -86,6 +87,39 @@ namespace S3.Gateway.Middleware
                     });
                 }
             }
+        }
+
+        private static Dictionary<string, string> GetSafeHeaders(IHeaderDictionary headers)
+        {
+            var result = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            foreach (var header in headers)
+            {
+                if (header.Key.Equals(PartnerAccessKeyDefaults.SecretKeyHeader, StringComparison.OrdinalIgnoreCase) ||
+                    header.Key.Equals("Authorization", StringComparison.OrdinalIgnoreCase) ||
+                    header.Key.Equals("Cookie", StringComparison.OrdinalIgnoreCase))
+                {
+                    result[header.Key] = "***";
+                    continue;
+                }
+
+                if (header.Key.Equals(PartnerAccessKeyDefaults.AccessKeyHeader, StringComparison.OrdinalIgnoreCase))
+                {
+                    result[header.Key] = MaskAccessKey(header.Value.ToString());
+                    continue;
+                }
+
+                result[header.Key] = header.Value.ToString();
+            }
+
+            return result;
+        }
+
+        private static string MaskAccessKey(string accessKey)
+        {
+            if (accessKey.Length <= 12)
+                return "***";
+
+            return $"{accessKey[..8]}***{accessKey[^4..]}";
         }
     }
 }

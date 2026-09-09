@@ -25,6 +25,8 @@
 
             public string SSL { get; set; } = string.Empty;
             public string SSLPassword { get; set; } = string.Empty;
+
+            public bool SkipVerifySignature { get; set; }
         }
     }
 }

@@ -1,9 +1,11 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using S3.Gateway.Common;
 using S3.Gateway.Features.Payments.Napas;
 using S3.Gateway.Integrations.Payment;
+using S3.Gateway.Security;
 using System.Text;
 
 namespace S3.Gateway.Controllers
@@ -32,7 +34,9 @@ namespace S3.Gateway.Controllers
             var payloadVerify = Utility.GetJsonProperty(rawBody, "payload");
 
             var publicKeyPath = Path.Combine(AppContext.BaseDirectory, _pConfig.Napas.PublicKey);
-            var verifySignature = RSASignatureService.VerifySignature(payloadVerify, request.Header.Signature, publicKeyPath);
+            var verifySignature = RSASignatureService.VerifySignature(payloadVerify, request.Header.Signature, publicKeyPath)
+                || _pConfig.Napas.SkipVerifySignature;
+
             if (verifySignature == false)
             {
                 return BadRequest("Verify Signature Failed");
@@ -43,6 +47,7 @@ namespace S3.Gateway.Controllers
         }
 
         [HttpPost("pmnp/qr")]
+        [Authorize(Policy = PartnerScopes.PaymentQrCreate)]
         public async Task<IActionResult> NapasGenQR([FromBody] NapasGenQRRequest request)
         {
             var result = await _mediator.Send(request);
@@ -50,6 +55,7 @@ namespace S3.Gateway.Controllers
         }
 
         [HttpPost("pmnp/investigation")]
+        [Authorize(Policy = PartnerScopes.PaymentInvestigation)]
         public async Task<IActionResult> NapasInvestigation([FromBody] NapasInvestigationRequest request)
         {
             var result = await _mediator.Send(request);
@@ -57,6 +63,7 @@ namespace S3.Gateway.Controllers
         }
 
         [HttpPost("pmnp/refund")]
+        [Authorize(Policy = PartnerScopes.PaymentRefund)]
         public async Task<IActionResult> NapasRefund([FromBody] NapasRefundRequest request)
         {
             var result = await _mediator.Send(request);

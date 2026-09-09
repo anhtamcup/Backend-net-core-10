@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
+using S3.Gateway.Administration;
 using S3.Gateway.Data;
 using S3.Gateway.Features.Logs;
 using S3.Gateway.Integrations.Base;
@@ -7,6 +9,7 @@ using S3.Gateway.Integrations.Ekyc.Napas;
 using S3.Gateway.Integrations.Payment;
 using S3.Gateway.Integrations.Payment.Napas;
 using S3.Gateway.Middleware;
+using S3.Gateway.Security;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +21,28 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services
+    .AddAuthentication(options =>
+    {
+        options.DefaultAuthenticateScheme = PartnerAccessKeyDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = PartnerAccessKeyDefaults.AuthenticationScheme;
+    })
+    .AddScheme<AuthenticationSchemeOptions, PartnerAccessKeyAuthenticationHandler>(
+        PartnerAccessKeyDefaults.AuthenticationScheme,
+        _ => { });
+
+builder.Services.AddAuthorization(options =>
+{
+    foreach (var scope in PartnerScopes.All)
+    {
+        options.AddPolicy(scope, policy =>
+        {
+            policy.RequireAuthenticatedUser();
+            policy.RequireClaim(PartnerAccessKeyDefaults.ScopeClaim, scope);
+        });
+    }
+});
 
 builder.Services.AddDbContext<DBContext>(options =>
     options.UseSqlServer(
@@ -52,10 +77,19 @@ builder.Services.Configure<PaymentConfig>(builder.Configuration.GetSection("Paym
 builder.Services.AddScoped<BaseApiClient>();
 builder.Services.AddScoped<NapasClient>();
 builder.Services.AddScoped<NapasApi>();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<IPartnerContext, PartnerContext>();
 builder.Services.AddSingleton<ILogService, LogService>();
 builder.Services.AddHostedService<LogBackgroundWorker>();
 
 var app = builder.Build();
+
+if (PartnerProvisioningCommand.CanHandle(args))
+{
+    Environment.ExitCode = await PartnerProvisioningCommand.RunAsync(app.Services, args);
+    return;
+}
+
 app.UseMiddleware<RequestLoggingMiddleware>();
 
 
@@ -69,6 +103,7 @@ app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

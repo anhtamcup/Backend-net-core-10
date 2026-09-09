@@ -1,9 +1,11 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using S3.Gateway.Common;
 using S3.Gateway.Features.Ekyc.Napas;
 using S3.Gateway.Integrations.Ekyc;
+using S3.Gateway.Security;
 using System.Text;
 
 namespace S3.Gateway.Controllers
@@ -21,6 +23,7 @@ namespace S3.Gateway.Controllers
         }
 
         [HttpPost("pmnp/merchant/getdeeplink")]
+        [Authorize(Policy = PartnerScopes.EkycDeepLinkCreate)]
         public async Task<IActionResult> Getdeeplink([FromBody] GetDeepLinkRequest request)
         {
             var result = await _mediator.Send(request);
@@ -56,6 +59,7 @@ namespace S3.Gateway.Controllers
         }
 
         [HttpPost("pmnp/merchant/createmerchant")]
+        [Authorize(Policy = PartnerScopes.EkycMerchantCreate)]
         public async Task<IActionResult> CreateMerchant([FromBody] CreateMerchantRequest request)
         {
             var result = await _mediator.Send(request);
@@ -63,6 +67,7 @@ namespace S3.Gateway.Controllers
         }
 
         [HttpPost("pmnp/merchant/updatebankaccount")]
+        [Authorize(Policy = PartnerScopes.EkycMerchantUpdate)]
         public async Task<IActionResult> UpdateBankAccount([FromBody] UpdateBankAccountRequest request)
         {
             var result = await _mediator.Send(request);
@@ -70,6 +75,7 @@ namespace S3.Gateway.Controllers
         }
 
         [HttpPost("pmnp/merchant/querymerchant")]
+        [Authorize(Policy = PartnerScopes.EkycMerchantQuery)]
         public async Task<IActionResult> QueryMerchant([FromBody] QueryMerchantRequest request)
         {
             var result = await _mediator.Send(request);
@@ -77,6 +83,7 @@ namespace S3.Gateway.Controllers
         }
 
         [HttpPost("pmnp/merchant/updatemerchant")]
+        [Authorize(Policy = PartnerScopes.EkycMerchantUpdate)]
         public async Task<IActionResult> UpdateMerchant([FromBody] UpdateMerchantRequest request)
         {
             var result = await _mediator.Send(request);

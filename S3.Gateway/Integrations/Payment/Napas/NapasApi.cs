@@ -93,10 +93,10 @@ namespace S3.Gateway.Integrations.Payment.Napas
             return result;
         }
 
-        public static string GenerateRefundId(
-        int refundSequence,
-        string alias,
-        string originalTransRef)
+        public string GenerateRefundId(
+            int refundSequence,
+            string alias,
+            string originalTransRef)
         {
             if (refundSequence < 1 || refundSequence > 99)
                 throw new ArgumentOutOfRangeException(nameof(refundSequence), "refundSequence phải trong khoảng 1-99");
@@ -144,10 +144,6 @@ namespace S3.Gateway.Integrations.Payment.Napas
 
             payload.CaseId = senderReference;
             payload.CreationDateTime = creationDateTime;
-            payload.RefundData.RefundId = GenerateRefundId(
-                1,
-                "NPCFCFB",
-                payload.OriginalData.RefId);
 
             var header = new NpHeader
             {

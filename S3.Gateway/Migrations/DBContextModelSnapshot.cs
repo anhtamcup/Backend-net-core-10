@@ -51,6 +51,9 @@ namespace S3.Gateway.Migrations
                     b.Property<string>("RequestBody2")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("RequestHeader")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("RequestID")
                         .HasColumnType("nvarchar(max)");
 
@@ -88,6 +91,10 @@ namespace S3.Gateway.Migrations
                     b.Property<string>("CallbackUrl")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ClientRequestID")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -96,6 +103,12 @@ namespace S3.Gateway.Migrations
 
                     b.Property<string>("PartnerCode")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("PartnerCredentialID")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PartnerID")
+                        .HasColumnType("int");
 
                     b.Property<string>("RefID")
                         .HasColumnType("nvarchar(max)");
@@ -120,6 +133,12 @@ namespace S3.Gateway.Migrations
 
                     b.HasKey("ID");
 
+                    b.HasIndex("PartnerCredentialID");
+
+                    b.HasIndex("PartnerID", "Target", "ClientRequestID")
+                        .IsUnique()
+                        .HasFilter("[PartnerID] IS NOT NULL AND [ClientRequestID] IS NOT NULL");
+
                     b.ToTable("CallbackRoutings");
                 });
 
@@ -143,6 +162,9 @@ namespace S3.Gateway.Migrations
                     b.Property<bool>("IsSuccess")
                         .HasColumnType("bit");
 
+                    b.Property<string>("RefID")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("RequestID")
                         .HasColumnType("nvarchar(max)");
 
@@ -158,6 +180,94 @@ namespace S3.Gateway.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("CallbackRoutingLogs");
+                });
+
+            modelBuilder.Entity("S3.Gateway.Entities.Partner", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("Code")
+                        .IsUnique();
+
+                    b.ToTable("Partners");
+                });
+
+            modelBuilder.Entity("S3.Gateway.Entities.PartnerCredential", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<string>("AccessKey")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ExpiresAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("LastUsedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("PartnerID")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("RevokedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Scopes")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("SecretKeyHash")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("AccessKey")
+                        .IsUnique();
+
+                    b.HasIndex("PartnerID");
+
+                    b.ToTable("PartnerCredentials");
                 });
 
             modelBuilder.Entity("S3.Gateway.Entities.RequestLog", b =>
@@ -189,6 +299,9 @@ namespace S3.Gateway.Migrations
                     b.Property<string>("RequestBody")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("RequestHeader")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("RequestID")
                         .HasColumnType("nvarchar(max)");
 
@@ -207,6 +320,39 @@ namespace S3.Gateway.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("RequestLogs");
+                });
+
+            modelBuilder.Entity("S3.Gateway.Entities.CallbackRouting", b =>
+                {
+                    b.HasOne("S3.Gateway.Entities.PartnerCredential", "PartnerCredential")
+                        .WithMany()
+                        .HasForeignKey("PartnerCredentialID")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("S3.Gateway.Entities.Partner", "Partner")
+                        .WithMany()
+                        .HasForeignKey("PartnerID")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Partner");
+
+                    b.Navigation("PartnerCredential");
+                });
+
+            modelBuilder.Entity("S3.Gateway.Entities.PartnerCredential", b =>
+                {
+                    b.HasOne("S3.Gateway.Entities.Partner", "Partner")
+                        .WithMany("Credentials")
+                        .HasForeignKey("PartnerID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Partner");
+                });
+
+            modelBuilder.Entity("S3.Gateway.Entities.Partner", b =>
+                {
+                    b.Navigation("Credentials");
                 });
 #pragma warning restore 612, 618
         }
