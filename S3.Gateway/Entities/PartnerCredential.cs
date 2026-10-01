@@ -13,6 +13,7 @@ namespace S3.Gateway.Entities
         public Partner Partner { get; set; } = null!;
         public string AccessKey { get; set; } = string.Empty;
         public string SecretKeyHash { get; set; } = string.Empty;
+        public string SecretKey { get; set; } = string.Empty;
         public string Scopes { get; set; } = string.Empty;
         public PartnerCredentialStatus Status { get; set; } = PartnerCredentialStatus.ACTIVE;
         public DateTime? ExpiresAt { get; set; }

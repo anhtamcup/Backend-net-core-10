@@ -225,6 +225,31 @@ namespace S3.Gateway.Features.Payments.Napas
 
             var genQRResponse = NapasQR.GenQRCodeBase64(genQRRequest);
 
+            var paymentTransaction = new PaymentTransaction
+            {
+                PartnerID = _partnerContext.PartnerID,
+                Provider = "NAPAS",
+                PaymentMethod = "QR",
+                ClientRequestID = request.RequestID,
+                GatewayRequestID = callbackRouting.RequestID,
+                ProviderTransactionID = genQRRequest.AccountNumber,
+                ProviderReferenceID = genQRRequest.AccountNumber,
+                CallbackRoutingID = callbackRouting.ID,
+                AccountNumber = qrInfor.AccountNumber,
+                BankID = qrInfor.BankID,
+                Amount = request.Amount,
+                Currency = qrInfor.TransactionCurrency,
+                BillNumber = request.BillNumber,
+                Description = request.Description,
+                QRType = request.IsStaticQR ? "STATIC" : "DYNAMIC",
+                RawCreateRequest = JsonConvert.SerializeObject(request),
+                Status = genQRResponse.Success
+                    ? PaymentTransactionStatus.PENDING
+                    : PaymentTransactionStatus.FAILED,
+                PartnerCallbackStatus = PartnerCallbackStatus.PENDING
+            };
+            _dbContext.PaymentTransactions.Add(paymentTransaction);
+
             var callbackRoutingLog = new CallbackRoutingLog
             {
                 RequestID = callbackRouting.RequestID,

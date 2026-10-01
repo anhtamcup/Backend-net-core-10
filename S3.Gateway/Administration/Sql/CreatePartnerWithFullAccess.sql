@@ -1,14 +1,15 @@
 /*
     Tạo Partner và credential full quyền trong cùng transaction.
     Chỉ thay đổi các biến ở khối cấu hình bên dưới.
-    SecretKey chỉ được trả về ở SELECT cuối và không được lưu plaintext.
+    SecretKey được trả về ở SELECT cuối và lưu tại PartnerCredentials.SecretKey.
+    Full quyền bao gồm cả payment.history.
 */
 
 SET NOCOUNT ON;
 SET XACT_ABORT ON;
 
-DECLARE @PartnerCode nvarchar(50) = N'REPLACE_PARTNER_CODE';
-DECLARE @PartnerName nvarchar(200) = N'REPLACE_PARTNER_NAME';
+DECLARE @PartnerCode nvarchar(50) = N'S3Local';
+DECLARE @PartnerName nvarchar(200) = N'S3Local';
 DECLARE @Environment varchar(10) = 'uat'; -- uat | prod
 DECLARE @ExpiresAt datetime2 = NULL;       -- Ví dụ: '2027-12-31 23:59:59'
 
@@ -38,7 +39,7 @@ DECLARE @SecretHashBase64 varchar(100) =
         'xs:base64Binary(sql:variable("@SecretHash"))',
         'varchar(100)');
 DECLARE @Scopes nvarchar(1000) =
-    N'ekyc.deeplink.create,ekyc.merchant.create,ekyc.merchant.query,ekyc.merchant.update,payment.investigation,payment.qr.create,payment.refund';
+    N'ekyc.deeplink.create,ekyc.merchant.create,ekyc.merchant.query,ekyc.merchant.update,payment.history,payment.investigation,payment.qr.create,payment.refund';
 DECLARE @Now datetime2 = SYSDATETIME();
 DECLARE @PartnerID int;
 
@@ -68,6 +69,7 @@ INSERT INTO dbo.PartnerCredentials
     PartnerID,
     AccessKey,
     SecretKeyHash,
+    SecretKey,
     Scopes,
     Status,
     ExpiresAt,
@@ -81,6 +83,7 @@ VALUES
     @PartnerID,
     @AccessKey,
     @SecretHashBase64,
+    @SecretKey,
     @Scopes,
     1, -- ACTIVE
     @ExpiresAt,

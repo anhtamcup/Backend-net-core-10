@@ -60,6 +60,29 @@ namespace S3.Gateway.Data
                     .IsUnique()
                     .HasFilter("[PartnerID] IS NOT NULL AND [ClientRequestID] IS NOT NULL");
             });
+
+            modelBuilder.Entity<PaymentTransaction>(entity =>
+            {
+                entity.Property(item => item.Amount).HasPrecision(18, 2);
+                entity.HasOne(item => item.Partner)
+                    .WithMany()
+                    .HasForeignKey(item => item.PartnerID)
+                    .OnDelete(DeleteBehavior.Restrict);
+                entity.HasIndex(item => new { item.PartnerID, item.CreatedAt });
+                entity.HasIndex(item => new { item.Provider, item.ProviderTransactionID });
+                entity.HasIndex(item => item.ClientRequestID);
+                entity.HasIndex(item => new { item.PartnerCallbackStatus, item.PartnerCallbackAt });
+            });
+
+            modelBuilder.Entity<PaymentNotification>(entity =>
+            {
+                entity.HasOne(item => item.PaymentTransaction)
+                    .WithMany()
+                    .HasForeignKey(item => item.PaymentTransactionID)
+                    .OnDelete(DeleteBehavior.Cascade);
+                entity.HasIndex(item => new { item.Provider, item.ProviderTransactionID });
+                entity.HasIndex(item => item.RequestID);
+            });
         }
 
         public DbSet<RequestLog> RequestLogs { get; set; }
@@ -68,5 +91,7 @@ namespace S3.Gateway.Data
         public DbSet<CallbackRoutingLog> CallbackRoutingLogs { get; set; }
         public DbSet<Partner> Partners { get; set; }
         public DbSet<PartnerCredential> PartnerCredentials { get; set; }
+        public DbSet<PaymentTransaction> PaymentTransactions { get; set; }
+        public DbSet<PaymentNotification> PaymentNotifications { get; set; }
     }
 }

@@ -156,6 +156,7 @@ namespace S3.Gateway.Administration
                 PartnerID = partner.ID,
                 AccessKey = accessKey,
                 SecretKeyHash = PartnerCredentialSecret.Hash(secretKey),
+                SecretKey = secretKey,
                 Scopes = string.Join(',', scopes),
                 Status = PartnerCredentialStatus.ACTIVE,
                 ExpiresAt = expiresAt

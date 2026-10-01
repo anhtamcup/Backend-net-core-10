@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using S3.Gateway.Common;
 using S3.Gateway.Features.Payments.Napas;
+using S3.Gateway.Features.Payments;
 using S3.Gateway.Integrations.Payment;
 using S3.Gateway.Security;
 using System.Text;
@@ -65,6 +66,14 @@ namespace S3.Gateway.Controllers
         [HttpPost("pmnp/refund")]
         [Authorize(Policy = PartnerScopes.PaymentRefund)]
         public async Task<IActionResult> NapasRefund([FromBody] NapasRefundRequest request)
+        {
+            var result = await _mediator.Send(request);
+            return Ok(result);
+        }
+
+        [HttpGet("transactions")]
+        [Authorize(Policy = PartnerScopes.PaymentHistory)]
+        public async Task<IActionResult> PaymentHistory([FromQuery] PaymentHistoryRequest request)
         {
             var result = await _mediator.Send(request);
             return Ok(result);

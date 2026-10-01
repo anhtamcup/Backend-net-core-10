@@ -12,6 +12,7 @@ namespace S3.Gateway.Integrations.Base
 {
     public class BaseApiClient
     {
+        public HttpStatusCode? LastStatusCode { get; private set; }
         private readonly ILogService _logService;
 
         public BaseApiClient(ILogService logService)
@@ -245,6 +246,7 @@ namespace S3.Gateway.Integrations.Base
                 }
 
                 log.StatusCode = (int)response.StatusCode;
+                LastStatusCode = response.StatusCode;
                 log.IsSuccess = response.StatusCode == HttpStatusCode.OK;
 
                 var result = JsonConvert.DeserializeObject<T>(response.Content);
@@ -252,6 +254,7 @@ namespace S3.Gateway.Integrations.Base
             }
             catch (Exception ex)
             {
+                LastStatusCode = null;
                 log.ErrorMessage = ex.ToString();
                 return default(T);
             }

@@ -249,6 +249,9 @@ namespace S3.Gateway.Migrations
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
 
+                    b.Property<string>("SecretKey")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("SecretKeyHash")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -268,6 +271,179 @@ namespace S3.Gateway.Migrations
                     b.HasIndex("PartnerID");
 
                     b.ToTable("PartnerCredentials");
+                });
+
+            modelBuilder.Entity("S3.Gateway.Entities.PaymentNotification", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ErrorMessage")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDuplicate")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Payload")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PaymentTransactionID")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ProcessedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ProcessingStatus")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Provider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderReferenceID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProviderStatus")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProviderTransactionID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("ReceivedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("RequestID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("PaymentTransactionID");
+
+                    b.HasIndex("RequestID");
+
+                    b.HasIndex("Provider", "ProviderTransactionID");
+
+                    b.ToTable("PaymentNotifications");
+                });
+
+            modelBuilder.Entity("S3.Gateway.Entities.PaymentTransaction", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<string>("AccountNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Amount")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("BankID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BillNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("CallbackRoutingID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ClientRequestID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Currency")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("GatewayRequestID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("LastNotificationAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("PaidAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("PartnerCallbackAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PartnerCallbackCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PartnerCallbackError")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("PartnerCallbackHttpStatus")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PartnerCallbackMessage")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PartnerCallbackStatus")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PartnerID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PaymentMethod")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Provider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProviderMessage")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProviderReferenceID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProviderStatus")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProviderTransactionID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("QRType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RawCreateRequest")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("ClientRequestID");
+
+                    b.HasIndex("PartnerCallbackStatus", "PartnerCallbackAt");
+
+                    b.HasIndex("PartnerID", "CreatedAt");
+
+                    b.HasIndex("Provider", "ProviderTransactionID");
+
+                    b.ToTable("PaymentTransactions");
                 });
 
             modelBuilder.Entity("S3.Gateway.Entities.RequestLog", b =>
@@ -346,6 +522,27 @@ namespace S3.Gateway.Migrations
                         .HasForeignKey("PartnerID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Partner");
+                });
+
+            modelBuilder.Entity("S3.Gateway.Entities.PaymentNotification", b =>
+                {
+                    b.HasOne("S3.Gateway.Entities.PaymentTransaction", "PaymentTransaction")
+                        .WithMany()
+                        .HasForeignKey("PaymentTransactionID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PaymentTransaction");
+                });
+
+            modelBuilder.Entity("S3.Gateway.Entities.PaymentTransaction", b =>
+                {
+                    b.HasOne("S3.Gateway.Entities.Partner", "Partner")
+                        .WithMany()
+                        .HasForeignKey("PartnerID")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Partner");
                 });
