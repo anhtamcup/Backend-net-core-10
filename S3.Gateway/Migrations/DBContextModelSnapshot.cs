@@ -379,6 +379,9 @@ namespace S3.Gateway.Migrations
                     b.Property<DateTime?>("LastNotificationAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("NotificationPaymentID")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("PaidAt")
                         .HasColumnType("datetime2");
 
@@ -428,6 +431,9 @@ namespace S3.Gateway.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RawCreateRequest")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RequestCreateQRID")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Status")

@@ -44,6 +44,8 @@ namespace S3.Gateway.Features.Payments
         public string TransactionID { get; set; } = string.Empty;
         public string ReferenceID { get; set; } = string.Empty;
         public string ClientRequestID { get; set; } = string.Empty;
+        public string? RequestCreateQRID { get; set; }
+        public string? NotificationPaymentID { get; set; }
         public string AccountNumber { get; set; } = string.Empty;
         public string BankID { get; set; } = string.Empty;
         public decimal Amount { get; set; }
@@ -135,6 +137,8 @@ namespace S3.Gateway.Features.Payments
                     TransactionID = x.ProviderTransactionID,
                     ReferenceID = x.ProviderReferenceID,
                     ClientRequestID = x.ClientRequestID,
+                    RequestCreateQRID = x.RequestCreateQRID,
+                    NotificationPaymentID = x.NotificationPaymentID,
                     AccountNumber = x.AccountNumber,
                     BankID = x.BankID,
                     Amount = x.Amount,

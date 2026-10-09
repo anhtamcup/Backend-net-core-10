@@ -232,6 +232,7 @@ namespace S3.Gateway.Features.Payments.Napas
                 PaymentMethod = "QR",
                 ClientRequestID = request.RequestID,
                 GatewayRequestID = callbackRouting.RequestID,
+                RequestCreateQRID = callbackRouting.RequestID,
                 ProviderTransactionID = genQRRequest.AccountNumber,
                 ProviderReferenceID = genQRRequest.AccountNumber,
                 CallbackRoutingID = callbackRouting.ID,

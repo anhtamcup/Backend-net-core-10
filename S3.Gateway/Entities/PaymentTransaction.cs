@@ -26,6 +26,10 @@ namespace S3.Gateway.Entities
         public string PaymentMethod { get; set; } = string.Empty;
         public string ClientRequestID { get; set; } = string.Empty;
         public string GatewayRequestID { get; set; } = string.Empty;
+        // Correlation IDs matching RequestLogs.RequestID, not RequestLogs.ID.
+        public string? RequestCreateQRID { get; set; }
+        // Most recent notification; PaymentNotifications retains every notification RequestID.
+        public string? NotificationPaymentID { get; set; }
         public string ProviderTransactionID { get; set; } = string.Empty;
         public string ProviderReferenceID { get; set; } = string.Empty;
         public int? CallbackRoutingID { get; set; }
