@@ -7,6 +7,7 @@ using S3.Gateway.Entities;
 using S3.Gateway.Integrations.Base;
 using S3.Gateway.Integrations.Payment;
 using S3.Gateway.Integrations.Payment.Napas;
+using System.Globalization;
 using static S3.Gateway.Features.Payments.Napas.TransIdCodecHelper;
 
 namespace S3.Gateway.Features.Payments.Napas
@@ -37,8 +38,11 @@ namespace S3.Gateway.Features.Payments.Napas
             {
                 var routing = await _dbContext.CallbackRoutings
                     .FirstOrDefaultAsync(item => item.RefID == request.Payload.Id, cancellationToken);
+
                 if (routing != null)
                     return await ForwardNotificationAsync(routing, request, payload, cancellationToken);
+
+                return await RecordUnroutedNotificationAsync(request, payload, cancellationToken);
             }
 
             DecodeResult decodeData;
@@ -65,6 +69,59 @@ namespace S3.Gateway.Features.Payments.Napas
                     return await _apiClient.PostTAsync<NpPaymentNotificationResponse>(
                         _pConfig.Napas.ForwardNotiPaymentURL, payload);
             }
+        }
+
+        private async Task<NpPaymentNotificationResponse> RecordUnroutedNotificationAsync(
+            PaymentNotificationRequest request,
+            string payload,
+            CancellationToken cancellationToken)
+        {
+            var providerTransactionId = request.Payload.Id ?? string.Empty;
+            var providerReferenceId = request.Payload.RefId ?? string.Empty;
+            var now = DateTime.Now;
+            decimal.TryParse(request.Payload.Amount, NumberStyles.Number,
+                CultureInfo.InvariantCulture, out var amount);
+
+            var transaction = new PaymentTransaction
+            {
+                PartnerID = null,
+                Provider = "NAPAS",
+                PaymentMethod = "QR",
+                ProviderTransactionID = providerTransactionId,
+                ProviderReferenceID = providerReferenceId,
+                AccountNumber = providerTransactionId[..^7],
+                BankID = request.Payload.BeneficiaryBank ?? string.Empty,
+                Amount = amount,
+                Currency = "704",
+                BillNumber = "NAPGSQR",
+                QRType = "STATIC"
+            };
+            _dbContext.PaymentTransactions.Add(transaction);
+
+            transaction.ProviderStatus = request.Payload.Status ?? string.Empty;
+            if (!string.IsNullOrWhiteSpace(request.Payload.CustomerName))
+                transaction.CustomerName = request.Payload.CustomerName;
+            transaction.Status = IsSuccessful(request.Payload.Status)
+                ? PaymentTransactionStatus.SUCCESS
+                : PaymentTransactionStatus.PROCESSING;
+            transaction.LastNotificationAt = now;
+            if (transaction.Status == PaymentTransactionStatus.SUCCESS)
+                transaction.PaidAt ??= now;
+
+            await _dbContext.SaveChangesAsync(cancellationToken);
+            var notification = await RecordNotificationAsync(transaction, request, payload, cancellationToken);
+            if (notification != null)
+            {
+                notification.ProcessingStatus = PaymentNotificationProcessingStatus.PROCESSED;
+                notification.ProcessedAt = now;
+                await _dbContext.SaveChangesAsync(cancellationToken);
+            }
+
+            return new NpPaymentNotificationResponse
+            {
+                Code = "success",
+                Message = "Notification received"
+            };
         }
 
         private async Task<NpPaymentNotificationResponse> ForwardNotificationAsync(
@@ -125,11 +182,6 @@ namespace S3.Gateway.Features.Payments.Napas
             if (transaction == null)
                 return null;
 
-            var isDuplicate = await _dbContext.PaymentNotifications.AnyAsync(x =>
-                x.PaymentTransactionID == transaction.ID &&
-                x.ProviderTransactionID == request.Payload.Id &&
-                x.Payload == payload, cancellationToken);
-
             var notification = new PaymentNotification
             {
                 PaymentTransactionID = transaction.ID,
@@ -139,10 +191,7 @@ namespace S3.Gateway.Features.Payments.Napas
                 ProviderReferenceID = request.Payload.RefId ?? string.Empty,
                 ProviderStatus = request.Payload.Status ?? string.Empty,
                 Payload = payload,
-                IsDuplicate = isDuplicate,
-                ProcessingStatus = isDuplicate
-                    ? PaymentNotificationProcessingStatus.DUPLICATE
-                    : PaymentNotificationProcessingStatus.RECEIVED
+                ProcessingStatus = PaymentNotificationProcessingStatus.RECEIVED
             };
 
             _dbContext.PaymentNotifications.Add(notification);
@@ -165,6 +214,8 @@ namespace S3.Gateway.Features.Payments.Napas
             transaction.ProviderTransactionID = request.Payload.Id ?? transaction.ProviderTransactionID;
             transaction.ProviderReferenceID = request.Payload.RefId ?? transaction.ProviderReferenceID;
             transaction.ProviderStatus = request.Payload.Status ?? string.Empty;
+            if (!string.IsNullOrWhiteSpace(request.Payload.CustomerName))
+                transaction.CustomerName = request.Payload.CustomerName;
             transaction.LastNotificationAt = DateTime.Now;
             transaction.Status = IsSuccessful(request.Payload.Status)
                 ? PaymentTransactionStatus.SUCCESS

@@ -37,6 +37,7 @@ namespace S3.Gateway.Entities
         public string BillNumber { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public string QRType { get; set; } = string.Empty;
+        public string CustomerName { get; set; } = string.Empty;
 
         public PaymentTransactionStatus Status { get; set; } = PaymentTransactionStatus.PENDING;
         public string ProviderStatus { get; set; } = string.Empty;

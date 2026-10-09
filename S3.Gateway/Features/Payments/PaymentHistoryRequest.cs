@@ -51,6 +51,7 @@ namespace S3.Gateway.Features.Payments
         public string BillNumber { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public string QRType { get; set; } = string.Empty;
+        public string CustomerName { get; set; } = string.Empty;
         public string Status { get; set; } = string.Empty;
         public string ProviderStatus { get; set; } = string.Empty;
         public string PartnerCallbackStatus { get; set; } = string.Empty;
@@ -141,6 +142,7 @@ namespace S3.Gateway.Features.Payments
                     BillNumber = x.BillNumber,
                     Description = x.Description,
                     QRType = x.QRType,
+                    CustomerName = x.CustomerName ?? string.Empty,
                     Status = x.Status.ToString(),
                     ProviderStatus = x.ProviderStatus,
                     PartnerCallbackStatus = x.PartnerCallbackStatus.ToString(),
