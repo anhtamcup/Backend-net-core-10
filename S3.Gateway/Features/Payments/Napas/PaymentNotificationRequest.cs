@@ -36,11 +36,10 @@ namespace S3.Gateway.Features.Payments.Napas
 
             if (billNumberEncode == "NAPGSQR")
             {
-                var routing = await _dbContext.CallbackRoutings
-                    .FirstOrDefaultAsync(item => item.RefID == request.Payload.Id, cancellationToken);
-
-                if (routing != null)
-                    return await ForwardNotificationAsync(routing, request, payload, true, cancellationToken);
+                var recorded = await RecordStaticNotificationAsync(request, payload, cancellationToken);
+                if (recorded != null)
+                    return await ForwardNotificationAsync(recorded.Value.Routing, request, payload,
+                        recorded.Value.Transaction, recorded.Value.Notification, cancellationToken);
 
                 return await RecordUnroutedNotificationAsync(request, payload, cancellationToken);
             }
@@ -64,7 +63,11 @@ namespace S3.Gateway.Features.Payments.Napas
                     if (routing == null)
                         throw new Exception("Bill number không hợp lệ");
 
-                    return await ForwardNotificationAsync(routing, request, payload, false, cancellationToken);
+                    var transaction = await _dbContext.PaymentTransactions
+                        .FirstOrDefaultAsync(x => x.CallbackRoutingID == routing.ID, cancellationToken);
+                    var notification = await RecordNotificationAsync(transaction, request, payload, cancellationToken);
+                    return await ForwardNotificationAsync(routing, request, payload,
+                        transaction, notification, cancellationToken);
                 default:
                     return await _apiClient.PostTAsync<NpPaymentNotificationResponse>(
                         _pConfig.Napas.ForwardNotiPaymentURL, payload);
@@ -129,23 +132,10 @@ namespace S3.Gateway.Features.Payments.Napas
             CallbackRouting routing,
             PaymentNotificationRequest request,
             string payload,
-            bool isStaticQr,
+            PaymentTransaction? transaction,
+            PaymentNotification? notification,
             CancellationToken cancellationToken)
         {
-            PaymentTransaction? transaction;
-            PaymentNotification? notification;
-            if (isStaticQr)
-            {
-                (transaction, notification) = await RecordStaticNotificationAsync(
-                    routing, request, payload, cancellationToken);
-            }
-            else
-            {
-                transaction = await _dbContext.PaymentTransactions
-                    .FirstOrDefaultAsync(x => x.CallbackRoutingID == routing.ID, cancellationToken);
-                notification = await RecordNotificationAsync(transaction, request, payload, cancellationToken);
-            }
-
             var forwardResponse = await _apiClient.PostTAsync<NpPaymentNotificationResponse>(routing.CallbackUrl, payload);
             var forwardHttpStatus = _apiClient.LastStatusCode.HasValue
                 ? (int?)_apiClient.LastStatusCode.Value
@@ -182,20 +172,54 @@ namespace S3.Gateway.Features.Payments.Napas
             return forwardResponse;
         }
 
-        private async Task<(PaymentTransaction, PaymentNotification)> RecordStaticNotificationAsync(
-            CallbackRouting routing,
+        private async Task<(CallbackRouting Routing, PaymentTransaction Transaction, PaymentNotification Notification)?> RecordStaticNotificationAsync(
             PaymentNotificationRequest request,
             string payload,
             CancellationToken cancellationToken)
         {
             await using var dbTransaction = await _dbContext.Database.BeginTransactionAsync(cancellationToken);
-            var original = await _dbContext.PaymentTransactions
+            var providerTransactionId = request.Payload.Id ?? string.Empty;
+            var lockResource = $"napas-static-qr:{providerTransactionId}";
+            await _dbContext.Database.ExecuteSqlInterpolatedAsync($@"
+                DECLARE @lockResult int;
+                EXEC @lockResult = sys.sp_getapplock
+                    @Resource = {lockResource},
+                    @LockMode = 'Exclusive',
+                    @LockOwner = 'Transaction',
+                    @LockTimeout = 30000;
+                IF @lockResult < 0
+                    THROW 51010, 'Could not lock static QR routing.', 1;", cancellationToken);
+
+            // Claim unused QR creation rows in creation order, regardless of callback status.
+            var available = await (
+                from candidateRouting in _dbContext.CallbackRoutings
+                join candidateOriginal in _dbContext.PaymentTransactions
+                    on (int?)candidateRouting.ID equals candidateOriginal.CallbackRoutingID
+                where candidateRouting.RefID == providerTransactionId &&
+                    candidateRouting.Target == Target3rd.Napas &&
+                    candidateOriginal.GatewayRequestID == candidateRouting.RequestID &&
+                    candidateOriginal.QRType == "STATIC" &&
+                    candidateOriginal.Status == PaymentTransactionStatus.PENDING &&
+                    candidateOriginal.NotificationPaymentID == null
+                orderby candidateRouting.CreatedAt, candidateRouting.ID
+                select new { Routing = candidateRouting, Original = candidateOriginal }
+            ).FirstOrDefaultAsync(cancellationToken);
+
+            var routing = available?.Routing ?? await _dbContext.CallbackRoutings
+                .Where(item => item.RefID == providerTransactionId && item.Target == Target3rd.Napas)
+                .OrderBy(item => item.CreatedAt)
+                .ThenBy(item => item.ID)
+                .FirstOrDefaultAsync(cancellationToken);
+            if (routing == null)
+                return null;
+
+            var original = available?.Original ?? await _dbContext.PaymentTransactions
                 .FirstOrDefaultAsync(x => x.CallbackRoutingID == routing.ID &&
                     x.GatewayRequestID == routing.RequestID, cancellationToken);
 
-            // A static QR ID is reusable, so only the first notification claims the QR creation row.
+            // Each unused Gen QR routing gets one notification before reusing the oldest routing.
             var notificationRequestId = RequestContext.RequestID;
-            var useOriginal = original != null &&
+            var useOriginal = available != null && original != null &&
                 await _dbContext.PaymentTransactions
                     .Where(x => x.ID == original.ID && x.NotificationPaymentID == null)
                     .ExecuteUpdateAsync(setters => setters
@@ -212,7 +236,6 @@ namespace S3.Gateway.Features.Payments.Napas
             }
             else
             {
-                var providerTransactionId = request.Payload.Id ?? string.Empty;
                 transaction = new PaymentTransaction
                 {
                     PartnerID = original?.PartnerID ?? routing.PartnerID,
@@ -239,7 +262,7 @@ namespace S3.Gateway.Features.Payments.Napas
 
             var notification = (await RecordNotificationAsync(transaction, request, payload, cancellationToken))!;
             await dbTransaction.CommitAsync(cancellationToken);
-            return (transaction, notification);
+            return (routing, transaction, notification);
         }
 
         private async Task<PaymentNotification?> RecordNotificationAsync(
