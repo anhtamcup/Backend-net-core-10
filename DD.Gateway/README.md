@@ -84,3 +84,19 @@ dotnet run --project DD.Gateway/DD.Gateway.csproj
 Swagger UI is available at `/swagger`. Each incoming request writes a row to `RequestLogs`, including the path, method, all header names and values, text body, response, status, duration, IP address, and exception details. Text bodies are limited to 64 KiB; binary bodies are omitted.
 
 Because request headers are stored without masking, `X-Secret-Key` values sent by clients are also stored in `RequestLogs`.
+
+## DEV request log viewer
+
+`GET /api/dev/request-logs` lets developers inspect saved gateway requests and responses, including request headers, bodies, status, duration, IP, errors, and stack traces. It supports filters for request ID, path, a substring in either request or response body, method, status, errors, and UTC time range, with pages of up to 100 records. The viewer page is at `/dev/request-logs.html` and calls the protected API from the browser.
+
+The endpoint requires the `dev.requestlogs.read` scope. This scope is deliberately excluded from `--scopes all`, so existing partner credentials do not receive access. To create a dedicated DEV partner and issue a credential with only this scope in pgAdmin, run [CreateDevRequestLogsCredential.sql](DD.Gateway/Administration/Sql/CreateDevRequestLogsCredential.sql) against `dd_gateway`. The final query accepts the partner code, name, `uat`/`prod` environment, and optional expiry date; it creates the partner if needed and returns the access key and secret key. Running it again issues another credential.
+
+The same page also has a **Chọn bảng SQL** tab for browsing database tables and views, searching a keyword across each selected table's rows, and paging through 50 rows at a time. Its API requires the separate `dev.database.read` scope. To use both tabs with one credential, run [CreateDevDatabaseExplorerCredential.sql](DD.Gateway/Administration/Sql/CreateDevDatabaseExplorerCredential.sql); the resulting credential has `dev.requestlogs.read,dev.database.read`. This permission can read sensitive data from every non-system table or view visible to the gateway's database account, so issue it only to trusted developers. Responses from this explorer are omitted from `RequestLogs` to avoid copying queried table contents into the log table.
+
+Alternatively, create a credential for an existing active developer partner from the repository root:
+
+```powershell
+dotnet run --project DD.Gateway/DD.Gateway.csproj -- credential create --partner DEV-TOOLS --environment prod --scopes dev.requestlogs.read --expires 2026-12-31
+```
+
+This credential can read sensitive data from `RequestLogs`, including the `X-Secret-Key` request header values already stored there. Share it only with trusted developers. The browser page keeps the credential in memory for the current tab and does not save it to local storage.

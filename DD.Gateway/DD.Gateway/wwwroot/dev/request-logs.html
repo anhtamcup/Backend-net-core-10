@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DEV · Gateway Data Explorer</title>
+  <style>
+    :root { color-scheme: light; --ink:#202a36; --muted:#657487; --line:#dbe3eb; --surface:#fff; --bg:#f2f5f9; --accent:#215a9a; --danger:#a52b39; --ok:#247649; }
+    * { box-sizing:border-box }
+    body { margin:0; color:var(--ink); background:var(--bg); font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif }
+    main { width:min(1280px,calc(100% - 32px)); margin:32px auto 60px }
+    h1 { margin:0 0 4px; font-size:26px }
+    h2 { margin:0 0 12px; font-size:18px }
+    .subtitle,.muted { color:var(--muted) }
+    .panel,.entry { background:var(--surface); border:1px solid var(--line); border-radius:12px; box-shadow:0 2px 8px #14283a0a }
+    .panel { padding:20px; margin-top:18px }
+    .credentials,.filters { display:grid; gap:12px; align-items:end }
+    .credentials { grid-template-columns:1fr 1fr auto }
+    .filters { grid-template-columns:repeat(4,minmax(145px,1fr)) }
+    label { display:grid; gap:5px; color:var(--muted); font-size:13px }
+    input,select,button { min-height:40px; border:1px solid var(--line); border-radius:7px; padding:8px 10px; font:inherit; background:#fff; color:var(--ink) }
+    input:focus,select:focus { outline:2px solid #9fc5ec; border-color:var(--accent) }
+    button { cursor:pointer; border-color:var(--accent); background:var(--accent); color:#fff; font-weight:600 }
+    button.secondary { color:var(--accent); background:#fff }
+    button:disabled { opacity:.5; cursor:default }
+    .actions { display:flex; gap:8px; align-items:center }
+    .remember { display:flex; grid-column:1/-1; align-items:center; gap:8px; color:var(--ink); font-size:14px }
+    .remember input { min-height:0; width:16px; height:16px; margin:0; accent-color:var(--accent) }
+    .tabs { display:flex; gap:8px; margin-top:18px }
+    .tabs button.active { color:#fff; background:var(--accent) }
+    .tabs button:not(.active) { color:var(--accent); background:#fff }
+    .tab-panel[hidden] { display:none }
+    .notice { color:var(--muted); font-size:12px; margin:12px 0 0 }
+    #message { min-height:24px; margin:14px 0 0; color:var(--muted) }
+    #message.error { color:var(--danger) }
+    .result-header { display:flex; justify-content:space-between; align-items:center; gap:12px }
+    #results { display:grid; gap:12px; margin-top:14px }
+    .entry { overflow:hidden }
+    .entry summary { list-style:none; display:grid; grid-template-columns:minmax(170px,1.2fr) minmax(180px,2fr) auto auto auto; align-items:center; gap:14px; padding:14px 16px; cursor:pointer }
+    .entry summary::-webkit-details-marker { display:none }
+    .entry summary:hover { background:#f8fafc }
+    .request-id { font:12px/1.4 ui-monospace,SFMono-Regular,Consolas,monospace; overflow-wrap:anywhere }
+    .path { overflow-wrap:anywhere }
+    .badge { display:inline-block; min-width:48px; padding:2px 7px; border-radius:999px; text-align:center; background:#edf1f5; font-size:12px; font-weight:700 }
+    .badge.bad { color:var(--danger); background:#fcebed }
+    .badge.good { color:var(--ok); background:#e9f6ee }
+    .details { padding:0 16px 16px; display:grid; grid-template-columns:1fr 1fr; gap:12px }
+    .detail { min-width:0; border:1px solid var(--line); border-radius:8px; overflow:hidden }
+    .detail h3 { margin:0; padding:8px 10px; background:#f5f7fa; font-size:13px }
+    pre { margin:0; padding:10px; max-height:360px; overflow:auto; white-space:pre-wrap; overflow-wrap:anywhere; font:12px/1.55 ui-monospace,SFMono-Regular,Consolas,monospace }
+    .empty { color:var(--muted); padding:12px 0 }
+    .table-controls { display:grid; grid-template-columns:minmax(180px,1fr) minmax(240px,1.5fr) minmax(200px,1fr) auto; gap:12px; align-items:end }
+    #databaseMessage { min-height:24px; margin:14px 0 0; color:var(--muted) }
+    #databaseMessage.error { color:var(--danger) }
+    .data-wrap { margin-top:14px; max-width:100%; overflow:auto; border:1px solid var(--line); border-radius:8px }
+    .data-table { border-collapse:collapse; min-width:100%; width:max-content; font-size:13px }
+    .data-table th,.data-table td { max-width:420px; padding:9px 11px; border-bottom:1px solid var(--line); border-right:1px solid var(--line); text-align:left; vertical-align:top; white-space:pre-wrap; overflow-wrap:anywhere }
+    .data-table th { position:sticky; top:0; background:#f4f7fa; color:var(--ink); font-weight:700 }
+    .data-table td { font-family:ui-monospace,SFMono-Regular,Consolas,monospace; font-size:12px }
+    @media(max-width:760px) { .credentials,.filters { grid-template-columns:1fr 1fr } .entry summary { grid-template-columns:1fr auto auto; gap:8px } .entry summary .path { grid-column:1/-1; grid-row:2 } .details { grid-template-columns:1fr } }
+    @media(max-width:480px) { .credentials,.filters { grid-template-columns:1fr } main { width:calc(100% - 20px); margin-top:18px } .panel { padding:14px } .entry summary { grid-template-columns:1fr auto } .entry summary .badge { grid-row:2 } .entry summary .path { grid-column:1/-1; grid-row:3 } }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Gateway Data Explorer <span class="muted">/ DEV</span></h1>
+  <div class="subtitle">Tra cứu request log và dữ liệu các bảng trong database gateway.</div>
+
+  <section class="panel" aria-labelledby="credentials-title">
+    <h2 id="credentials-title">Quyền truy cập</h2>
+    <form id="credentials" class="credentials">
+      <label>Access key<input id="accessKey" autocomplete="off" required></label>
+      <label>Secret key<input id="secretKey" type="password" autocomplete="off" required></label>
+      <button type="submit">Kết nối</button>
+      <label class="remember"><input id="remember" type="checkbox"> Ghi nhớ credential trên trình duyệt này</label>
+    </form>
+    <p class="notice">Dùng credential có scope <code>dev.requestlogs.read</code> và <code>dev.database.read</code>. Mở trang qua domain của DD.Gateway; không mở trực tiếp file HTML trên máy. Khi chọn ghi nhớ, khóa được lưu trong trình duyệt dưới dạng văn bản. Chỉ bật trên máy cá nhân tin cậy.</p>
+  </section>
+
+  <nav class="tabs" aria-label="Chọn loại dữ liệu">
+    <button id="logsTab" class="active" type="button">Request Logs</button>
+    <button id="tablesTab" type="button">Chọn bảng SQL</button>
+  </nav>
+
+  <div id="logsView" class="tab-panel">
+  <section class="panel" aria-labelledby="filters-title">
+    <h2 id="filters-title">Bộ lọc</h2>
+    <form id="filters" class="filters">
+      <label>Request ID<input id="requestId" placeholder="Một phần hoặc toàn bộ"></label>
+      <label>Path<input id="path" placeholder="/api/ekyc"></label>
+      <label>Từ khóa request / response<input id="bodyContains" placeholder="Tìm trong request hoặc response"></label>
+      <label>Method<select id="method"><option value="">Tất cả</option><option>GET</option><option>POST</option><option>PUT</option><option>PATCH</option><option>DELETE</option></select></label>
+      <label>Status code<input id="statusCode" type="number" min="100" max="599" placeholder="Ví dụ 500"></label>
+      <label>Lỗi<select id="hasError"><option value="">Tất cả</option><option value="true">Có lỗi (4xx/5xx)</option><option value="false">Không lỗi</option></select></label>
+      <label>Từ thời điểm (UTC)<input id="fromUtc" type="datetime-local"></label>
+      <label>Đến thời điểm (UTC)<input id="toUtc" type="datetime-local"></label>
+      <div class="actions"><button id="searchButton" type="submit">Tìm log</button><button class="secondary" id="resetButton" type="button">Xóa lọc</button></div>
+    </form>
+    <div id="message" role="status" aria-live="polite">Nhập credential DEV rồi bấm Kết nối.</div>
+  </section>
+
+  <section class="panel">
+    <div class="result-header"><h2>Kết quả</h2><div class="actions"><button class="secondary" id="prevButton" disabled>Trước</button><button class="secondary" id="nextButton" disabled>Sau</button></div></div>
+    <div id="pageInfo" class="muted"></div>
+    <div id="results"><div class="empty">Chưa có kết quả.</div></div>
+  </section>
+  </div>
+
+  <section id="databaseView" class="panel tab-panel" hidden>
+    <h2>Chọn bảng muốn xem</h2>
+    <div class="table-controls">
+      <label>Schema<select id="databaseSchema" disabled><option value="">Đang tải…</option></select></label>
+      <label>Bảng / view<select id="databaseTable" disabled><option value="">Chọn schema trước</option></select></label>
+      <label>Tìm trong các dòng<input id="databaseSearch" placeholder="Nhập từ khóa bất kỳ"></label>
+      <div class="actions"><button id="loadDatabaseButton" type="button">Tải lại</button></div>
+    </div>
+    <div id="databaseMessage" role="status" aria-live="polite">Chọn tab này để tải danh sách bảng.</div>
+    <div class="result-header" style="margin-top:12px"><div id="databasePageInfo" class="muted"></div><div class="actions"><button class="secondary" id="databasePrevButton" type="button" disabled>Trước</button><button class="secondary" id="databaseNextButton" type="button" disabled>Sau</button></div></div>
+    <div id="databaseResults"></div>
+  </section>
+</main>
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const storageKey = "ddGateway.devRequestLogsCredential";
+  const state = { accessKey: "", secretKey: "", page: 1, pageSize: 50, totalCount: 0, busy: false };
+  const databaseState = { tables: [], page: 1, pageSize: 50, hasNext: false, loaded: false, busy: false };
+  const message = (text, error = false) => { $("message").textContent = text; $("message").classList.toggle("error", error); };
+  const databaseMessage = (text, error = false) => { $("databaseMessage").textContent = text; $("databaseMessage").classList.toggle("error", error); };
+  const authHeaders = () => ({ "X-Access-Key": state.accessKey, "X-Secret-Key": state.secretKey });
+  const explainHttpError = async response => {
+    let reason = `HTTP ${response.status}`;
+    try { const body = await response.json(); if (body.message) reason += ` · ${body.message}`; } catch {}
+    if (response.status === 401) return "Credential không hợp lệ hoặc đã hết hạn.";
+    if (response.status === 403) return "Credential chưa được cấp scope cần thiết cho chức năng này.";
+    return reason;
+  };
+  const formatDate = value => {
+    const date = new Date(value);
+    return Number.isNaN(date.getTime()) ? value : date.toLocaleString("vi-VN", { timeZone: "Asia/Bangkok" });
+  };
+  const addDetail = (container, title, value, json = false) => {
+    const section = document.createElement("section"); section.className = "detail";
+    const heading = document.createElement("h3"); heading.textContent = title;
+    const pre = document.createElement("pre");
+    if (!value) pre.textContent = "(trống)";
+    else if (json) {
+      try { pre.textContent = JSON.stringify(JSON.parse(value), null, 2); }
+      catch { pre.textContent = value; }
+    } else pre.textContent = value;
+    section.append(heading, pre); container.append(section);
+  };
+  const render = items => {
+    const root = $("results"); root.replaceChildren();
+    if (!items.length) { const empty = document.createElement("div"); empty.className = "empty"; empty.textContent = "Không tìm thấy log phù hợp."; root.append(empty); return; }
+    for (const item of items) {
+      const entry = document.createElement("details"); entry.className = "entry";
+      const summary = document.createElement("summary");
+      const requestId = document.createElement("span"); requestId.className = "request-id"; requestId.textContent = item.requestId || `Log #${item.id}`;
+      const path = document.createElement("span"); path.className = "path"; path.textContent = `${item.method} ${item.path}`;
+      const status = document.createElement("span"); status.className = `badge ${item.statusCode >= 400 ? "bad" : "good"}`; status.textContent = item.statusCode;
+      const duration = document.createElement("span"); duration.className = "muted"; duration.textContent = `${item.duration} ms`;
+      const created = document.createElement("span"); created.className = "muted"; created.textContent = formatDate(item.createdAt);
+      summary.append(requestId, path, status, duration, created);
+      const details = document.createElement("div"); details.className = "details";
+      addDetail(details, "Request body", item.requestBody);
+      addDetail(details, "Response body", item.responseBody);
+      addDetail(details, "Request headers", item.requestHeader, true);
+      addDetail(details, "Error", [item.errorMessage, item.stackTrace].filter(Boolean).join("\n\n"));
+      addDetail(details, "Thông tin khác", `IP: ${item.ipAddress || "(không có)"}\nRequest ID: ${item.requestId}\nThời gian UTC: ${item.createdAt}`);
+      entry.append(summary, details); root.append(entry);
+    }
+  };
+  const setBusy = busy => { state.busy = busy; $("searchButton").disabled = busy || !state.accessKey; };
+  const search = async page => {
+    if (!state.accessKey || state.busy) return;
+    if (window.location.protocol === "file:") {
+      message("Bạn đang mở file HTML trực tiếp trên máy. Hãy mở trang qua DD.Gateway, ví dụ https://<domain-gateway>/dev/request-logs.html, để trang gọi được API cùng domain.", true);
+      return;
+    }
+    state.page = page; setBusy(true); message("Đang tải log…");
+    try {
+      const params = new URLSearchParams({ page: String(state.page), pageSize: String(state.pageSize) });
+      for (const id of ["requestId", "path", "bodyContains", "method", "statusCode", "hasError"]) { const value = $(id).value.trim(); if (value) params.set(id, value); }
+      for (const id of ["fromUtc", "toUtc"]) { const value = $(id).value; if (value) params.set(id, new Date(value).toISOString()); }
+      const response = await fetch(`/api/dev/request-logs?${params}`, { headers: authHeaders() });
+      if (!response.ok) throw new Error(await explainHttpError(response));
+      const data = await response.json(); state.totalCount = data.totalCount; render(data.items);
+      const pages = Math.ceil(data.totalCount / data.pageSize);
+      $("pageInfo").textContent = `${data.totalCount.toLocaleString("vi-VN")} log · trang ${data.page}/${Math.max(1, pages)}`;
+      $("prevButton").disabled = data.page <= 1; $("nextButton").disabled = data.page >= pages;
+      message(data.totalCount ? "Bấm vào một dòng để xem đầy đủ thông tin." : "Không có log nào phù hợp.");
+    } catch (error) {
+      const detail = error instanceof TypeError
+        ? "Không kết nối được API. Hãy mở trang từ https://<domain-gateway>/dev/request-logs.html (cùng domain DD.Gateway), kiểm tra API đã deploy và gateway đang truy cập được."
+        : error.message || "Không gọi được API.";
+      message(detail, true);
+    }
+    finally { setBusy(false); }
+  };
+  const selectedTables = () => databaseState.tables.filter(item => item.schema === $("databaseSchema").value);
+  const updateTableOptions = (loadRows = true) => {
+    const select = $("databaseTable"); select.replaceChildren();
+    const tables = selectedTables();
+    for (const table of tables) {
+      const option = document.createElement("option");
+      option.value = `${table.schema}\0${table.name}`;
+      option.textContent = `${table.name} · ${table.columns.length} cột · ${table.type === "BASE TABLE" ? "table" : "view"}`;
+      select.append(option);
+    }
+    select.disabled = tables.length === 0;
+    if (tables.length && loadRows) loadDatabaseRows(1);
+    else { $("databaseResults").replaceChildren(); $("databasePageInfo").textContent = ""; }
+  };
+  const loadDatabaseTables = async () => {
+    if (!state.accessKey || databaseState.busy) return;
+    databaseState.busy = true; databaseMessage("Đang tải danh sách bảng…");
+    let loadFirstPage = false;
+    try {
+      const response = await fetch("/api/dev/database/tables", { headers: authHeaders() });
+      if (!response.ok) throw new Error(await explainHttpError(response));
+      databaseState.tables = await response.json(); databaseState.loaded = true;
+      const schemas = [...new Set(databaseState.tables.map(item => item.schema))];
+      const schemaSelect = $("databaseSchema"); schemaSelect.replaceChildren();
+      for (const schema of schemas) {
+        const option = document.createElement("option"); option.value = schema; option.textContent = schema; schemaSelect.append(option);
+      }
+      schemaSelect.disabled = schemas.length === 0;
+      if (!schemas.length) { databaseMessage("Không tìm thấy bảng hoặc view mà tài khoản database được phép đọc."); $("databaseTable").replaceChildren(); return; }
+      updateTableOptions(false);
+      loadFirstPage = true;
+      databaseMessage(`Có ${databaseState.tables.length} bảng/view trong ${schemas.length} schema.`);
+    } catch (error) {
+      databaseState.loaded = false;
+      databaseMessage(error instanceof TypeError ? "Không kết nối được API database." : error.message, true);
+    } finally {
+      databaseState.busy = false;
+      if (loadFirstPage) loadDatabaseRows(1);
+    }
+  };
+  const loadDatabaseRows = async page => {
+    if (!state.accessKey || databaseState.busy) return;
+    const selected = databaseState.tables.find(item => `${item.schema}\0${item.name}` === $("databaseTable").value);
+    if (!selected) return;
+    databaseState.busy = true; databaseState.page = page; databaseMessage("Đang tải dữ liệu bảng…");
+    try {
+      const params = new URLSearchParams({ schema: selected.schema, table: selected.name, page: String(page), pageSize: String(databaseState.pageSize) });
+      const searchTerm = $("databaseSearch").value.trim(); if (searchTerm) params.set("search", searchTerm);
+      const response = await fetch(`/api/dev/database/rows?${params}`, { headers: authHeaders() });
+      if (!response.ok) throw new Error(await explainHttpError(response));
+      const data = await response.json(); databaseState.hasNext = data.hasNext;
+      const root = $("databaseResults"); root.replaceChildren();
+      if (data.columns.length && data.rows.length) {
+        const wrap = document.createElement("div"); wrap.className = "data-wrap";
+        const table = document.createElement("table"); table.className = "data-table";
+        const head = document.createElement("thead"); const headRow = document.createElement("tr");
+        for (const column of data.columns) {
+          const th = document.createElement("th"); th.textContent = `${column.name} · ${column.dataType}`; headRow.append(th);
+        }
+        head.append(headRow); table.append(head);
+        const body = document.createElement("tbody");
+        for (const row of data.rows) {
+          const tr = document.createElement("tr");
+          for (const column of data.columns) {
+            const td = document.createElement("td"); const value = row[column.name];
+            td.textContent = value === null || value === undefined ? "NULL" : typeof value === "object" ? JSON.stringify(value) : String(value);
+            tr.append(td);
+          }
+          body.append(tr);
+        }
+        table.append(body); wrap.append(table); root.append(wrap);
+      } else {
+        const empty = document.createElement("div"); empty.className = "empty"; empty.textContent = "Bảng chưa có dữ liệu."; root.append(empty);
+      }
+      $("databasePageInfo").textContent = `${data.schema}.${data.table} · ${data.rows.length} dòng · trang ${data.page}${data.hasNext ? " (còn trang tiếp)" : " (trang cuối)"}`;
+      $("databasePrevButton").disabled = data.page <= 1; $("databaseNextButton").disabled = !data.hasNext;
+      databaseMessage("Đang hiển thị tối đa 50 dòng mỗi trang.");
+    } catch (error) {
+      databaseMessage(error instanceof TypeError ? "Không kết nối được API database." : error.message, true);
+    } finally { databaseState.busy = false; }
+  };
+  $("credentials").addEventListener("submit", event => {
+    event.preventDefault(); state.accessKey = $("accessKey").value.trim(); state.secretKey = $("secretKey").value;
+    if (!state.accessKey || !state.secretKey) { message("Cần nhập cả hai khóa.", true); return; }
+    if ($("remember").checked) {
+      localStorage.setItem(storageKey, JSON.stringify({ accessKey: state.accessKey, secretKey: state.secretKey }));
+    } else {
+      localStorage.removeItem(storageKey);
+    }
+    $("searchButton").disabled = false; search(1); loadDatabaseTables();
+  });
+  $("filters").addEventListener("submit", event => { event.preventDefault(); search(1); });
+  $("prevButton").addEventListener("click", () => search(state.page - 1));
+  $("nextButton").addEventListener("click", () => search(state.page + 1));
+  $("resetButton").addEventListener("click", () => { $("filters").reset(); search(1); });
+  $("logsTab").addEventListener("click", () => {
+    $("logsView").hidden = false; $("databaseView").hidden = true;
+    $("logsTab").classList.add("active"); $("tablesTab").classList.remove("active");
+  });
+  $("tablesTab").addEventListener("click", () => {
+    $("logsView").hidden = true; $("databaseView").hidden = false;
+    $("tablesTab").classList.add("active"); $("logsTab").classList.remove("active");
+    if (!databaseState.loaded) loadDatabaseTables();
+  });
+  $("databaseSchema").addEventListener("change", updateTableOptions);
+  $("databaseTable").addEventListener("change", () => loadDatabaseRows(1));
+  $("databaseSearch").addEventListener("keydown", event => { if (event.key === "Enter") { event.preventDefault(); loadDatabaseRows(1); } });
+  $("loadDatabaseButton").addEventListener("click", loadDatabaseTables);
+  $("databasePrevButton").addEventListener("click", () => loadDatabaseRows(databaseState.page - 1));
+  $("databaseNextButton").addEventListener("click", () => loadDatabaseRows(databaseState.page + 1));
+  try {
+    const saved = JSON.parse(localStorage.getItem(storageKey) || "null");
+    if (saved?.accessKey && saved?.secretKey) {
+      state.accessKey = saved.accessKey; state.secretKey = saved.secretKey;
+      $("accessKey").value = saved.accessKey; $("secretKey").value = saved.secretKey;
+      $("remember").checked = true; $("searchButton").disabled = false;
+      search(1); loadDatabaseTables();
+    }
+  } catch {
+    localStorage.removeItem(storageKey);
+  }
+})();
+</script>
+</body>
+</html>

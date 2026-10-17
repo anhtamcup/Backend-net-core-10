@@ -43,7 +43,9 @@ public sealed class RequestLoggingMiddleware(RequestDelegate next, ILogger<Reque
                     : string.Empty,
                 Method = context.Request.Method,
                 RequestBody = requestBody,
-                ResponseBody = IsTextContent(context.Response.ContentType)
+                ResponseBody = context.Request.Path.StartsWithSegments("/api/dev/database")
+                    ? "[DEV database response omitted]"
+                    : IsTextContent(context.Response.ContentType)
                     ? capture.CapturedText
                     : "[non-text response omitted]",
                 StatusCode = requestError is null ? context.Response.StatusCode : StatusCodes.Status500InternalServerError,

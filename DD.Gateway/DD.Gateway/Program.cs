@@ -59,7 +59,7 @@ builder.Services.AddAuthorization(options =>
         .RequireAuthenticatedUser()
         .Build();
 
-    foreach (var scope in PartnerScopes.All)
+    foreach (var scope in PartnerScopes.Assignable)
     {
         options.AddPolicy(scope, policy =>
         {
@@ -80,6 +80,10 @@ if (PartnerProvisioningCommand.CanHandle(args))
 
 app.UseMiddleware<RequestLoggingMiddleware>();
 
+// The request log viewer is a developer tool and should remain opt-in.
+app.UseDefaultFiles();
+app.UseStaticFiles();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -93,6 +97,9 @@ app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.MapGet("/dev/request-logs", () => Results.Redirect("/dev/request-logs.html"))
+    .AllowAnonymous();
 
 app.MapControllers();
 

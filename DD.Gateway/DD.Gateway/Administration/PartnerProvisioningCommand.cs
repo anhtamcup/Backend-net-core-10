@@ -118,7 +118,7 @@ public static class PartnerProvisioningCommand
             ? PartnerScopes.All.OrderBy(item => item).ToArray()
             : scopesValue.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
                 .Distinct(StringComparer.Ordinal).OrderBy(item => item).ToArray();
-        var invalidScopes = scopes.Where(item => !PartnerScopes.All.Contains(item)).ToArray();
+        var invalidScopes = scopes.Where(item => !PartnerScopes.Assignable.Contains(item)).ToArray();
         if (scopes.Length == 0 || invalidScopes.Length > 0)
         {
             Console.Error.WriteLine(invalidScopes.Length > 0
