@@ -50,7 +50,8 @@ public sealed class GatewayDbContext(DbContextOptions<GatewayDbContext> options)
         {
             entity.HasKey(session => session.SessionId);
             entity.Property(session => session.SessionId).HasMaxLength(36);
-            entity.Property(session => session.NabPartnerId).HasMaxLength(100).IsRequired();
+            entity.Property(session => session.Provider).HasMaxLength(50).IsRequired();
+            entity.Property(session => session.ProviderPartnerId).HasMaxLength(100).IsRequired();
             entity.Property(session => session.CallbackUrl).HasMaxLength(2048).IsRequired();
             entity.Property(session => session.ResultHash).HasMaxLength(64);
             entity.Property(session => session.Status).HasMaxLength(20);

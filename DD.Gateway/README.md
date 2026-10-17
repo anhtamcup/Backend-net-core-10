@@ -45,10 +45,10 @@ NAB's document describes app-to-app links, not backend APIs. `EkycController` pr
 `POST /api/ekyc/deeplinks` requires the `ekyc.deeplink.create` scope and accepts the NAB-issued `partnerID` and registered custom `callbackUrl` from the caller:
 
 ```json
-{"partnerID":"PARTNER","callbackUrl":"partnerapp://ekyc/callback"}
+{"provider":"NAMABANK","partnerID":"PARTNER","callbackUrl":"partnerapp://ekyc/callback"}
 ```
 
-The response contains `sessionId`, `issuedAt`, and `url`. DD.Gateway generates `sessionID` and `issuedAt`, stores the session against the authenticated gateway partner, adds them to the incoming values, and encrypts the resulting four-field JSON object. The partner backend should call this API with its access/secret key, then pass `url` to its mobile app to open through the operating system. `DD.Gateway/appsettings.json` contains the NAB URL and protocol limits (`BaseUrl`, `MaximumPlaintextBytes`, `RsaKeySizeBits`, `CiphertextBytes`, `EncodedCiphertextLength`, and `MaximumCallbackResultLength`). Configure the NAB request-encryption public key through app configuration or environment variables:
+The `provider` selects a registered eKYC provider; `NAMABANK` is currently supported. Provider integrations implement `IEkycProvider` and are registered in dependency injection, so provider-specific link creation and callback verification stay outside the controller. The response contains `provider`, `sessionId`, `issuedAt`, and `url`. DD.Gateway generates `sessionID` and `issuedAt`, stores the session and selected provider against the authenticated gateway partner, adds the generated values to the incoming values, and encrypts the resulting four-field JSON object. The partner backend should call this API with its access/secret key, then pass `url` to its mobile app to open through the operating system. The verification request also includes the selected `provider`; the gateway verifies the callback with that provider and confirms it matches the provider stored for the session. `DD.Gateway/appsettings.json` contains the NAB URL and protocol limits (`BaseUrl`, `MaximumPlaintextBytes`, `RsaKeySizeBits`, `CiphertextBytes`, `EncodedCiphertextLength`, and `MaximumCallbackResultLength`). Configure the NAB request-encryption public key through app configuration or environment variables:
 
 ```text
 NamABank__Ekyc__PublicKeyPath
@@ -56,10 +56,10 @@ NamABank__Ekyc__PublicKeyPath
 
 `PublicKeyPath` may be relative to the application's content root. Copy the keys for the current environment into [Keys/NamABank](DD.Gateway/Keys/NamABank/README.md), using the fixed filenames already configured in `appsettings.json`. The files currently included are the provided NAB UAT keys. The custom URL scheme in the request is distinct from `Partners.CallbackUrl`, which is an HTTP/HTTPS endpoint for partner notifications. The gateway rejects a `callbackUrl` that already contains a `result` query parameter. NAB must have registered the exact callback scheme/host/path for this `partnerID`; the gateway cannot determine NAB's registration from the request. Invalid input or a JSON payload over 190 UTF-8 bytes returns HTTP 400; missing or invalid public-key configuration returns HTTP 503. Encryption uses RSA-2048 OAEP-SHA256, and the `data` query parameter is unpadded Base64URL.
 
-After NAB opens the custom callback URL in the partner app, the app checks that the URL matches its registered callback and contains exactly one `result` parameter. It sends that parameter unchanged to its own backend, which calls `POST /api/ekyc/callback/verify` with the gateway access/secret key:
+After NAB opens the custom callback URL in the Edoidep app, the app checks that the URL matches its registered callback and contains exactly one `result` parameter. It sends that parameter unchanged to its own backend, which calls `POST /api/ekyc/callback/verify` with the selected provider and gateway access/secret key:
 
 ```json
-{"result":"<JWS Compact from callback URL>"}
+{"provider":"NAMABANK","result":"<JWS Compact from callback URL>"}
 ```
 
 The gateway verifies RS256 with the NAB **callback-signing public key**, checks the `kid` against the configured value, validates the `sessionID` and status/code pair, and matches the session to the authenticated partner. It stores the first verified result; a different subsequent result returns HTTP 409. The endpoint does not receive a direct NAB webhook. Configure each environment's callback verification `kid` and key path separately from the request-encryption key, for example:

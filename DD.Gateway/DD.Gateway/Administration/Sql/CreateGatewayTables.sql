@@ -60,7 +60,8 @@ CREATE INDEX IF NOT EXISTS "IX_PartnerCredentials_PartnerId"
 CREATE TABLE IF NOT EXISTS "EkycSessions" (
     "SessionId" character varying(36) CONSTRAINT "PK_EkycSessions" PRIMARY KEY,
     "PartnerId" integer NOT NULL,
-    "NabPartnerId" character varying(100) NOT NULL,
+    "Provider" character varying(50) NOT NULL DEFAULT 'NAMABANK',
+    "ProviderPartnerId" character varying(100) NOT NULL,
     "CallbackUrl" character varying(2048) NOT NULL,
     "IssuedAt" bigint NOT NULL,
     "CreatedAt" timestamp with time zone NOT NULL,
@@ -71,6 +72,27 @@ CREATE TABLE IF NOT EXISTS "EkycSessions" (
     CONSTRAINT "FK_EkycSessions_Partners_PartnerId"
         FOREIGN KEY ("PartnerId") REFERENCES "Partners" ("Id") ON DELETE RESTRICT
 );
+
+ALTER TABLE "EkycSessions"
+    ADD COLUMN IF NOT EXISTS "Provider" character varying(50) NOT NULL DEFAULT 'NAMABANK';
+
+DO $migration$
+BEGIN
+    IF EXISTS (
+        SELECT 1 FROM information_schema.columns
+        WHERE table_schema = current_schema()
+            AND table_name = 'EkycSessions'
+            AND column_name = 'NabPartnerId'
+    ) AND NOT EXISTS (
+        SELECT 1 FROM information_schema.columns
+        WHERE table_schema = current_schema()
+            AND table_name = 'EkycSessions'
+            AND column_name = 'ProviderPartnerId'
+    ) THEN
+        ALTER TABLE "EkycSessions" RENAME COLUMN "NabPartnerId" TO "ProviderPartnerId";
+    END IF;
+END;
+$migration$;
 
 CREATE INDEX IF NOT EXISTS "IX_EkycSessions_PartnerId_CreatedAt"
     ON "EkycSessions" ("PartnerId", "CreatedAt");

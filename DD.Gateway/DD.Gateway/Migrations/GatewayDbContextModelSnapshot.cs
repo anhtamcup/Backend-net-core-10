@@ -43,10 +43,15 @@ namespace DD.Gateway.Migrations
                     b.Property<long>("IssuedAt")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("NabPartnerId")
+                    b.Property<string>("ProviderPartnerId")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
+
+                    b.Property<string>("Provider")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.Property<int>("PartnerId")
                         .HasColumnType("integer");

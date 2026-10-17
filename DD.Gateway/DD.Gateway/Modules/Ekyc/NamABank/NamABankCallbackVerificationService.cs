@@ -3,6 +3,7 @@ using System.Text;
 using System.Text.Json;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Options;
+using DD.Gateway.Modules.Ekyc.Providers;
 
 namespace DD.Gateway.Modules.Ekyc.NamABank;
 
@@ -10,7 +11,7 @@ public sealed class NamABankCallbackVerificationService(
     IOptions<NamABankEkycOptions> options,
     IHostEnvironment hostEnvironment)
 {
-    public VerifiedCallbackResult Verify(string? result)
+    public EkycVerifiedResult Verify(string? result)
     {
         var settings = options.Value;
         settings.ValidateCallbackSettings();
@@ -121,7 +122,7 @@ public sealed class NamABankCallbackVerificationService(
                 throw new NamABankEkycRequestException("Nội dung callback NAB không hợp lệ.");
             }
 
-            return new VerifiedCallbackResult(
+            return new EkycVerifiedResult(
                 sessionId, status, code,
                 OptionalString(payload.RootElement, "messageVi"),
                 OptionalString(payload.RootElement, "messageEn"));

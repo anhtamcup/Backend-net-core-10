@@ -2,6 +2,7 @@ using DD.Gateway.Administration;
 using DD.Gateway.Data;
 using DD.Gateway.Middleware;
 using DD.Gateway.Modules.Ekyc.NamABank;
+using DD.Gateway.Modules.Ekyc.Providers;
 using DD.Gateway.Security;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -45,6 +46,8 @@ builder.Services.Configure<NamABankEkycOptions>(
 builder.Services.AddSingleton(TimeProvider.System);
 builder.Services.AddSingleton<NamABankDeepLinkService>();
 builder.Services.AddSingleton<NamABankCallbackVerificationService>();
+builder.Services.AddSingleton<IEkycProvider, NamABankEkycProvider>();
+builder.Services.AddSingleton<EkycProviderRegistry>();
 builder.Services
     .AddAuthentication(options =>
     {
